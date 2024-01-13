@@ -35,6 +35,14 @@ export class SharedService {
     return response;
   }
 
+  delete<T>(url:any):Observable<T>{
+    let response =  this.http.delete<T>(url);
+
+    return response;
+
+  }
+
+ 
   put<T>(url: string, body, options): any {
     return this.http.put<T>(url, body, {headers: options});
   }

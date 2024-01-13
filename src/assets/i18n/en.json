@@ -73,6 +73,11 @@
       "TEXT": "Dashboard",
       "BADGE": "03"
     },
+
+    "CATEGORY": {
+      "TEXT": "Category",
+      "BADGE": "03"
+    },
     "LAYOUTS": {
       "TEXT": "Layouts",
       "LIST": {

@@ -7,7 +7,7 @@ import { WidgetModule } from '../shared/widget/widget.module';
 
 import { PagesRoutingModule } from './pages-routing.module';
 
-import { NgbNavModule, NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule, NgbDropdownModule, NgbTooltipModule, NgbPaginationModule, NgbTypeaheadModule, NgbCollapseModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -29,6 +29,10 @@ import { ChartModule } from './chart/chart.module';
 import { FormModule } from './form/form.module';
 import { TablesModule } from './tables/tables.module';
 import { MapsModule } from './maps/maps.module';
+import { CategoryComponent } from './category/category.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+// import { DataTablesModule } from 'angular-datatables';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -36,7 +40,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 };
 
 @NgModule({
-  declarations: [DashboardComponent, CalendarComponent, ChatComponent, KanbanComponent],
+  declarations: [DashboardComponent, CalendarComponent, ChatComponent, KanbanComponent, CategoryComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -59,7 +63,18 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TablesModule,
     MapsModule,
     LeafletModule,
-    WidgetModule
+    WidgetModule,
+    NgbPaginationModule,
+  //  DataTablesModule,
+
+
+    // 
+    NgbTypeaheadModule,
+ 
+    NgbCollapseModule,
+    NgSelectModule,
+    NgxSliderModule,
+    NgbModalModule
   ],
   providers: [
     {

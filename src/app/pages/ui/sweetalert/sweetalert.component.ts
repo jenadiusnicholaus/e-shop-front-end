@@ -127,7 +127,7 @@ export class SweetalertComponent implements OnInit {
       timer: 2000,
       timerProgressBar: true,
       didOpen: () => {
-        Swal.showLoading()
+        // Swal.showLoading()
         timerInterval = setInterval(() => {
           Swal.getHtmlContainer().querySelector('strong').textContent = Swal.getTimerLeft() + '';
         }, 100);

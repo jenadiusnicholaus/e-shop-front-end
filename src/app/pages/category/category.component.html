@@ -1,0 +1,258 @@
+<div class="container-fluid">
+  <app-pagetitle title="Categories" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <ul class="nav nav-tabs nav-tabs-custom mb-4">
+            <li class="nav-item">
+                <a class="nav-link fw-bold p-3 active" href="javascript:void(0);">All Category</a>
+            </li>
+            <li class="nav-item">
+              <button (click)="_addCategoryModal(addModal)" type="button" class="btn btn-primary btn-rounded"> Add Category</button>
+            </li>
+        </ul>
+          <!-- <div class="row mb-md-2">
+            <div class="col-sm-12 col-md-6">
+              [(ngModel)]="categoryModel!.page_size!" 
+              <div class="dataTables_length" id="tickets-table_length"><label
+                  class="d-inline-flex align-items-center">Show
+                  <select name="tickets-table_length" aria-controls="tickets-table" name="pageSize"  
+                    class="custom-select custom-select-sm form-control form-control-sm mx-2">
+                    <option [ngValue]="10">10</option>
+                    <option [ngValue]="25">25</option>
+                    <option [ngValue]="50">50</option>
+                    <option [ngValue]="100">100</option>
+                  </select> entries</label></div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label
+                  class="d-inline-flex align-items-center">Search:
+                  <input type="text" name="searchTerm" class="form-control form-control-sm ms-2"
+                    aria-controls="tickets-table" ></label></div>
+            </div>
+          </div> -->
+          <div class="table-responsive">
+            <table id="basic-datatable"
+              class="table table-centered dt-responsive nowrap datatables no-footer dtr-inline">
+              <thead>
+                <tr>
+                  <th sortable="id" (sort)="onSort($event)">Id</th>
+                  <th sortable="name" (sort)="onSort($event)">Name</th>
+                  <th sortable="description" (sort)="onSort($event)">Description</th>
+                  <th sortable="status" (sort)="onSort($event)">Stattus</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let category of categoryModel?.results">
+                  <td>
+                    <a class="text-dark fw-bold">
+                      <ngb-highlight [result]="category?.id" [term]="service.searchTerm"></ngb-highlight>
+                    </a>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="category?.name" [term]="service.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="category?.description" [term]="service.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight *ngIf="category?.status==1" [result]='"Active"' [term]="service.searchTerm"></ngb-highlight>
+                    <ngb-highlight *ngIf="category?.status==2" [result]='"InActive"' [term]="service.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <a style="background-color: rgb(227, 227, 21); border-radius: 100%; padding: 10px; margin: 2px;" (click)="_editCategoryModal(editModal, category.id)" class="me-3 text-primary" placement="top" ngbTooltip="Edit"><i
+                        class="mdi mdi-pencil font-size-18"></i></a>
+                    <a (click)="_comfirmAndDeleteCategory(category.id)" class="text-danger" placement="top" ngbTooltip="Delete"><i
+                        class="mdi mdi-trash-can font-size-18"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row justify-content-md-between align-items-md-center mt-2">
+            <div class="col-sm-12 col-md-5">
+              <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">Showing
+                1 to
+                {{categoryModel?.page_size}} of {{categoryModel?.count}}
+                entries
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-5">
+              <div class="text-md-end float-md-end pagination-rounded">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                      <a style="cursor: pointer;" *ngIf="categoryModel?.previous!=null"  class="page-link"(click)="_getAllCategory(null, categoryModel?.previous)" tabindex="-1">Previous</a>
+                    </li>
+                 
+                    <li class="page-item">
+                      <a style="cursor: pointer;" *ngIf="categoryModel?.next!=null"  class="page-link"(click)="_getAllCategory(null ,categoryModel?.next)" tabindex="-1">next</a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #editModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Edit Category</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="p-2 mb-3">
+      <div class="row">
+        
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+            
+              <form (ngSubmit)="_editCategory(categoryDetails?.data?.id)" [formGroup]="editCategoryForm">
+                <div class="form-group">
+                  <label>Required</label>
+                  <input type="text" class="form-control" formControlName="name"
+                    [ngClass]="{'is-invalid': submitted && editForm.name.errors}" placeholder="Category Name" />
+                  <div *ngIf="submitted && editForm.name.errors" class="invalid-feedback">
+                    <span *ngIf="editForm.name.errors.required">This value is required.</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Equal To</label>
+                  <div>
+                    <input type="description" class="form-control" placeholder="Description" formControlName="description"
+                      [ngClass]="{'is-invalid': submitted && editForm.description.errors}" />
+                    <div *ngIf="submitted && editForm.description.errors" class="invalid-feedback">
+                      <span *ngIf="editForm.description.errors.required">This value is required.</span>
+                      <span *ngIf="editForm.description.errors.minlength">description must be at least 6
+                        characters.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="">Select</label>
+                  <div class="col-md-12">
+                    <select class="form-control" formControlName="status"
+                    [ngClass]="{'is-invalid': submitted && editForm.status.errors}">
+                      <option value="" disabled>Select status</option>
+                      <option value="1">Active</option>
+                      <option value="2">In active</option>
+                    </select>
+
+                    <div *ngIf="submitted && editForm.status.errors" class="invalid-feedback">
+                      <span *ngIf="editForm.status.errors.required">This value is required.</span>
+                      <span *ngIf="editForm.status.errors.mustMatch">This value should be the same.</span>
+                    </div>
+                  </div>
+                </div>
+              
+               
+                <div class="form-group mt-3">
+                  <div>
+                    <button type="submit" class="btn btn-primary me-1">
+                      Submit
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div> 
+</ng-template>
+
+<ng-template #addModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Add Category</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="p-2 mb-3">
+      <div class="row">
+        
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+            
+              <form (ngSubmit)="_addCategory()" [formGroup]="addCategoryForm">
+                <div class="form-group">
+                  <label>Required</label>
+                  <input type="text" class="form-control" formControlName="name"
+                    [ngClass]="{'is-invalid': submitted && editForm.name.errors}" placeholder="Category Name" />
+                  <div *ngIf="submitted && editForm.name.errors" class="invalid-feedback">
+                    <span *ngIf="editForm.name.errors.required">This value is required.</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Equal To</label>
+                  <div>
+                    <input type="description" class="form-control" placeholder="Description" formControlName="description"
+                      [ngClass]="{'is-invalid': submitted && editForm.description.errors}" />
+                    <div *ngIf="submitted && editForm.description.errors" class="invalid-feedback">
+                      <span *ngIf="editForm.description.errors.required">This value is required.</span>
+                      <span *ngIf="editForm.description.errors.minlength">description must be at least 6
+                        characters.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="">Select</label>
+                  <div class="col-md-12">
+                    <select class="form-control"  formControlName="status"
+                    [ngClass]="{'is-invalid': submitted && editForm.status.errors}">
+                      <option value="" disabled>Select status</option>
+                      <option value="1">Active</option>
+                      <option value="2">In active</option>
+                    </select>
+
+                    <div *ngIf="submitted && editForm.status.errors" class="invalid-feedback">
+                      <span *ngIf="editForm.status.errors.required">This value is required.</span>
+                      <span *ngIf="editForm.status.errors.mustMatch">This value should be the same.</span>
+                    </div>
+                  </div>
+                </div>
+              
+               
+                <div class="form-group mt-3">
+                  <div>
+                    <button type="submit" class="btn btn-primary me-1">
+                      Submit
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div> 
+</ng-template>
+
+
+  
+
+
+
+  

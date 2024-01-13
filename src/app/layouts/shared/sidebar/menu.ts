@@ -17,6 +17,17 @@ export const MENU: MenuItem[] = [
         link: '/'
     },
     {
+        id: 2,
+        label: 'MENUITEMS.CATEGORY.TEXT',
+        icon: 'ri-table-line',
+        badge: {
+            variant: 'success',
+            text: 'MENUITEMS.DASHBOARDS.BADGE',
+        },
+      
+        link: 'category/'
+    },
+    {
         id: 3,
         label: 'MENUITEMS.CALENDAR.TEXT',
         icon: 'ri-calendar-2-line',

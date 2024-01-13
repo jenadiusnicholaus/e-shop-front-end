@@ -1,25 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from "@angular/core";
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from "@angular/forms";
 
-import { AuthenticationService } from '../../../core/services/auth.service';
-import { AuthfakeauthenticationService } from '../../../core/services/authfake.service';
+import { AuthenticationService } from "../../../core/services/auth.service";
+import { AuthfakeauthenticationService } from "../../../core/services/authfake.service";
 
-import { ActivatedRoute, Router } from '@angular/router';
-import { first } from 'rxjs/operators';
+import { ActivatedRoute, Router } from "@angular/router";
+import { first } from "rxjs/operators";
 
-import { environment } from '../../../../environments/environment';
-import { SharedService } from 'src/app/shared/custom_http.service';
+import { environment } from "../../../../environments/environment";
+import { SharedService } from "src/app/shared/custom_http.service";
+import { CustomAlertService } from "src/app/shared/custom-alert.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit {
-
   loginForm: UntypedFormGroup;
   submitted = false;
-  error = '';
+  error = "";
   returnUrl: string;
 
   // set the currenr year
@@ -28,18 +32,22 @@ export class LoginComponent implements OnInit {
   // tslint:disable-next-line: max-line-length
   constructor(
     public httpShareService: SharedService,
-    private formBuilder: UntypedFormBuilder, private route: ActivatedRoute, private router: Router, public authenticationService: AuthenticationService, public authFackservice: AuthfakeauthenticationService) { }
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    public authenticationService: AuthenticationService,
+    public authFackservice: AuthfakeauthenticationService,
+    public customAlert: CustomAlertService
+  ) {}
 
   ngOnInit() {
-    document.body.removeAttribute('data-layout');
-    document.body.classList.add('auth-body-bg');
+    document.body.removeAttribute("data-layout");
+    document.body.classList.add("auth-body-bg");
 
     this.loginForm = this.formBuilder.group({
-      username: ['nicho', [Validators.required]],
-      password: ['1234', [Validators.required]],
+      username: ["nicho", [Validators.required]],
+      password: ["1234", [Validators.required]],
     });
-
-
 
     // reset login status
     // this.authenticationService.logout();
@@ -49,7 +57,9 @@ export class LoginComponent implements OnInit {
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.loginForm.controls; }
+  get f() {
+    return this.loginForm.controls;
+  }
 
   /**
    * Form submit
@@ -61,36 +71,25 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return false;
     } else {
-      // if (environment.defaultauth === 'firebase') {
-      //   this.authenticationService.login(this.f.email.value, this.f.password.value).then((res: any) => {
-      //     this.router.navigate(['/']);
-      //   })
-      //     .catch(error => {
-      //       this.error = error ? error : '';
-      //     });
-      // } else {
-      //   this.authFackservice.login(this.f.email.value, this.f.password.value)
-      //     .pipe(first())
-      //     .subscribe(
-      //       data => {
-      //         this.router.navigate(['/']);
-      //       },
-      //       error => {
-      //         this.error = error ? error : '';
-      //       });
-      // }
+      // LOGIN THE USER AND REDIRECT TO HOMW  PAGE.
+      let login_url =
+        environment.E_SHOP_BASE_URL +
+        environment.AUTHENTICATION.AUTHENTICATION_BASE_URL +
+        environment.AUTHENTICATION.LOGIN_URL;
+      this.httpShareService
+        .post(null, login_url, this.loginForm.value)
+        .subscribe(
+          (data) => {
+            sessionStorage.setItem("access", data["access"]);
 
-       let  login_url = environment.E_SHOP_BASE_URL+environment.AUTHENTICATION.AUTHENTICATION_BASE_URL+ environment.AUTHENTICATION.LOGIN_URL;
-    this.httpShareService.post( null,login_url, this.loginForm.value ).subscribe(
-        data => {
-          sessionStorage.setItem('access', data['access']);
-           console.log(data)
-          this.router.navigate(['/']); 
-        },
-        error => {
-          this.error = error ? error : '';
-        });
+            this.router.navigate(["/"]);
+            // this.customAlert.successmsg('Welcome to E-shop!', `You are wellcome, ${data.user.username}`)
+          },
+          (error) => {
+            console.log(error);
+            this.error = error ? error : "";
+          }
+        );
     }
   }
-
 }

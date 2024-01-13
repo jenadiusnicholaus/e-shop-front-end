@@ -5,11 +5,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { ChatComponent } from './chat/chat.component';
 import { KanbanComponent } from './kanban/kanban.component';
+import { CategoryComponent } from './category/category.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
     { path: 'calendar', component: CalendarComponent },
     { path: 'chat', component: ChatComponent },
+    { path: 'category', component: CategoryComponent },
     { path: 'kanban-board', component: KanbanComponent },
     { path: 'ecommerce', loadChildren: () => import('./ecommerce/ecommerce.module').then(m => m.EcommerceModule) },
     { path: 'email', loadChildren: () => import('./email/email.module').then(m => m.EmailModule) },
