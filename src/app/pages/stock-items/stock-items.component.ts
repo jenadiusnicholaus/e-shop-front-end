@@ -11,6 +11,7 @@ import { SharedService } from "src/app/shared/custom_http.service";
 import { environment } from "src/environments/environment";
 import { StockItemsModel } from "./model";
 import { ProductModel } from "../add-new-stock-item/models";
+import Swal from "sweetalert2";
 
 @Component({
   selector: "app-stock-items",
@@ -173,6 +174,44 @@ export class StockItemsComponent implements OnInit {
           }
         );
     }
+  }
+
+  deleteStockItem(stockItemId: any) {
+    const url =
+      environment.E_SHOP_BASE_URL +
+      environment.IMS.IMS_STOCK_ITEMS_BASE_URL +
+      `?stock_item_id=${stockItemId}`;
+    this.httpShareService.delete(url).subscribe(
+      (res: any) => {
+        this.customAlert.successmsg(
+          "Stock Item Deleted Successfully",
+          "Stock Item Deleted Successfully",
+          "success"
+        );
+        this.getAllStockList();
+      },
+      (error) => {
+        this.customAlert.successmsg(
+          "Error in deleting stock item",
+          "Something went wrong, please try again later",
+          "error"
+        );
+      }
+    );
+  }
+
+  _comfirmAndDeleteStockItem(stockItemId) {
+    this.customAlert.comfirmAndDelete({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      comfirm: (result) => {
+        console.log(result);
+        if (result) {
+          this.deleteStockItem(stockItemId);
+        }
+      },
+    });
   }
 
   getProductsList() {
