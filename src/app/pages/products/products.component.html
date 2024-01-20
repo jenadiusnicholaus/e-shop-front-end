@@ -1,8 +1,6 @@
 <div class="container-fluid">
-  <app-pagetitle
-    title="Categories"
-    [breadcrumbItems]="breadCrumbItems"
-  ></app-pagetitle>
+  <!-- [breadcrumbItems]="breadCrumbItems" -->
+  <app-pagetitle title="Categories"></app-pagetitle>
   <div class="row">
     <div class="col-12">
       <div class="card">
@@ -10,16 +8,17 @@
           <ul class="nav nav-tabs nav-tabs-custom mb-4">
             <li class="nav-item">
               <a class="nav-link fw-bold p-3 active" href="javascript:void(0);"
-                >All Category</a
+                >All product</a
               >
             </li>
             <li class="nav-item">
+              <!-- (click)="_addproductModal(addModal)" -->
               <button
-                (click)="_addCategoryModal(addModal)"
                 type="button"
+                (click)="addProductModal(addModal)"
                 class="btn btn-primary btn-rounded"
               >
-                Add Category
+                Add product
               </button>
             </li>
           </ul>
@@ -39,25 +38,27 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let category of categoryModel?.results">
+                <tr *ngFor="let product of productModel?.results">
                   <td>
                     <a class="text-dark fw-bold">
-                      <ngb-highlight [result]="category?.id"></ngb-highlight>
+                      <ngb-highlight [result]="product?.id"></ngb-highlight>
                     </a>
                   </td>
                   <td>
-                    <ngb-highlight [result]="category?.name"></ngb-highlight>
-                  </td>
-                  <td>
-                    <ngb-highlight></ngb-highlight>
+                    <ngb-highlight [result]="product?.name"></ngb-highlight>
                   </td>
                   <td>
                     <ngb-highlight
-                      *ngIf="category?.status == 1"
+                      [result]="product?.description"
+                    ></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight
+                      *ngIf="product?.status == 1"
                       [result]="'Active'"
                     ></ngb-highlight>
                     <ngb-highlight
-                      *ngIf="category?.status == 2"
+                      *ngIf="product?.status == 2"
                       [result]="'InActive'"
                     ></ngb-highlight>
                   </td>
@@ -65,19 +66,25 @@
                     <a
                       style="
                         background-color: rgb(227, 227, 21);
-                        border-radius: 100%;
+                        border-radius: 50%;
                         padding: 10px;
                         margin: 2px;
                       "
-                      (click)="_editCategoryModal(editModal, category.id)"
+                      (click)="editProductModal(editModal, product)"
                       class="me-3 text-primary"
                       placement="top"
                       ngbTooltip="Edit"
                       ><i class="mdi mdi-pencil font-size-18"></i
                     ></a>
                     <a
-                      (click)="_comfirmAndDeleteCategory(category.id)"
+                      style="
+                        background-color: rgb(239, 231, 231);
+                        border-radius: 50%;
+                        padding: 10px;
+                        margin: 2px;
+                      "
                       class="text-danger"
+                      (click)="_comfirmAndDelete(product?.id)"
                       placement="top"
                       ngbTooltip="Delete"
                       ><i class="mdi mdi-trash-can font-size-18"></i
@@ -97,8 +104,8 @@
                 role="status"
                 aria-live="polite"
               >
-                Showing 1 to {{ categoryModel?.page_size }} of
-                {{ categoryModel?.count }}
+                Showing 1 to {{ productModel?.page_size }} of
+                {{ productModel?.count }}
                 entries
               </div>
             </div>
@@ -109,9 +116,9 @@
                     <li class="page-item">
                       <a
                         style="cursor: pointer"
-                        *ngIf="categoryModel?.previous != null"
+                        *ngIf="productModel?.previous != null"
                         class="page-link"
-                        (click)="_getAllCategory(null, categoryModel?.previous)"
+                        (click)="getAllProduct(null, productModel?.previous)"
                         tabindex="-1"
                         >Previous</a
                       >
@@ -120,9 +127,9 @@
                     <li class="page-item">
                       <a
                         style="cursor: pointer"
-                        *ngIf="categoryModel?.next != null"
+                        *ngIf="productModel?.next != null"
                         class="page-link"
-                        (click)="_getAllCategory(null, categoryModel?.next)"
+                        (click)="getAllProduct(null, productModel?.next)"
                         tabindex="-1"
                         >next</a
                       >
@@ -138,9 +145,9 @@
   </div>
 </div>
 
-<ng-template #editModal let-modal>
+<ng-template #addModal let-modal>
   <div class="modal-header">
-    <h5 class="modal-title mt-0">Edit Category</h5>
+    <h5 class="modal-title mt-0">Add Category</h5>
     <button
       type="button"
       class="btn-close"
@@ -154,64 +161,121 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <form
-                (ngSubmit)="_editCategory(categoryDetails?.data?.id)"
-                [formGroup]="editCategoryForm"
-              >
+              <form (ngSubmit)="_addProduct()" [formGroup]="addProductForm">
                 <div class="form-group">
-                  <label>Required</label>
-                  <input
+                  <label>Category</label>
+                  <!-- <app-custom-select-field
+                    [formFieldName]="'category'"
+                    [validateFormField]="addForm.category"
+                    [submitted]="submitted"
+                    [items]="categoryModel"
+                    [formFieldOptionSelectedLabel]="'Select Category'"
+                  >
+                  </app-custom-select-field> -->
+                  <select
                     type="text"
                     class="form-control"
-                    formControlName="name"
+                    formControlName="category"
                     [ngClass]="{
-                      'is-invalid': submitted && editForm.name.errors
+                      'is-invalid': submitted && addForm.category.errors
                     }"
                     placeholder="Category Name"
-                  />
-                  <div
-                    *ngIf="submitted && editForm.name.errors"
-                    class="invalid-feedback"
                   >
-                    <span *ngIf="editForm.name.errors.required"
-                      >This value is required.</span
+                    <div
+                      *ngIf="submitted && addForm.category.errors"
+                      class="invalid-feedback"
                     >
+                      <span *ngIf="addForm.category.errors.required"
+                        >This value is required.</span
+                      >
+                    </div>
+
+                    <option value="" disabled>Select Category</option>
+                    <option
+                      value="{{ category.id }}"
+                      *ngFor="let category of categoryModel"
+                    >
+                      {{ category?.name }}
+                    </option>
+                  </select>
+
+                  <!-- <ng-select [items]="categoryModel"></ng-select> -->
+                </div>
+                <div class="form-group">
+                  <label>Name</label>
+                  <!-- <div>
+                    <app-custom-input-field
+                      [formFieldPlaceholder]="'name'"
+                      [formFieldName]="'name'"
+                      [validateFormField]="addForm.name"
+                      [submitted]="submitted"
+                    >
+                    </app-custom-input-field> -->
+                  <div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Name"
+                      formControlName="name"
+                      [ngClass]="{
+                        'is-invalid': submitted && addForm.name.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="submitted && addForm.name.errors"
+                      class="invalid-feedback"
+                    >
+                      <span *ngIf="addForm.name.errors.required"
+                        >This value is required.</span
+                      >
+                      <span *ngIf="addForm.name.errors.minlength"
+                        >Name must be at least 6 characters.</span
+                      >
+                    </div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label>Equal To</label>
+                  <label>Description</label>
                   <div>
+                    <!-- <app-custom-input-field
+                      [formFieldPlaceholder]="'Description'"
+                      [formFieldName]="'description'"
+                      [validateFormField]="addForm.description"
+                      [submitted]="submitted"
+                    >
+                    </app-custom-input-field> -->
+
                     <input
-                      type="description"
+                      type="text"
                       class="form-control"
                       placeholder="Description"
                       formControlName="description"
                       [ngClass]="{
-                        'is-invalid': submitted && editForm.description.errors
+                        'is-invalid': submitted && addForm.description.errors
                       }"
                     />
                     <div
-                      *ngIf="submitted && editForm.description.errors"
+                      *ngIf="submitted && addForm.description.errors"
                       class="invalid-feedback"
                     >
-                      <span *ngIf="editForm.description.errors.required"
+                      <span *ngIf="addForm.description.errors.required"
                         >This value is required.</span
                       >
-                      <span *ngIf="editForm.description.errors.minlength"
-                        >description must be at least 6 characters.</span
+                      <span *ngIf="addForm.description.errors.minlength"
+                        >Description is required.</span
                       >
                     </div>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label class="">Select</label>
+                  <label class="">Status</label>
                   <div class="col-md-12">
                     <select
                       class="form-control"
                       formControlName="status"
                       [ngClass]="{
-                        'is-invalid': submitted && editForm.status.errors
+                        'is-invalid': submitted && addForm.status.errors
                       }"
                     >
                       <option value="" disabled>Select status</option>
@@ -220,13 +284,13 @@
                     </select>
 
                     <div
-                      *ngIf="submitted && editForm.status.errors"
+                      *ngIf="submitted && addForm.status.errors"
                       class="invalid-feedback"
                     >
-                      <span *ngIf="editForm.status.errors.required"
+                      <span *ngIf="addForm.status.errors.required"
                         >This value is required.</span
                       >
-                      <span *ngIf="editForm.status.errors.mustMatch"
+                      <span *ngIf="addForm.status.errors.mustMatch"
                         >This value should be the same.</span
                       >
                     </div>
@@ -252,7 +316,7 @@
   </div>
 </ng-template>
 
-<ng-template #addModal let-modal>
+<ng-template #editModal let-modal>
   <div class="modal-header">
     <h5 class="modal-title mt-0">Add Category</h5>
     <button
@@ -268,32 +332,85 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <form (ngSubmit)="_addCategory()" [formGroup]="addCategoryForm">
+              <form (ngSubmit)="_editProduct()" [formGroup]="editProductForm">
                 <div class="form-group">
-                  <label>Required</label>
-                  <input
+                  <label>Category</label>
+
+                  <select
                     type="text"
                     class="form-control"
-                    formControlName="name"
+                    formControlName="category"
                     [ngClass]="{
-                      'is-invalid': submitted && editForm.name.errors
+                      'is-invalid': submitted && editForm.category.errors
                     }"
                     placeholder="Category Name"
-                  />
-                  <div
-                    *ngIf="submitted && editForm.name.errors"
-                    class="invalid-feedback"
                   >
-                    <span *ngIf="editForm.name.errors.required"
-                      >This value is required.</span
+                    <div
+                      *ngIf="submitted && editForm.category.errors"
+                      class="invalid-feedback"
                     >
+                      <span *ngIf="editForm.category.errors.required"
+                        >This value is required.</span
+                      >
+                    </div>
+
+                    <option value="" disabled>Select Category</option>
+                    <option
+                      value="{{ category.id }}"
+                      *ngFor="let category of categoryModel"
+                    >
+                      {{ category?.name }}
+                    </option>
+                  </select>
+
+                  <!-- <ng-select [items]="categoryModel"></ng-select> -->
+                </div>
+                <div class="form-group">
+                  <label>Name</label>
+                  <!-- <div>
+                    <app-custom-input-field
+                      [formFieldPlaceholder]="'name'"
+                      [formFieldName]="'name'"
+                      [validateFormField]="editForm.name"
+                      [submitted]="submitted"
+                    >
+                    </app-custom-input-field> -->
+                  <div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Name"
+                      formControlName="name"
+                      [ngClass]="{
+                        'is-invalid': submitted && editForm.name.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="submitted && editForm.name.errors"
+                      class="invalid-feedback"
+                    >
+                      <span *ngIf="editForm.name.errors.required"
+                        >This value is required.</span
+                      >
+                      <span *ngIf="editForm.name.errors.minlength"
+                        >Name must be at least 6 characters.</span
+                      >
+                    </div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label>Equal To</label>
+                  <label>Description</label>
                   <div>
+                    <!-- <app-custom-input-field
+                      [formFieldPlaceholder]="'Description'"
+                      [formFieldName]="'description'"
+                      [validateFormField]="editForm.description"
+                      [submitted]="submitted"
+                    >
+                    </app-custom-input-field> -->
+
                     <input
-                      type="description"
+                      type="text"
                       class="form-control"
                       placeholder="Description"
                       formControlName="description"
@@ -309,14 +426,14 @@
                         >This value is required.</span
                       >
                       <span *ngIf="editForm.description.errors.minlength"
-                        >description must be at least 6 characters.</span
+                        >Description is required.</span
                       >
                     </div>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label class="">Select</label>
+                  <label class="">Status</label>
                   <div class="col-md-12">
                     <select
                       class="form-control"

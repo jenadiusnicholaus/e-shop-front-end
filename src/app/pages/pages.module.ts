@@ -1,53 +1,63 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { UiModule } from '../shared/ui/ui.module';
-import { WidgetModule } from '../shared/widget/widget.module';
+import { UiModule } from "../shared/ui/ui.module";
+import { WidgetModule } from "../shared/widget/widget.module";
 
-import { PagesRoutingModule } from './pages-routing.module';
+import { PagesRoutingModule } from "./pages-routing.module";
 
-import { NgbNavModule, NgbDropdownModule, NgbTooltipModule, NgbPaginationModule, NgbTypeaheadModule, NgbCollapseModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgApexchartsModule } from 'ng-apexcharts';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { FullCalendarModule } from '@fullcalendar/angular';
-import { DndModule } from 'ngx-drag-drop';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import {
+  NgbNavModule,
+  NgbDropdownModule,
+  NgbTooltipModule,
+  NgbPaginationModule,
+  NgbTypeaheadModule,
+  NgbCollapseModule,
+  NgbModalModule,
+} from "@ng-bootstrap/ng-bootstrap";
+import { NgApexchartsModule } from "ng-apexcharts";
+import { Ng2SearchPipeModule } from "ng2-search-filter";
+import { FullCalendarModule } from "@fullcalendar/angular";
+import { DndModule } from "ngx-drag-drop";
+import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+import { PERFECT_SCROLLBAR_CONFIG } from "ngx-perfect-scrollbar";
+import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
+import { LeafletModule } from "@asymmetrik/ngx-leaflet";
 
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { CalendarComponent } from './calendar/calendar.component';
-import { ChatComponent } from './chat/chat.component';
-import { EcommerceModule } from './ecommerce/ecommerce.module';
-import { KanbanComponent } from './kanban/kanban.component';
-import { EmailModule } from './email/email.module';
-import { UIModule } from './ui/ui.module';
-import { IconsModule } from './icons/icons.module';
-import { ChartModule } from './chart/chart.module';
-import { FormModule } from './form/form.module';
-import { TablesModule } from './tables/tables.module';
-import { MapsModule } from './maps/maps.module';
-import { CategoryComponent } from './category/category.component';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { DashboardComponent } from "./dashboard/dashboard.component";
+
+import { CategoryComponent } from "./category/category.component";
+import { NgSelectModule } from "@ng-select/ng-select";
+import { NgxSliderModule } from "@angular-slider/ngx-slider";
+import { ProductsComponent } from "./products/products.component";
+import { StockComponent } from "./stock/stock.component";
+import { StockItemsComponent } from "./stock-items/stock-items.component";
+import { AddNewStockItemComponent } from "./add-new-stock-item/add-new-stock-item.component";
 // import { DataTablesModule } from 'angular-datatables';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
-  wheelSpeed: 0.3
+  wheelSpeed: 0.3,
 };
 
 @NgModule({
-  declarations: [DashboardComponent, CalendarComponent, ChatComponent, KanbanComponent, CategoryComponent],
+  declarations: [
+    DashboardComponent,
+
+    CategoryComponent,
+    ProductsComponent,
+    StockComponent,
+    StockItemsComponent,
+    AddNewStockItemComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     PagesRoutingModule,
     UiModule,
-    UIModule,
+
     Ng2SearchPipeModule,
     NgbNavModule,
     NgbDropdownModule,
@@ -56,31 +66,24 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PerfectScrollbarModule,
     DndModule,
     FullCalendarModule,
-    EcommerceModule, EmailModule,
-    IconsModule,
-    ChartModule,
-    FormModule,
-    TablesModule,
-    MapsModule,
+
     LeafletModule,
     WidgetModule,
     NgbPaginationModule,
-  //  DataTablesModule,
-
-
-    // 
+    //  DataTablesModule,
+    //
     NgbTypeaheadModule,
- 
+
     NgbCollapseModule,
     NgSelectModule,
     NgxSliderModule,
-    NgbModalModule
+    NgbModalModule,
   ],
   providers: [
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
-      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    }
-  ]
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
+    },
+  ],
 })
-export class PagesModule { }
+export class PagesModule {}

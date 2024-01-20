@@ -1,12 +1,5 @@
 import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
-import {
-  OrderSortableDirective,
-  SortEvent,
-} from "../ecommerce/orders/orders-sortable.directive";
-import { Order } from "../ecommerce/orders/orders.model";
-import { Observable } from "rxjs";
-import { OrderService } from "../ecommerce/orders/orders.service";
-import { ordersData } from "../ecommerce/orders/data";
+
 import { DecimalPipe } from "@angular/common";
 import { environment } from "src/environments/environment";
 import { SharedService } from "src/app/shared/custom_http.service";
@@ -25,11 +18,8 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
   selector: "app-category",
   templateUrl: "./category.component.html",
   styleUrls: ["./category.component.scss"],
-  providers: [OrderService, DecimalPipe],
 })
 export class CategoryComponent implements OnInit {
-  @ViewChildren(OrderSortableDirective)
-  headers: QueryList<OrderSortableDirective>;
 
   // breadcrumb items
   breadCrumbItems: Array<{}>;
@@ -37,52 +27,19 @@ export class CategoryComponent implements OnInit {
   addCategoryForm: UntypedFormGroup;
   submitted = false;
 
-  // Table data
-  ordersData: Order[];
-
   categoryModel: CategoryModel;
   categoryDetails: CategoryDetails;
   error: "";
 
-  selectValue: string[];
-  // dtOptions: DataTables.Settings = {};
-  tables$: Observable<Order[]>;
-  total$: Observable<number>;
-
   constructor(
-    public service: OrderService,
+    // public service: OrderService,
     public httpShareService: SharedService,
     public customAlert: CustomAlertService,
     private formBuilder: UntypedFormBuilder,
     private modalService: NgbModal
-  ) {
-    this.tables$ = service.tables$;
-    this.total$ = service.total$;
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.selectValue = [
-      "Alaska",
-      "Hawaii",
-      "California",
-      "Nevada",
-      "Oregon",
-      "Washington",
-      "Arizona",
-      "Colorado",
-      "Idaho",
-      "Montana",
-      "Nebraska",
-      "New Mexico",
-      "North Dakota",
-      "Utah",
-      "Wyoming",
-      "Alabama",
-      "Arkansas",
-      "Illinois",
-      "Iowa",
-    ];
-
     this.breadCrumbItems = [
       { label: "IMS" },
       { label: "Categories", active: true },
@@ -112,8 +69,8 @@ export class CategoryComponent implements OnInit {
     } else {
       burl =
         environment.E_SHOP_BASE_URL +
-        environment.IMS.IMS_BASE_URL +
-        environment.IMS.CATEGORY_BASE_URL +
+        environment.IMS.IMS_CAT_BASE_URL +
+        environment.IMS.CATEGORY_SUB_BASE_URL +
         `?page=${pageNumber}`;
     }
     this.httpShareService.get<CategoryModel>(burl, null).subscribe(
@@ -146,8 +103,8 @@ export class CategoryComponent implements OnInit {
   _deleteCategory(categoryId) {
     let url =
       environment.E_SHOP_BASE_URL +
-      environment.IMS.IMS_BASE_URL +
-      environment.IMS.CATEGORY_BASE_URL +
+      environment.IMS.IMS_CAT_BASE_URL +
+      environment.IMS.CATEGORY_SUB_BASE_URL +
       `?category_id=${categoryId}`;
     this.httpShareService.delete<CategoryModel>(url).subscribe(
       (data) => {
@@ -169,8 +126,8 @@ export class CategoryComponent implements OnInit {
     }
     let url =
       environment.E_SHOP_BASE_URL +
-      environment.IMS.IMS_BASE_URL +
-      environment.IMS.CATEGORY_BASE_URL +
+      environment.IMS.IMS_CAT_BASE_URL +
+      environment.IMS.CATEGORY_SUB_BASE_URL +
       `?category_id=${categoryId}`;
     this.httpShareService
       .put<CategoryModel>(url, this.editCategoryForm.value, null)
@@ -196,8 +153,8 @@ export class CategoryComponent implements OnInit {
     }
     let url =
       environment.E_SHOP_BASE_URL +
-      environment.IMS.IMS_BASE_URL +
-      environment.IMS.CATEGORY_BASE_URL;
+      environment.IMS.IMS_CAT_BASE_URL +
+      environment.IMS.CATEGORY_SUB_BASE_URL;
 
     if (
       confirm(
@@ -227,8 +184,8 @@ export class CategoryComponent implements OnInit {
   _getCategoryInfos(categoryId) {
     let url =
       environment.E_SHOP_BASE_URL +
-      environment.IMS.IMS_BASE_URL +
-      environment.IMS.CATEGORY_BASE_URL +
+      environment.IMS.IMS_CAT_BASE_URL +
+      environment.IMS.CATEGORY_SUB_BASE_URL +
       `?category_id=${categoryId}`;
     this.httpShareService.get<CategoryDetails>(url, null).subscribe(
       (data) => {
@@ -245,17 +202,6 @@ export class CategoryComponent implements OnInit {
         this.customAlert.successmsg("An error Occured", `${error}`, "warning");
       }
     );
-  }
-
-  onSort({ column, direction }: SortEvent) {
-    // resetting other headers
-    this.headers.forEach((header) => {
-      if (header.sortable !== column) {
-        header.direction = "";
-      }
-    });
-    this.service.sortColumn = column;
-    this.service.sortDirection = direction;
   }
 
   _editCategoryModal(scrollDataModal: any, categoryId) {

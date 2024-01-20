@@ -78,6 +78,16 @@
       "TEXT": "Category",
       "BADGE": "03"
     },
+
+    "PRODUCTS": {
+      "TEXT": "Products",
+      "BADGE": "03"
+    },
+
+    "STOCK": {
+      "TEXT": "Stock",
+      "BADGE": "03"
+    },
     "LAYOUTS": {
       "TEXT": "Layouts",
       "LIST": {

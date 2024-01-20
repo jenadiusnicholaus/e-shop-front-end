@@ -1,0 +1,549 @@
+<div class="container-fluid">
+  <div *ngIf="isLoading" class="loader">
+    <p>Loading...</p>
+  </div>
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <!-- <h4 class="card-title">Stock No</h4>
+        <p class="card-title-desc">Descrition</p> -->
+        <ul
+          ngbNav
+          #customNav="ngbNav"
+          [activeId]="1"
+          class="nav-tabs nav-tabs-custom nav-justified"
+        >
+          <li [ngbNavItem]="1">
+            <a ngbNavLink>
+              <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+              <span class="d-none d-sm-block">Stock Items</span>
+            </a>
+            <ng-template ngbNavContent>
+              <div class="table-responsive">
+                <table
+                  id="basic-datatable"
+                  class="table table-centered dt-responsive nowrap datatables no-footer dtr-inline"
+                >
+                  <thead>
+                    <tr>
+                      <th sortable="id">Stock Id</th>
+                      <th sortable="name">Stock Name</th>
+                      <th sortable="name">Product</th>
+                      <th sortable="stock">Qty</th>
+                      <th sortable="Stock">Unit Price</th>
+                      <th sortable="Stock">unit SP</th>
+                      <th sortable="Stock">unit EP</th>
+                      <th sortable="Stock">Total EP</th>
+                      <th sortable="Stock">Total SP</th>
+                      <th sortable="status">Stattus</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of stockItemsModel">
+                      <td>
+                        <a class="text-dark fw-bold">
+                          <ngb-highlight [result]="item?.id"></ngb-highlight>
+                        </a>
+                      </td>
+                      <td>
+                        <ngb-highlight
+                          [result]="item?.stock.name"
+                        ></ngb-highlight>
+                      </td>
+                      <td>
+                        <div
+                          class="badge font-size-12"
+                          [ngClass]="{
+                            'bg-danger-subtle text-danger':
+                              item?.product.status === '2',
+                            'bg-success-subtle text-success':
+                              item?.product.status === '1'
+                          }"
+                        >
+                          <ngb-highlight
+                            [result]="item?.product.name"
+                          ></ngb-highlight>
+                        </div>
+                      </td>
+                      <td>{{ item?.qty }}{{ item?.qty_in }}</td>
+
+                      <td>
+                        <ngb-highlight
+                          [result]="item?.unit_price"
+                        ></ngb-highlight>
+                      </td>
+                      <td>
+                        <ngb-highlight
+                          [result]="item?.unit_selling_price"
+                        ></ngb-highlight>
+                      </td>
+                      <td>
+                        <ngb-highlight
+                          [result]="item?.unit_estmated_profit"
+                        ></ngb-highlight>
+                      </td>
+
+                      <td>
+                        <ngb-highlight
+                          [result]="item?.total_estmated_profit"
+                        ></ngb-highlight>
+                      </td>
+                      <td>
+                        <ngb-highlight
+                          [result]="item?.total_selling_price"
+                        ></ngb-highlight>
+                      </td>
+
+                      <td>
+                        <div
+                          class="badge font-size-12"
+                          [ngClass]="{
+                            'bg-danger-subtle text-danger':
+                              item?.status === '2',
+                            'bg-success-subtle text-success':
+                              item?.status === '1'
+                          }"
+                        >
+                          <ngb-highlight
+                            *ngIf="item?.status == 1"
+                            [result]="'in-stock'"
+                          ></ngb-highlight>
+                          <ngb-highlight
+                            *ngIf="item?.status == 2"
+                            [result]="'Out of stock'"
+                          ></ngb-highlight>
+                        </div>
+                      </td>
+                      <td>
+                        <!-- (click)=" editStoxkItemtModal(modal: any, product: any))" -->
+
+                        <a
+                          (click)="editStockItemtModal(editModal, item)"
+                          style="
+                            background-color: rgb(227, 227, 21);
+                            border-radius: 50%;
+                            padding: 10px;
+                            margin: 2px;
+                          "
+                          class="me-3 text-primary"
+                          placement="top"
+                          ngbTooltip="Edit"
+                          ><i class="mdi mdi-pencil font-size-18"></i
+                        ></a>
+                        <!-- (click)="_comfirmAndDelete(product?.id)" -->
+
+                        <a
+                          style="
+                            background-color: rgb(239, 231, 231);
+                            border-radius: 50%;
+                            padding: 10px;
+                            margin: 2px;
+                          "
+                          class="text-danger"
+                          placement="top"
+                          ngbTooltip="Delete"
+                          ><i class="mdi mdi-trash-can font-size-18"></i
+                        ></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="2">
+            <a ngbNavLink>
+              <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+              <span class="d-none d-sm-block">Add new Item </span>
+            </a>
+            <ng-template ngbNavContent>
+              <app-add-new-stock-item
+                [stockId]="stockId"
+              ></app-add-new-stock-item>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="3">
+            <a ngbNavLink>
+              <span class="d-block d-sm-none"
+                ><i class="far fa-envelope"></i
+              ></span>
+              <span class="d-none d-sm-block">Stock sales</span>
+            </a>
+            <ng-template ngbNavContent>
+              <!-- <ng-template [ngTemplateOutlet]="TabContent"></ng-template> -->
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="4">
+            <a ngbNavLink>
+              <span class="d-block d-sm-none"><i class="fas fa-cog"></i></span>
+              <span class="d-none d-sm-block">Stock revenues</span>
+            </a>
+            <ng-template ngbNavContent>
+              <!-- <ng-template [ngTemplateOutlet]="TabContent1"></ng-template> -->
+            </ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="customNav"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #editModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Edit Stock item</h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="modal.dismiss('Cross click')"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="p-2 mb-3">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <form
+                (ngSubmit)="editStockItemSubmit()"
+                [formGroup]="editStockItemForm"
+              >
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Product to add</label>
+                      <select
+                        type="text"
+                        class="form-control"
+                        formControlName="product"
+                        [ngClass]="{
+                          'is-invalid':
+                            submitted && editStockIform.product.errors
+                        }"
+                        placeholder="Type something"
+                      >
+                        <div
+                          *ngIf="submitted && editStockIform.product.errors"
+                          class="invalid-feedback"
+                        >
+                          <span *ngIf="editStockIform.product.errors.required"
+                            >This value is required.</span
+                          >
+                        </div>
+
+                        <option value="" disabled selected>
+                          Select Product
+                        </option>
+                        <option
+                          *ngFor="let product of productsModel"
+                          [value]="product.id"
+                        >
+                          {{ product.name }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label>unit selling price</label>
+                      <div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="unit selling price"
+                          formControlName="unit_selling_price"
+                          [ngClass]="{
+                            'is-invalid':
+                              submitted &&
+                              editStockIform.unit_selling_price.errors
+                          }"
+                        />
+                        <div
+                          *ngIf="
+                            submitted &&
+                            editStockIform.unit_selling_price.errors
+                          "
+                          class="invalid-feedback"
+                        >
+                          <span
+                            *ngIf="
+                              editStockIform.unit_selling_price.errors.required
+                            "
+                            >This value is required.</span
+                          >
+                          <span
+                            *ngIf="
+                              editStockIform.unit_selling_price.errors.minlength
+                            "
+                            >Quantity_in must be at least 6 characters.</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Quantity</label>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div>
+                        <input
+                          type="number"
+                          class="form-control"
+                          placeholder="Enter Quantity"
+                          formControlName="qty"
+                          [ngClass]="{
+                            'is-invalid': submitted && editStockIform.qty.errors
+                          }"
+                        />
+                        <div
+                          *ngIf="submitted && editStockIform.qty.errors"
+                          class="invalid-feedback"
+                        >
+                          <span *ngIf="editStockIform.qty.errors.required"
+                            >This value is required.</span
+                          >
+                          <span *ngIf="editStockIform.qty.errors.minlength"
+                            >Quantity must be at least 6 characters.</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div>
+                        <select
+                          type="text"
+                          class="form-control"
+                          placeholder="qty in  "
+                          formControlName="qty_in"
+                          [ngClass]="{
+                            'is-invalid':
+                              submitted && editStockIform.qty_in.errors
+                          }"
+                        >
+                          <div
+                            *ngIf="submitted && editStockIform.qty_in.errors"
+                            class="invalid-feedback"
+                          >
+                            <span *ngIf="editStockIform.qty_in.errors.required"
+                              >This value is required.</span
+                            >
+                            <span *ngIf="editStockIform.qty_in.errors.minlength"
+                              >Quantity_in must be at least 6 characters.</span
+                            >
+                          </div>
+                          <!-- careate a for loop from SI_UNIT_CHOICES -->
+                          <option value="" disabled selected>
+                            Select qty in
+                          </option>
+                          <option
+                            *ngFor="let qty_in of SI_UNIT_CHOICES"
+                            [value]="qty_in.id"
+                          >
+                            {{ qty_in.name }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Unit price</label>
+                      <div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="unit_price"
+                          [ngClass]="{
+                            'is-invalid':
+                              submitted && editStockIform.unit_price.errors
+                          }"
+                          placeholder="unit price"
+                        />
+                        <div
+                          *ngIf="submitted && editStockIform.unit_price.errors"
+                          class="invalid-feedback"
+                        >
+                          <span
+                            *ngIf="editStockIform.unit_price.errors.required"
+                            >This value is required.</span
+                          >
+                          <span *ngIf="editStockIform.unit_price.errors.pattern"
+                            >This value should be a valid unit estmated
+                            profit.</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label>Unit estmated profit</label>
+                      <div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="unit_estmated_profit"
+                          [ngClass]="{
+                            'is-invalid':
+                              submitted &&
+                              editStockIform.unit_estmated_profit.errors
+                          }"
+                          placeholder="Enter only unit estmated profit"
+                        />
+                        <div
+                          *ngIf="
+                            submitted &&
+                            editStockIform.unit_estmated_profit.errors
+                          "
+                          class="invalid-feedback"
+                        >
+                          <span
+                            *ngIf="
+                              editStockIform.unit_estmated_profit.errors
+                                .required
+                            "
+                            >This value is required.</span
+                          >
+                          <span
+                            *ngIf="
+                              editStockIform.unit_estmated_profit.errors.pattern
+                            "
+                            >This value should be a valid unit estmated
+                            profit.</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>status</label>
+                      <div>
+                        <select
+                          type="url"
+                          class="form-control"
+                          placeholder="status"
+                          formControlName="status"
+                          [ngClass]="{
+                            'is-invalid':
+                              submitted && editStockIform.status.errors
+                          }"
+                        >
+                          <div
+                            *ngIf="submitted && editStockIform.status.errors"
+                            class="invalid-feedback"
+                          >
+                            <span *ngIf="editStockIform.status.errors.required"
+                              >This value is required.</span
+                            >
+                            <span *ngIf="editStockIform.status.errors.pattern"
+                              >This value should be a valid status.</span
+                            >
+                          </div>
+                          <option value="" disabled selected>
+                            Select status
+                          </option>
+                          <!-- STATUS -->
+                          <option *ngFor="let st of STATUS" [value]="st.id">
+                            {{ st.name }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label>Update date</label>
+                      <div>
+                        <input
+                          formControlName="date_updated"
+                          type="date"
+                          class="form-control"
+                          [ngClass]="{
+                            'is-invalid':
+                              submitted && editStockIform.date_updated.errors
+                          }"
+                          placeholder="Enter only date_updated"
+                        />
+                        <div
+                          *ngIf="
+                            submitted && editStockIform.date_updated.errors
+                          "
+                          class="invalid-feedback"
+                        >
+                          <span
+                            *ngIf="editStockIform.date_updated.errors.required"
+                            >This value is required.</span
+                          >
+                          <span
+                            *ngIf="editStockIform.date_updated.errors.pattern"
+                            >This value should be date_updated.</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>description</label>
+                  <div>
+                    <textarea
+                      formControlName="description"
+                      class="form-control"
+                      rows="5"
+                      [ngClass]="{
+                        'is-invalid':
+                          submitted && editStockIform.description.errors
+                      }"
+                    ></textarea>
+                    <div
+                      *ngIf="submitted && editStockIform.description.errors"
+                      class="invalid-feedback"
+                    >
+                      <span *ngIf="editStockIform.description.errors.required"
+                        >This value is required.</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 ms-auto">
+                  <div class="mt-4 mt-lg-0">
+                    <h5 class="font-size-14 mb-4">
+                      Is this updates because you sold this product?
+                    </h5>
+                    <div class="form-check mb-3">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        formControlName="is_sales_update"
+                        id="customCheck1"
+                      />
+                      <label class="form-check-label" for="customCheck1"
+                        >Update for sales?</label
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group mb-0">
+                  <div>
+                    <button type="submitted" class="btn btn-primary me-1">
+                      submitted
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
