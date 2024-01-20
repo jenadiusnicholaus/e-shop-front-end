@@ -1,0 +1,254 @@
+<div class="container-fluid">
+  <app-pagetitle title="Sales"></app-pagetitle>
+
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <form
+            (ngSubmit)="createSalesFormSubmit()"
+            [formGroup]="createSalesForm"
+          >
+            <div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group mb-4">
+                    <label for="billing-name">stock item</label>
+                    <select
+                      type="text"
+                      class="form-control"
+                      formControlName="stock_item"
+                      [ngClass]="{
+                        'is-invalid': submitted && salesForm.stock_item.errors
+                      }"
+                      placeholder="Select stock item"
+                    >
+                      <div
+                        *ngIf="submitted && salesForm.stock_item.errors"
+                        class="invalid-feedback"
+                      >
+                        <span *ngIf="salesForm.stock_item.errors.required"
+                          >This value is required.</span
+                        >
+                      </div>
+
+                      <option value="" disabled selected>
+                        Select stock item
+                      </option>
+                      <option
+                        *ngFor="let stockitem of StockItemModel"
+                        [value]="stockitem.id"
+                      >
+                        {{ stockitem.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group mb-4">
+                    <label for="billing-email-address">Quantity Sold </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Quantity sold"
+                      formControlName="quantity_sold"
+                      [ngClass]="{
+                        'is-invalid':
+                          submitted && salesForm.quantity_sold.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="submitted && salesForm.quantity_sold.errors"
+                      class="invalid-feedback"
+                    >
+                      <span *ngIf="salesForm.quantity_sold.errors.required"
+                        >This value is required.</span
+                      >
+                      <span *ngIf="salesForm.quantity_sold.errors.minlength"
+                        >Quantity_in must be at least 6 characters.</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group mb-4">
+                    <label for="price">price</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="price"
+                      formControlName="price"
+                      [ngClass]="{
+                        'is-invalid': submitted && salesForm.price.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="submitted && salesForm.price.errors"
+                      class="invalid-feedback"
+                    >
+                      <span *ngIf="salesForm.price.errors.required"
+                        >This value is required.</span
+                      >
+                      <span *ngIf="salesForm.price.errors.minlength"
+                        >Quantity_in must be at least 6 characters.</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group mb-4">
+                    <label for="price">Sale Date</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      placeholder="sales_date"
+                      formControlName="sales_date"
+                      [ngClass]="{
+                        'is-invalid': submitted && salesForm.sales_date.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="submitted && salesForm.sales_date.errors"
+                      class="invalid-feedback"
+                    >
+                      <span *ngIf="salesForm.sales_date.errors.required"
+                        >This value is required.</span
+                      >
+                      <span *ngIf="salesForm.sales_date.errors.minlength"
+                        >Quantity_in must be at least 6 characters.</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group mb-4 mb-lg-0">
+                    <div class="col-md-12 ms-auto">
+                      <div class="mt-4 mt-lg-0">
+                        <div class="form-check mb-3">
+                          <input
+                            type="checkbox"
+                            class="form-check-input"
+                            formControlName="product_price_changed"
+                            id="customCheck1"
+                            (change)="onCheckboxChange($event)"
+                          />
+                          <label class="form-check-label" for="customCheck1"
+                            >Is price Changed?</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <label for="price">Reason for Changes</label>
+
+                  <div>
+                    <textarea
+                      formControlName="reason_for_change"
+                      class="form-control"
+                      rows="2"
+                      [ngClass]="{
+                        'is-invalid':
+                          submitted && salesForm.reason_for_change.errors
+                      }"
+                    ></textarea>
+                    <div
+                      *ngIf="submitted && salesForm.reason_for_change.errors"
+                      class="invalid-feedback"
+                    >
+                      <span *ngIf="salesForm.reason_for_change.errors.required"
+                        >This value is required.</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-4 mt-4">
+                <div class="col-md-6">
+                  <button type="submit" class="btn btn-primary me-1">
+                    Submit
+                  </button>
+                </div>
+                <div class="col-md-6">
+                  <!-- <button type="submit" class="btn btn-danger me-1">
+                    cancel
+                  </button> -->
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card checkout-order-summary">
+        <div class="card-body">
+          <div class="p-3 bg-light mb-4">
+            <h5 class="font-size-14 mb-0">
+              Order Summary <span class="float-end ms-2">#SK2356</span>
+            </h5>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-centered mb-0 table-nowrap">
+              <thead>
+                <tr>
+                  <th class="border-top-0" style="width: 110px" scope="col">
+                    Product
+                  </th>
+                  <th class="border-top-0" scope="col">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  style="scroll-behavior: auto"
+                  *ngFor="let s of stockItemSales"
+                >
+                  <th scope="row" class="font-size-14 text-truncate">
+                    {{ s.stock_item.product.name }}
+                  </th>
+                  <td>
+                    <h5 class="font-size-14 text-truncate text-muted">
+                      <a class="text-dark">{{ s.total_price }}</a>
+                    </h5>
+                  </td>
+                  <td>{{ s.total_price }}</td>
+                </tr>
+
+                <tr>
+                  <td colspan="2">
+                    <h6 class="m-0 text-end">Sub Total:</h6>
+                  </td>
+                  <td>Total here</td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <div class="bg-primary-subtle text-primary p-3 rounded">
+                      <h5 class="font-size-14 text-primary mb-0">
+                        <i class="fas fa-shipping-fast me-2"></i> Shipping
+                        <span class="float-end">Free</span>
+                      </h5>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <h6 class="m-0 text-end">Total:</h6>
+                  </td>
+                  <td>$ 705</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+</div>

@@ -34,6 +34,7 @@ import { ProductsComponent } from "./products/products.component";
 import { StockComponent } from "./stock/stock.component";
 import { StockItemsComponent } from "./stock-items/stock-items.component";
 import { AddNewStockItemComponent } from "./add-new-stock-item/add-new-stock-item.component";
+import { SalesComponent } from './sales/sales.component';
 // import { DataTablesModule } from 'angular-datatables';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -44,12 +45,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 @NgModule({
   declarations: [
     DashboardComponent,
-
     CategoryComponent,
     ProductsComponent,
     StockComponent,
     StockItemsComponent,
     AddNewStockItemComponent,
+    SalesComponent,
   ],
   imports: [
     CommonModule,

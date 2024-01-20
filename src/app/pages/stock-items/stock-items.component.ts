@@ -1,15 +1,15 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
   Validators,
 } from "@angular/forms";
 import { ActivatedRoute, Route } from "@angular/router";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal, NgbNav } from "@ng-bootstrap/ng-bootstrap";
 import { CustomAlertService } from "src/app/shared/custom-alert.service";
 import { SharedService } from "src/app/shared/custom_http.service";
 import { environment } from "src/environments/environment";
-import { StockItemsModel } from "./model";
+import { StockItemSales, StockItemsModel } from "./model";
 import { ProductModel } from "../add-new-stock-item/models";
 import Swal from "sweetalert2";
 
@@ -25,6 +25,8 @@ export class StockItemsComponent implements OnInit {
   submitted = false;
   editStockItemForm: UntypedFormGroup; // bootstrap validation form
   isLoading = false;
+  stockItemSales: StockItemSales;
+  @ViewChild("customNav") customNav: NgbNav;
 
   productsModel: ProductModel[];
   error = "";
@@ -144,9 +146,6 @@ export class StockItemsComponent implements OnInit {
       this.isLoading = false;
       return;
     } else {
-      console.log(this.editStockItemForm.valid);
-      console.log(this.editStockItemForm.value);
-
       const url =
         environment.E_SHOP_BASE_URL +
         environment.IMS.IMS_STOCK_ITEMS_BASE_URL +
@@ -226,6 +225,34 @@ export class StockItemsComponent implements OnInit {
       (error) => {
         this.error = error ? error : "";
         this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+      }
+    );
+  }
+
+  changeTab(id, stockItemObj: any) {
+    this.customNav.select(id);
+    this.getStockItemSales(stockItemObj);
+  }
+
+  getStockItemSales(stockItemObj: any) {
+    this.stockItem = stockItemObj;
+    const url =
+      environment.E_SHOP_BASE_URL +
+      environment.IMS.IMS_SALES_BASE_URL +
+      `?stock_item_id=${stockItemObj.id}`;
+    this.httpShareService.get(url, null).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.stockItemSales = res;
+
+        // feed the form
+      },
+      (error) => {
+        this.customAlert.successmsg(
+          "Error in fetching stock details",
+          "Something went wrong, please try again later",
+          "error"
+        );
       }
     );
   }

@@ -33,6 +33,8 @@ export const environment = {
     IMS_STOCK_BASE_URL: `stock/${API_VERSION}/stock_vset/`,
     IMS_STOCK_ITEMS_BASE_URL: `stock/${API_VERSION}/stock-items_vset/`,
     IMS_PRODUCT_LIST_WITH_NO_PAGENATION: `products/${API_VERSION}/product-list/`,
+    // http://localhost:8000/api/sales/v1/sales_vset/?stock_item_id=10
+    IMS_SALES_BASE_URL: `sales/${API_VERSION}/sales_vset/`,
   },
 };
 
