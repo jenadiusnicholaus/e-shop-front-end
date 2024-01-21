@@ -12,6 +12,7 @@ import { environment } from "src/environments/environment";
 import { StockItemSales, StockItemsModel } from "./model";
 import { ProductModel } from "../add-new-stock-item/models";
 import Swal from "sweetalert2";
+import { ModuleStateService } from "../shared_service";
 
 @Component({
   selector: "app-stock-items",
@@ -57,7 +58,8 @@ export class StockItemsComponent implements OnInit {
     public customAlert: CustomAlertService,
     private formBuilder: UntypedFormBuilder,
     private modalService: NgbModal,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private moduleStateService: ModuleStateService
   ) {}
   ngOnInit(): void {
     this.isLoading = true;
@@ -102,6 +104,7 @@ export class StockItemsComponent implements OnInit {
       (res: any) => {
         console.log(res);
         this.stockItemsModel = res;
+        this.moduleStateService.setStockItemListState(res);
       },
       (error) => {
         this.customAlert.successmsg(
@@ -242,8 +245,11 @@ export class StockItemsComponent implements OnInit {
       `?stock_item_id=${stockItemObj.id}`;
     this.httpShareService.get(url, null).subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
         this.stockItemSales = res;
+        const newModuleState = res;
+        this.moduleStateService.setModuleState(newModuleState);
+        this.moduleStateService.setCurrentStockItemState(stockItemObj);
 
         // feed the form
       },

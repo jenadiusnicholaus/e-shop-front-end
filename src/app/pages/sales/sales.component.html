@@ -1,6 +1,5 @@
 <div class="container-fluid">
   <app-pagetitle title="Sales"></app-pagetitle>
-
   <div class="row">
     <div class="col-lg-8">
       <div class="card">
@@ -36,21 +35,29 @@
                         Select stock item
                       </option>
                       <option
-                        *ngFor="let stockitem of StockItemModel"
+                        *ngFor="let stockitem of stockItemModelList"
                         [value]="stockitem.id"
                       >
-                        {{ stockitem.name }}
+                        {{ stockitem.product.name }}-{{ stockitem.stock.name }}
                       </option>
                     </select>
                   </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-8">
                   <div class="form-group mb-4">
-                    <label for="billing-email-address">Quantity Sold </label>
+                    <label for="billing-email-address">
+                      Available Quantity -
+                      <span class="text-success"
+                        >{{ curentStockItem?.qty
+                        }}{{ curentStockItem?.qty_in }}</span
+                      ></label
+                    >
                     <input
                       type="text"
                       class="form-control"
-                      placeholder="Quantity sold"
+                      placeholder="Enter Quantity to sold, must be less than or equal to {{
+                        curentStockItem?.qty
+                      }}{{ curentStockItem?.qty_in }}"
                       formControlName="quantity_sold"
                       [ngClass]="{
                         'is-invalid':
@@ -70,13 +77,15 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-4">
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
                   <div class="form-group mb-4">
-                    <label for="price">price</label>
+                    <label for="price">Selling price</label>
                     <input
                       type="text"
                       class="form-control"
-                      placeholder="price"
+                      placeholder="Selling price"
                       formControlName="price"
                       [ngClass]="{
                         'is-invalid': submitted && salesForm.price.errors
@@ -90,33 +99,6 @@
                         >This value is required.</span
                       >
                       <span *ngIf="salesForm.price.errors.minlength"
-                        >Quantity_in must be at least 6 characters.</span
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="form-group mb-4">
-                    <label for="price">Sale Date</label>
-                    <input
-                      type="date"
-                      class="form-control"
-                      placeholder="sales_date"
-                      formControlName="sales_date"
-                      [ngClass]="{
-                        'is-invalid': submitted && salesForm.sales_date.errors
-                      }"
-                    />
-                    <div
-                      *ngIf="submitted && salesForm.sales_date.errors"
-                      class="invalid-feedback"
-                    >
-                      <span *ngIf="salesForm.sales_date.errors.required"
-                        >This value is required.</span
-                      >
-                      <span *ngIf="salesForm.sales_date.errors.minlength"
                         >Quantity_in must be at least 6 characters.</span
                       >
                     </div>
@@ -172,14 +154,17 @@
               </div>
               <div class="row mb-4 mt-4">
                 <div class="col-md-6">
-                  <button type="submit" class="btn btn-primary me-1">
+                  <button
+                    [disabled]="issaleDisabled"
+                    type="submit"
+                    class="btn btn-primary me-1"
+                  >
                     Submit
                   </button>
-                </div>
-                <div class="col-md-6">
-                  <!-- <button type="submit" class="btn btn-danger me-1">
-                    cancel
-                  </button> -->
+                  <!--  show a msg why sale is disabled -->
+                  <span *ngIf="issaleDisabled" class="text-danger">
+                    No quantity to sell
+                  </span>
                 </div>
               </div>
             </div>
@@ -192,7 +177,8 @@
         <div class="card-body">
           <div class="p-3 bg-light mb-4">
             <h5 class="font-size-14 mb-0">
-              Order Summary <span class="float-end ms-2">#SK2356</span>
+              Item Sales
+              <span class="float-end">{{ stockItemSales?.length }}</span>
             </h5>
           </div>
           <div class="table-responsive">
@@ -203,6 +189,7 @@
                     Product
                   </th>
                   <th class="border-top-0" scope="col">Amount</th>
+                  <th class="border-top-0" scope="col">item Sales Total</th>
                 </tr>
               </thead>
               <tbody>
@@ -223,26 +210,28 @@
 
                 <tr>
                   <td colspan="2">
-                    <h6 class="m-0 text-end">Sub Total:</h6>
+                    <h6 class="m-0 text-end">TSP:</h6>
                   </td>
-                  <td>Total here</td>
+                  <td>{{ curentStockItem?.total_selling_price }}</td>
                 </tr>
                 <tr>
                   <td colspan="3">
-                    <div class="bg-primary-subtle text-primary p-3 rounded">
+                    <div class="bg-success-subtle text-success p-3 rounded">
                       <h5 class="font-size-14 text-primary mb-0">
-                        <i class="fas fa-shipping-fast me-2"></i> Shipping
-                        <span class="float-end">Free</span>
+                        <i class="fas fa-shipping-fast me-2"></i> TEP
+                        <span class="float-end">{{
+                          curentStockItem?.total_estmated_profit
+                        }} Tsh</span>
                       </h5>
                     </div>
                   </td>
                 </tr>
-                <tr>
+                <!-- <tr>
                   <td colspan="2">
                     <h6 class="m-0 text-end">Total:</h6>
                   </td>
                   <td>$ 705</td>
-                </tr>
+                </tr> -->
               </tbody>
             </table>
           </div>

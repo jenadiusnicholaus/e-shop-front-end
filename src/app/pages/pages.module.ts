@@ -34,7 +34,9 @@ import { ProductsComponent } from "./products/products.component";
 import { StockComponent } from "./stock/stock.component";
 import { StockItemsComponent } from "./stock-items/stock-items.component";
 import { AddNewStockItemComponent } from "./add-new-stock-item/add-new-stock-item.component";
-import { SalesComponent } from './sales/sales.component';
+import { SalesComponent } from "./sales/sales.component";
+import { ModuleStateService } from "./shared_service";
+import { UnderconstractionPageComponent } from './underconstraction-page/underconstraction-page.component';
 // import { DataTablesModule } from 'angular-datatables';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -51,6 +53,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     StockItemsComponent,
     AddNewStockItemComponent,
     SalesComponent,
+    UnderconstractionPageComponent,
   ],
   imports: [
     CommonModule,
@@ -81,6 +84,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgbModalModule,
   ],
   providers: [
+    ModuleStateService,
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,

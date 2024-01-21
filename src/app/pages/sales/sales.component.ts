@@ -8,7 +8,10 @@ import { ActivatedRoute } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { CustomAlertService } from "src/app/shared/custom-alert.service";
 import { SharedService } from "src/app/shared/custom_http.service";
-import { StockItemSales } from "../stock-items/model";
+import { StockItemSales, StockItemsModel } from "../stock-items/model";
+import { ModuleStateService } from "../shared_service";
+import { BehaviorSubject } from "rxjs";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-sales",
@@ -17,15 +20,18 @@ import { StockItemSales } from "../stock-items/model";
 })
 export class SalesComponent implements OnInit {
   submitted = false;
-  StockItemModel: any;
+  stockItemModelList: any;
+  curentStockItem: any;
+  issaleDisabled = false;
   priceChanged = false;
-  @Input() stockItemSales: StockItemSales;
+  stockItemSales: StockItemSales;
   constructor(
     public httpShareService: SharedService,
     public customAlert: CustomAlertService,
     private formBuilder: UntypedFormBuilder,
     private modalService: NgbModal,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private moduleStateService: ModuleStateService
   ) {}
   createSalesForm: UntypedFormGroup;
   ngOnInit(): void {
@@ -35,10 +41,30 @@ export class SalesComponent implements OnInit {
       price: ["", [Validators.required]],
       product_price_changed: [false, [Validators.required]],
       reason_for_change: ["", [Validators.required]],
-      sales_date: ["", [Validators.required]],
+      // set default value to today's date
     });
     this.submitted = false;
     this.createSalesForm.get("reason_for_change").disable();
+    this.createSalesForm.get("price").disable();
+
+    this.moduleStateService.salesState$.subscribe((state) => {
+      this.stockItemSales = state;
+    });
+
+    this.moduleStateService.currentStockItemState$.subscribe((state) => {
+      if (state !== null) {
+        this.curentStockItem = state;
+
+        this.feedTheForm(state);
+      }
+    });
+
+    this.moduleStateService.stockItemList$.subscribe((state) => {
+      if (state !== null) {
+        this.stockItemModelList = state;
+        console.log(this.stockItemModelList);
+      }
+    });
   }
 
   get salesForm() {
@@ -47,14 +73,61 @@ export class SalesComponent implements OnInit {
 
   createSalesFormSubmit() {
     this.submitted = true;
+    console.log(this.createSalesForm.value);
+    const body = {
+      stock_item: this.createSalesForm.value.stock_item,
+      quantity_sold: this.createSalesForm.value.quantity_sold,
+      price: this.curentStockItem.unit_selling_price,
+      product_price_changed: false,
+      reason_for_change: "",
+    };
+
+    const url =
+      environment.E_SHOP_BASE_URL +
+      environment.IMS.IMS_SALES_BASE_URL +
+      `?stock_item_id=${this.curentStockItem.id}`;
+    this.httpShareService.post(null, url, body).subscribe(
+      (res: any) => {
+        console.log(res);
+
+        this.customAlert.successmsg(
+          "Success",
+          "Sales created successfully",
+          "success"
+        );
+        this.submitted = false;
+      },
+      (error) => {
+        this.customAlert.successmsg(
+          "Error in creating sales",
+          "Something went wrong, please try again later",
+          "error"
+        );
+        this.submitted = false;
+      }
+    );
+  }
+
+  feedTheForm(state) {
+    this.createSalesForm.patchValue({
+      stock_item: state?.id,
+      price: state?.unit_selling_price,
+      product_price_changed: false,
+      reason_for_change: "",
+    });
+    if (state.qty === 0) {
+      this.issaleDisabled = true;
+    }
   }
 
   onCheckboxChange($event) {
     this.priceChanged = $event.target.checked;
     if (this.priceChanged) {
       this.createSalesForm.get("reason_for_change").enable();
+      this.createSalesForm.get("price").enable();
     } else {
       this.createSalesForm.get("reason_for_change").disable();
+      this.createSalesForm.get("price").disable();
     }
   }
 }
