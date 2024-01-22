@@ -271,6 +271,9 @@ export class StockItemsComponent implements OnInit {
       }
     );
   }
+  goBack() {
+    window.history.back();
+  }
 
   getCurrentStockItemState() {
     const url =
@@ -282,8 +285,6 @@ export class StockItemsComponent implements OnInit {
       url,
       (data: any) => {
         this.stockItem = data;
-        console.log("stockItem", this.stockItem);
-        console.log(data);
         this.moduleStateService.setCurrentStockItemState(data);
       },
       (error) => {

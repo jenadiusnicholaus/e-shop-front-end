@@ -16,8 +16,17 @@
         >
           <li (click)="onTabKClick($event)" [ngbNavItem]="1">
             <a ngbNavLink>
-              <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-              <span class="d-none d-sm-block">Stock Items</span>
+              <span class="d-block d-sm-none">
+                <i class="fas fa-chevron-left"></i>
+              </span>
+              <span class="d-none d-sm-block"
+                ><i
+                  (click)="goBack()"
+                  class="fas fa-chevron-left"
+                  style="padding-right: 24px"
+                ></i
+                >Stock Items</span
+              >
             </a>
             <ng-template ngbNavContent>
               <div class="table-responsive">
@@ -157,7 +166,7 @@
                           "
                           class="btn btn-primary text-danger"
                           placement="top"
-                          ngbTooltip="Delete"
+                          ngbTooltip="Sell the product from stock"
                         >
                           Sell
                         </button>
@@ -170,8 +179,13 @@
           </li>
           <li [ngbNavItem]="2">
             <a ngbNavLink>
-              <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-              <span class="d-none d-sm-block">Add new Item </span>
+              <span class="d-block d-sm-none"
+                ><i class="far fa-plus-square"></i
+              ></span>
+              <span class="d-none d-sm-block"
+                ><i class="far fa-plus-square" style="padding-right: 24px"></i
+                >Add new Item
+              </span>
             </a>
             <ng-template ngbNavContent>
               <app-add-new-stock-item
@@ -182,9 +196,12 @@
           <li [ngbNavItem]="3">
             <a ngbNavLink>
               <span class="d-block d-sm-none"
-                ><i class="far fa-envelope"></i
+                ><i class="fa fa-shopping-cart"></i
               ></span>
-              <span class="d-none d-sm-block">Stock sales place</span>
+              <span class="d-none d-sm-block"
+                ><i class="fa fa-shopping-cart" style="padding-right: 24px"> </i
+                >Stock sales place</span
+              >
             </a>
             <ng-template ngbNavContent>
               <app-sales></app-sales>
@@ -192,8 +209,16 @@
           </li>
           <li [ngbNavItem]="4">
             <a ngbNavLink>
-              <span class="d-block d-sm-none"><i class="fas fa-cog"></i></span>
-              <span class="d-none d-sm-block">Stock revenues</span>
+              <span class="d-block d-sm-none"
+                ><i class="fas fa-comments-dollar"></i
+              ></span>
+              <span class="d-none d-sm-block"
+                ><i
+                  class="fas fa-comments-dollar"
+                  style="padding-right: 24px"
+                ></i
+                >Stock revenues</span
+              >
             </a>
             <ng-template ngbNavContent>
               <!-- <ng-template [ngTemplateOutlet]="TabContent1"></ng-template> -->

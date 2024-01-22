@@ -94,11 +94,11 @@ export class TopbarComponent implements OnInit {
     this.httpShareService.get<UserProfileModel>(login_url, null).subscribe(
       (data) => {
         this.userProfileModel = data;
-        this.customAlert.successmsg(
-          "Welcome to E-shop!",
-          `Hi ${data.user.username} You are wellcome!`,
-          "success"
-        );
+        // this.customAlert.successmsg(
+        //   "Welcome to E-shop!",
+        //   `Hi ${data.user.username} You are wellcome!`,
+        //   "success"
+        // );
       },
       (error) => {
         this.error = error ? error : "";
