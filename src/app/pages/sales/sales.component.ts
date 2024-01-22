@@ -9,9 +9,10 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { CustomAlertService } from "src/app/shared/custom-alert.service";
 import { SharedService } from "src/app/shared/custom_http.service";
 import { StockItemSales, StockItemsModel } from "../stock-items/model";
-import { ModuleStateService } from "../shared_service";
+import { ModuleStateService } from "../moduleshared.service";
 import { BehaviorSubject } from "rxjs";
 import { environment } from "src/environments/environment";
+import { RepositoryService } from "../repository.service";
 
 @Component({
   selector: "app-sales",
@@ -22,7 +23,7 @@ export class SalesComponent implements OnInit {
   submitted = false;
   stockItemModelList: any;
   curentStockItem: any;
-  issaleDisabled = false;
+  isSalesDisabled = false;
   priceChanged = false;
   stockItemSales: StockItemSales;
   constructor(
@@ -31,7 +32,8 @@ export class SalesComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private modalService: NgbModal,
     private route: ActivatedRoute,
-    private moduleStateService: ModuleStateService
+    private moduleStateService: ModuleStateService,
+    private repositoryService: RepositoryService
   ) {}
   createSalesForm: UntypedFormGroup;
   ngOnInit(): void {
@@ -54,7 +56,6 @@ export class SalesComponent implements OnInit {
     this.moduleStateService.currentStockItemState$.subscribe((state) => {
       if (state !== null) {
         this.curentStockItem = state;
-
         this.feedTheForm(state);
       }
     });
@@ -95,6 +96,7 @@ export class SalesComponent implements OnInit {
           "Sales created successfully",
           "success"
         );
+        this.getStockItemSales();
         this.submitted = false;
       },
       (error) => {
@@ -116,7 +118,10 @@ export class SalesComponent implements OnInit {
       reason_for_change: "",
     });
     if (state.qty === 0) {
-      this.issaleDisabled = true;
+      console.log("sales disabled");
+      console.log(state);
+      console.log(state.qty);
+      this.isSalesDisabled = true;
     }
   }
 
@@ -129,5 +134,53 @@ export class SalesComponent implements OnInit {
       this.createSalesForm.get("reason_for_change").disable();
       this.createSalesForm.get("price").disable();
     }
+  }
+
+  getStockItemSales() {
+    const url =
+      environment.E_SHOP_BASE_URL +
+      environment.IMS.IMS_SALES_BASE_URL +
+      `?stock_item_id=${this.curentStockItem.id}`;
+    this.repositoryService.getList(
+      url,
+      (data: any) => {
+        // console.log(res);
+        this.stockItemSales = data;
+        const newsalesState = data;
+        this.moduleStateService.setSalesState(newsalesState);
+        this.getCurrentStockItemState();
+
+        // feed the form
+      },
+      (error) => {
+        this.customAlert.successmsg(
+          "Error in fetching stock details",
+          "Something went wrong, please try again later",
+          "error"
+        );
+      }
+    );
+  }
+
+  getCurrentStockItemState() {
+    const url =
+      environment.E_SHOP_BASE_URL +
+      environment.IMS.IMS_STOCK_ITEM_OBJ +
+      `?stock_item_id=${this.curentStockItem.id}`;
+
+    this.repositoryService.getSingle(
+      url,
+      (data: any) => {
+        this.moduleStateService.setCurrentStockItemState(data);
+        this.feedTheForm(data);
+      },
+      (error) => {
+        this.customAlert.successmsg(
+          "Error in fetching stock details",
+          "Something went wrong, please try again later",
+          "error"
+        );
+      }
+    );
   }
 }

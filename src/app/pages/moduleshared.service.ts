@@ -23,7 +23,7 @@ export class ModuleStateService {
     return this._stockItemList.asObservable();
   }
 
-  setModuleState(newState: any) {
+  setSalesState(newState: any) {
     this._salesState.next(newState);
   }
 

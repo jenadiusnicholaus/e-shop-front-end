@@ -155,14 +155,14 @@
               <div class="row mb-4 mt-4">
                 <div class="col-md-6">
                   <button
-                    [disabled]="issaleDisabled"
+                    [disabled]="isSalesDisabled"
                     type="submit"
                     class="btn btn-primary me-1"
                   >
                     Submit
                   </button>
                   <!--  show a msg why sale is disabled -->
-                  <span *ngIf="issaleDisabled" class="text-danger">
+                  <span *ngIf="isSalesDisabled" class="text-danger">
                     No quantity to sell
                   </span>
                 </div>
@@ -219,9 +219,12 @@
                     <div class="bg-success-subtle text-success p-3 rounded">
                       <h5 class="font-size-14 text-primary mb-0">
                         <i class="fas fa-shipping-fast me-2"></i> TEP
-                        <span class="float-end">{{
-                          curentStockItem?.total_estmated_profit
-                        }} Tsh</span>
+                        <span class="float-end"
+                          >{{
+                            curentStockItem?.total_estmated_profit
+                          }}
+                          Tsh</span
+                        >
                       </h5>
                     </div>
                   </td>

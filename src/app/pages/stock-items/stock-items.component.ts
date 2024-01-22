@@ -12,7 +12,8 @@ import { environment } from "src/environments/environment";
 import { StockItemSales, StockItemsModel } from "./model";
 import { ProductModel } from "../add-new-stock-item/models";
 import Swal from "sweetalert2";
-import { ModuleStateService } from "../shared_service";
+import { ModuleStateService } from "../moduleshared.service";
+import { RepositoryService } from "../repository.service";
 
 @Component({
   selector: "app-stock-items",
@@ -59,7 +60,8 @@ export class StockItemsComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private modalService: NgbModal,
     private route: ActivatedRoute,
-    private moduleStateService: ModuleStateService
+    private moduleStateService: ModuleStateService,
+    private repositoryService: RepositoryService
   ) {}
   ngOnInit(): void {
     this.isLoading = true;
@@ -237,21 +239,52 @@ export class StockItemsComponent implements OnInit {
     this.getStockItemSales(stockItemObj);
   }
 
+  onTabKClick(event) {
+    console.log(event);
+    this.getAllStockList();
+  }
+
   getStockItemSales(stockItemObj: any) {
     this.stockItem = stockItemObj;
     const url =
       environment.E_SHOP_BASE_URL +
       environment.IMS.IMS_SALES_BASE_URL +
       `?stock_item_id=${stockItemObj.id}`;
-    this.httpShareService.get(url, null).subscribe(
-      (res: any) => {
+    this.repositoryService.getList(
+      url,
+      (data: any) => {
         // console.log(res);
-        this.stockItemSales = res;
-        const newModuleState = res;
-        this.moduleStateService.setModuleState(newModuleState);
-        this.moduleStateService.setCurrentStockItemState(stockItemObj);
+        this.stockItemSales = data;
+        const newsalesState = data;
+        this.moduleStateService.setSalesState(newsalesState);
+        // this.moduleStateService.setCurrentStockItemState(stockItemObj);
+        this.getCurrentStockItemState();
 
         // feed the form
+      },
+      (error) => {
+        this.customAlert.successmsg(
+          "Error in fetching stock details",
+          "Something went wrong, please try again later",
+          "error"
+        );
+      }
+    );
+  }
+
+  getCurrentStockItemState() {
+    const url =
+      environment.E_SHOP_BASE_URL +
+      environment.IMS.IMS_STOCK_ITEM_OBJ +
+      `?stock_item_id=${this.stockItem.id}`;
+
+    this.repositoryService.getSingle(
+      url,
+      (data: any) => {
+        this.stockItem = data;
+        console.log("stockItem", this.stockItem);
+        console.log(data);
+        this.moduleStateService.setCurrentStockItemState(data);
       },
       (error) => {
         this.customAlert.successmsg(

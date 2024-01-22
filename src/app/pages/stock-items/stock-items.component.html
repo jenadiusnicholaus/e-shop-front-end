@@ -14,7 +14,7 @@
           [activeId]="1"
           class="nav-tabs nav-tabs-custom nav-justified"
         >
-          <li [ngbNavItem]="1">
+          <li (click)="onTabKClick($event)" [ngbNavItem]="1">
             <a ngbNavLink>
               <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
               <span class="d-none d-sm-block">Stock Items</span>
