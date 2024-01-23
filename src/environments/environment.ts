@@ -35,8 +35,9 @@ export const environment = {
     IMS_PRODUCT_LIST_WITH_NO_PAGENATION: `products/${API_VERSION}/product-list/`,
     IMS_SALES_BASE_URL: `sales/${API_VERSION}/sales_vset/`,
     IMS_STOCK_ITEMS_LIST_WITH_NO_PAGENATION: `stock/${API_VERSION}/stock-items-list/`,
-    // http://localhost:8000/api/stock/v1/get-stock-items/?stock_item_id=10
     IMS_STOCK_ITEM_OBJ: `stock/${API_VERSION}/get-stock-items/`,
+    // http://localhost:8000/api/sales/v1/sales_vset/?stock_id=2
+    IMS_SALES_LIST_BY_STOCK: `sales/${API_VERSION}/sales_vset/`,
   },
 };
 

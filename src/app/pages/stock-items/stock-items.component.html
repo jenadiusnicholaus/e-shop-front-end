@@ -200,7 +200,7 @@
               ></span>
               <span class="d-none d-sm-block"
                 ><i class="fa fa-shopping-cart" style="padding-right: 24px"> </i
-                >Stock sales place</span
+                >Stock sales space</span
               >
             </a>
             <ng-template ngbNavContent>
@@ -208,7 +208,7 @@
             </ng-template>
           </li>
           <li [ngbNavItem]="4">
-            <a ngbNavLink>
+            <a ngbNavLink (click)="getStockSales()">
               <span class="d-block d-sm-none"
                 ><i class="fas fa-comments-dollar"></i
               ></span>
@@ -221,6 +221,7 @@
               >
             </a>
             <ng-template ngbNavContent>
+              <app-stock-sales></app-stock-sales>
               <!-- <ng-template [ngTemplateOutlet]="TabContent1"></ng-template> -->
             </ng-template>
           </li>

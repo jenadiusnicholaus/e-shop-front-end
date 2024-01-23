@@ -242,6 +242,7 @@ export class StockItemsComponent implements OnInit {
   onTabKClick(event) {
     console.log(event);
     this.getAllStockList();
+    this.getCurrentStockItemState();
   }
 
   getStockItemSales(stockItemObj: any) {
@@ -273,6 +274,7 @@ export class StockItemsComponent implements OnInit {
   }
   goBack() {
     window.history.back();
+    this.getCurrentStockItemState();
   }
 
   getCurrentStockItemState() {
@@ -293,6 +295,25 @@ export class StockItemsComponent implements OnInit {
           "Something went wrong, please try again later",
           "error"
         );
+      }
+    );
+  }
+
+  getStockSales() {
+    const url =
+      environment.E_SHOP_BASE_URL +
+      environment.IMS.IMS_SALES_LIST_BY_STOCK +
+      "?stock_id=" +
+      this.stockId;
+    this.repositoryService.getList(
+      url,
+
+      (res: any) => {
+        this.moduleStateService.setStockSalesListState(res);
+        console.log("this.stockItemsSalesModel", res);
+      },
+      (error) => {
+        console.log("error", error);
       }
     );
   }

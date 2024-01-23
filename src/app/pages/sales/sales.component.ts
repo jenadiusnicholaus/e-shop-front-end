@@ -117,11 +117,14 @@ export class SalesComponent implements OnInit {
       product_price_changed: false,
       reason_for_change: "",
     });
+
     if (state.qty === 0) {
       console.log("sales disabled");
       console.log(state);
       console.log(state.qty);
       this.isSalesDisabled = true;
+    } else {
+      this.isSalesDisabled = false;
     }
   }
 

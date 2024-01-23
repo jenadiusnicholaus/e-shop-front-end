@@ -38,6 +38,7 @@ import { SalesComponent } from "./sales/sales.component";
 import { ModuleStateService } from "./moduleshared.service";
 import { UnderconstractionPageComponent } from "./underconstraction-page/underconstraction-page.component";
 import { RepositoryService } from "./repository.service";
+import { StockSalesComponent } from './stock-sales/stock-sales.component';
 // import { DataTablesModule } from 'angular-datatables';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -55,6 +56,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AddNewStockItemComponent,
     SalesComponent,
     UnderconstractionPageComponent,
+    StockSalesComponent,
   ],
   imports: [
     CommonModule,
