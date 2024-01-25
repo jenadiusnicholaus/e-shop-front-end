@@ -177,8 +177,10 @@
         <div class="card-body">
           <div class="p-3 bg-light mb-4">
             <h5 class="font-size-14 mb-0">
-              Item Sales
-              <span class="float-end">{{ stockItemSales?.length }}</span>
+              Item Sales Summary
+              <span class="float-end ms-2">
+                From: {{ curentStockItem?.stock?.name }}</span
+              >
             </h5>
           </div>
           <div class="table-responsive">
@@ -188,59 +190,154 @@
                   <th class="border-top-0" style="width: 110px" scope="col">
                     Product
                   </th>
-                  <th class="border-top-0" scope="col">Amount</th>
-                  <th class="border-top-0" scope="col">item Sales Total</th>
+                  <th class="border-top-0" scope="col">UCS</th>
+                  <th class="border-top-0" scope="col">UCR</th>
                 </tr>
               </thead>
               <tbody>
-                <tr
-                  style="scroll-behavior: auto"
-                  *ngFor="let s of stockItemSales"
-                >
-                  <th scope="row" class="font-size-14 text-truncate">
-                    {{ s.stock_item.product.name }}
-                  </th>
-                  <td>
-                    <h5 class="font-size-14 text-truncate text-muted">
-                      <a class="text-dark">{{ s.total_price }}</a>
-                    </h5>
+                <tr *ngFor="let s of stockItemSales">
+                  <th scope="row">{{ s.stock_item.product.name }}</th>
+                  <td>{{ s?.total_price ?? 0 }}</td>
+                  <td>{{ s?.total_revenue ?? 0 }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <hr />
+            <h4>Summary</h4>
+
+            <table>
+              <tbody>
+                <tr class="bg-light text-end">
+                  <th scope="row" colspan="3">Total Item estimated profit :</th>
+
+                  <td class="text-success">
+                    {{ curentStockItem?.total_estmated_profit }} /=
                   </td>
-                  <td>{{ s.total_price }}</td>
                 </tr>
 
-                <tr>
-                  <td colspan="2">
-                    <h6 class="m-0 text-end">TSP:</h6>
-                  </td>
-                  <td>{{ curentStockItem?.total_selling_price }}</td>
-                </tr>
-                <tr>
-                  <td colspan="3">
-                    <div class="bg-success-subtle text-success p-3 rounded">
-                      <h5 class="font-size-14 text-primary mb-0">
-                        <i class="fas fa-shipping-fast me-2"></i> TEP
-                        <span class="float-end"
-                          >{{
-                            curentStockItem?.total_estmated_profit
-                          }}
-                          Tsh</span
-                        >
-                      </h5>
-                    </div>
+                <tr class="bg-light text-end">
+                  <th scope="row" colspan="3">Total item estimated sales:</th>
+                  <td class="text-success">
+                    {{ curentStockItem?.total_selling_price }} /=
                   </td>
                 </tr>
-                <!-- <tr>
-                  <td colspan="2">
-                    <h6 class="m-0 text-end">Total:</h6>
+                <tr class="bg-light text-end">
+                  <th scope="row" colspan="3">Total stock Current Profit:</th>
+
+                  <td class="text-success">
+                    {{ curentStockItem?.stock?.total_sales_revenue }}/=
                   </td>
-                  <td>$ 705</td>
-                </tr> -->
+                </tr>
+                <tr class="bg-light text-end">
+                  <th scope="row" colspan="3">Total stock estmated Profit</th>
+
+                  <td class="text-success">
+                    {{ curentStockItem?.stock?.total_estmated_profit }}/=
+                  </td>
+                </tr>
+
+                <tr class="bg-light text-end">
+                  <th scope="row" colspan="3">Total stock sales</th>
+
+                  <td class="text-success">
+                    {{ curentStockItem?.stock?.total_sales }}/=
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
+    <!-- <div class="col-lg-6">
+      <div class="card checkout-order-summary">
+        <div class="card-body">
+          <div class="table-responsive">
+            
+
+            <thead>
+              <tr>
+                <th class="border-top-0" style="width: 110px" scope="col">
+                  Product
+                </th>
+                <th class="border-top-0" style="width: 110px" scope="col">
+                  UCS
+                </th>
+
+                <th class="border-top-0" style="width: 110px" scope="col">
+                  UCR
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="bg-success-subtle text-success"
+                *ngFor="let s of stockItemSales"
+              >
+                <th scope="row" class="font-size-14 text-truncate">
+                  {{ s.stock_item.product.name }}
+                </th>
+                <td colspan="4">
+                  <h5 class="font-size-14 text-truncate text-muted">
+                    <a class="text-dark">{{ s?.total_price }}</a>
+                  </h5>
+                </td>
+                <td colspan="1">
+                  <h5 class="font-size-14 text-truncate text-muted">
+                    <a class="text-dark">{{ s?.total_revenue }}</a>
+                  </h5>
+                </td>
+              </tr>
+
+              <tr>
+                <hr style="color: gray" />
+              </tr>
+
+              <tr class="bg-light text-end">
+                <th scope="row" colspan="3">Total Item estmated profit :</th>
+
+                <td class="text-success">
+                  {{ curentStockItem?.total_estmated_profit }} /=
+                </td>
+              </tr>
+              <tr class="bg-light text-end">
+                <th scope="row" colspan="3">Total Item current profit :</th>
+
+                <td class="text-success">0 /=</td>
+              </tr>
+              <tr class="bg-light text-end">
+                <th scope="row" colspan="3">total item estmated sales:</th>
+                <td class="text-success">
+                  {{ curentStockItem?.total_selling_price }} /=
+                </td>
+              </tr>
+              <tr class="bg-light text-end">
+                <th scope="row" colspan="3">Total stock Current Profit:</th>
+
+                <td class="text-success">
+                  {{ curentStockItem?.stock?.total_sales_revenue }}/=
+                </td>
+              </tr>
+              <tr class="bg-light text-end">
+                <th scope="row" colspan="3">Total stock estmated Profit</th>
+
+                <td class="text-success">
+                  {{ curentStockItem?.stock?.total_estmated_profit }}/=
+                </td>
+              </tr>
+
+              <tr class="bg-light text-end">
+                <th scope="row" colspan="3">Total stock sales</th>
+
+                <td class="text-success">
+                  {{ curentStockItem?.stock?.total_sales }}/=
+                </td>
+              </tr>
+            </tbody>
+          </div>
+        </div>
+      </div>
+    </div> -->
   </div>
   <!-- end row -->
 </div>

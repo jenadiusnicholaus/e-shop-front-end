@@ -299,6 +299,27 @@ export class StockItemsComponent implements OnInit {
     );
   }
 
+  getStock() {
+    this.route.params.subscribe((params) => {
+      this.stockId = +params["ID"]; // (+) converts string 'id' to a number
+      const id = +params["ID"]; // (+) converts string 'id' to a number
+      // Now you can use id to load the stock item...
+      const url =
+        environment.E_SHOP_BASE_URL +
+        environment.IMS.IMS_STOCK_BASE_URL +
+        `?stock_id=${this.stockId}`;
+      this.repositoryService.getSingle(
+        url,
+        (data: any) => {
+          this.moduleStateService.setCurrentStockState(data);
+        },
+        (error) => {
+          console.log("error", error);
+        }
+      );
+    });
+  }
+
   getStockSales() {
     const url =
       environment.E_SHOP_BASE_URL +
@@ -311,6 +332,7 @@ export class StockItemsComponent implements OnInit {
       (res: any) => {
         this.moduleStateService.setStockSalesListState(res);
         console.log("this.stockItemsSalesModel", res);
+        this.getStock();
       },
       (error) => {
         console.log("error", error);

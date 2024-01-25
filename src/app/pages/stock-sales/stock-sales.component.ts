@@ -16,7 +16,7 @@ import { StockSalesModel } from "./model";
 })
 export class StockSalesComponent implements OnInit {
   stockItemsSalesModel: StockSalesModel[];
-  curentStockItem: any;
+  curentStock: any;
   constructor(
     public httpShareService: SharedService,
     public customAlert: CustomAlertService,
@@ -31,6 +31,12 @@ export class StockSalesComponent implements OnInit {
     this.moduleStateService.stockSalesList$.subscribe((state) => {
       if (state !== null) {
         this.stockItemsSalesModel = state;
+      }
+    });
+
+    this.moduleStateService.currentStock$.subscribe((state) => {
+      if (state !== null) {
+        this.curentStock = state;
       }
     });
   }

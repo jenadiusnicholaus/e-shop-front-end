@@ -9,14 +9,13 @@
         <th sortable="id">Stock Id</th>
         <th sortable="name">Stock Name</th>
         <th sortable="name">Product status</th>
-        <th sortable="Qty">Qty</th>
-        <th sortable="Unit_Price">Unit Price</th>
-        <th sortable="unit_SP">Total Sales</th>
-        <th sortable="Total EP">Total EP(Tsh)</th>
-        <!-- <th sortable="unit EP">unit EP(Tsh)</th>
-        <th sortable="Total EP">Total EP(Tsh)</th>
-        <th sortable="Total_SP">Total SP(Tsh)</th>
-        <th sortable="Stattus">stock Item Stattus</th> -->
+        <th sortable="Qty">Sold Qty</th>
+        <th sortable="Unit_Price">unit Price</th>
+        <th sortable="unit_SP">USP</th>
+        <th sortable="Total_SP">TSP</th>
+        <th sortable="unit ER">UER</th>
+        <th sortable="Total EP">TER</th>
+
         <th sortable="Stattus">stock Item Stattus</th>
         <th>Action</th>
       </tr>
@@ -60,13 +59,33 @@
           ></ngb-highlight>
         </td>
         <td>
-          <ngb-highlight [result]="saleRow?.total_price"></ngb-highlight>
+          <ngb-highlight
+            [result]="saleRow.stock_item?.unit_selling_price"
+          ></ngb-highlight>
+        </td>
+
+        <td>
+          <ngb-highlight
+            [result]="saleRow?.stock_item?.total_selling_price"
+          ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="saleRow?.stock_item?.unit_estmated_profit"
+          ></ngb-highlight>
         </td>
         <td>
           <ngb-highlight
             [result]="saleRow?.stock_item?.total_estmated_profit"
           ></ngb-highlight>
         </td>
+
+        <!-- <td>
+          <ngb-highlight
+            [result]="saleRow?.stock_item?.total_estmated_profit"
+          ></ngb-highlight>
+        </td> -->
+
         <!-- 
         <td>
           <ngb-highlight
@@ -113,6 +132,28 @@
             ><i class="fa fa-eye"></i
           ></a>
         </td>
+      </tr>
+      <tr class="bg-light text-end">
+        <th scope="row" colspan="1">Total :</th>
+
+        <td colspan="8" class="text-success">
+          {{ curentStock?.total_estmated_profit }}/=
+        </td>
+      </tr>
+      <tr class="bg-light text-end">
+        <th scope="row" colspan="10">Stock Current revenue :</th>
+
+        <td class="text-success">{{ curentStock?.total_sales_revenue }}/=</td>
+      </tr>
+      <tr class="bg-light text-end">
+        <th scope="row" colspan="10">Total item :</th>
+
+        <td class="text-success">{{ curentStock?.total_products }}</td>
+      </tr>
+      <tr class="bg-light text-end">
+        <th scope="row" colspan="10">Total Current Sales :</th>
+
+        <td class="text-success">{{ curentStock?.total_sales }} /=</td>
       </tr>
     </tbody>
   </table>

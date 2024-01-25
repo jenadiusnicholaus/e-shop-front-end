@@ -11,6 +11,7 @@ export class ModuleStateService {
   private _currentStockItemState = new BehaviorSubject<any>(null);
   private _stockItemList = new BehaviorSubject<any>(null);
   private _stockSalesList = new BehaviorSubject<any>(null);
+  private _currentStock = new BehaviorSubject<any>(null);
 
   get salesState$() {
     return this._salesState.asObservable();
@@ -28,6 +29,10 @@ export class ModuleStateService {
     return this._stockSalesList.asObservable();
   }
 
+  get currentStock$() {
+    return this._currentStock.asObservable();
+  }
+
   setSalesState(newState: any) {
     this._salesState.next(newState);
   }
@@ -42,5 +47,9 @@ export class ModuleStateService {
 
   setStockSalesListState(newState: any) {
     this._stockSalesList.next(newState);
+  }
+
+  setCurrentStockState(newState: any) {
+    this._currentStock.next(newState);
   }
 }
