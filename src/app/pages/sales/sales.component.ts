@@ -26,6 +26,7 @@ export class SalesComponent implements OnInit {
   isSalesDisabled = false;
   priceChanged = false;
   stockItemSales: StockItemSales;
+  shouldHideFormControl = false;
   constructor(
     public httpShareService: SharedService,
     public customAlert: CustomAlertService,
@@ -46,8 +47,10 @@ export class SalesComponent implements OnInit {
       // set default value to today's date
     });
     this.submitted = false;
-    this.createSalesForm.get("reason_for_change").disable();
+    // this.createSalesForm.get("reason_for_change").disable();
     this.createSalesForm.get("price").disable();
+    this.createSalesForm.get("stock_item").disable();
+    this.shouldHideFormControl = false;
 
     this.moduleStateService.salesState$.subscribe((state) => {
       this.stockItemSales = state;
@@ -75,6 +78,14 @@ export class SalesComponent implements OnInit {
   createSalesFormSubmit() {
     this.submitted = true;
     console.log(this.createSalesForm.value);
+    if (this.createSalesForm.value.quantity_sold === 0) {
+      this.customAlert.successmsg(
+        "Error in creating sales",
+        "Quantity sold cannot be zero",
+        "error"
+      );
+      return;
+    }
     const body = {
       stock_item: this.createSalesForm.value.stock_item,
       quantity_sold: this.createSalesForm.value.quantity_sold,
@@ -102,7 +113,7 @@ export class SalesComponent implements OnInit {
       (error) => {
         this.customAlert.successmsg(
           "Error in creating sales",
-          "Something went wrong, please try again later",
+          `${error}`,
           "error"
         );
         this.submitted = false;
@@ -131,10 +142,13 @@ export class SalesComponent implements OnInit {
   onCheckboxChange($event) {
     this.priceChanged = $event.target.checked;
     if (this.priceChanged) {
-      this.createSalesForm.get("reason_for_change").enable();
+      // this.createSalesForm.get("reason_for_change").enable();
+      this.shouldHideFormControl = true;
+
       this.createSalesForm.get("price").enable();
     } else {
-      this.createSalesForm.get("reason_for_change").disable();
+      this.shouldHideFormControl = false;
+      // this.createSalesForm.get("reason_for_change").disable();
       this.createSalesForm.get("price").disable();
     }
   }

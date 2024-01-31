@@ -1,160 +1,169 @@
 <!-- {{ stockItemsSalesModel | json }} -->
 <div class="table-responsive">
-  <table
-    id="basic-datatable"
-    class="table table-centered dt-responsive nowrap datatables no-footer dtr-inline"
-  >
-    <thead>
-      <tr>
-        <th sortable="id">Stock Id</th>
-        <th sortable="name">Stock Name</th>
-        <th sortable="name">Product status</th>
-        <th sortable="Qty">Sold Qty</th>
-        <th sortable="Unit_Price">unit Price</th>
-        <th sortable="unit_SP">USP</th>
-        <th sortable="Total_SP">TSP</th>
-        <th sortable="unit ER">UER</th>
-        <th sortable="Total EP">TER</th>
+  <ng-template *ngIf="stockItemsSalesModel.length > 0; then data; else error">
+  </ng-template>
+  <ng-template #data>
+    <table
+      id="basic-datatable"
+      class="table table-centered dt-responsive nowrap datatables no-footer dtr-inline"
+    >
+      <thead>
+        <tr>
+          <th sortable="id">Stock Id</th>
+          <th sortable="name">Stock Name</th>
+          <th sortable="name">Product status</th>
+          <th sortable="Qty">Sold Qty</th>
+          <th sortable="Unit_Price">unit Price</th>
+          <th sortable="unit_SP">USP</th>
+          <th sortable="Total_SP">TSP</th>
+          <th sortable="unit ER">UER</th>
+          <th sortable="Total EP">TER</th>
 
-        <th sortable="Stattus">stock Item Stattus</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let saleRow of stockItemsSalesModel">
-        <td>
-          <a class="text-dark fw-bold">
-            <ngb-highlight [result]="saleRow.id"></ngb-highlight>
-          </a>
-        </td>
-        <td>
-          <ngb-highlight
-            [result]="saleRow?.stock_item?.stock?.name"
-          ></ngb-highlight>
-        </td>
-        <td>
-          <div
-            class="badge font-size-12"
-            [ngClass]="{
-              'bg-danger-subtle text-danger':
-                saleRow?.stock_item?.product.status === '2',
-              'bg-success-subtle text-success':
-                saleRow?.stock_item?.product.status === '1'
-            }"
-          >
+          <th sortable="Stattus">stock Item Stattus</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let saleRow of stockItemsSalesModel">
+          <td>
+            <a class="text-dark fw-bold">
+              <ngb-highlight [result]="saleRow.id"></ngb-highlight>
+            </a>
+          </td>
+          <td>
             <ngb-highlight
-              [result]="saleRow?.stock_item?.product.name"
+              [result]="saleRow?.stock_item?.stock?.name"
             ></ngb-highlight>
-          </div>
-        </td>
-        <td>
-          <b style="color: green"
-            >{{ saleRow?.quantity_sold }} ({{ saleRow?.stock_item?.qty_in }})</b
-          >
-        </td>
+          </td>
+          <td>
+            <div
+              class="badge font-size-12"
+              [ngClass]="{
+                'bg-danger-subtle text-danger':
+                  saleRow?.stock_item?.product.status === '2',
+                'bg-success-subtle text-success':
+                  saleRow?.stock_item?.product.status === '1'
+              }"
+            >
+              <ngb-highlight
+                [result]="saleRow?.stock_item?.product.name"
+              ></ngb-highlight>
+            </div>
+          </td>
+          <td>
+            <b style="color: green"
+              >{{ saleRow?.quantity_sold }} ({{
+                saleRow?.stock_item?.qty_in
+              }})</b
+            >
+          </td>
 
+          <td>
+            <ngb-highlight
+              [result]="saleRow?.stock_item?.unit_price"
+            ></ngb-highlight>
+          </td>
+          <td>
+            <ngb-highlight
+              [result]="saleRow.stock_item?.unit_selling_price"
+            ></ngb-highlight>
+          </td>
+
+          <td>
+            <ngb-highlight
+              [result]="saleRow?.stock_item?.total_selling_price"
+            ></ngb-highlight>
+          </td>
+          <td>
+            <ngb-highlight
+              [result]="saleRow?.stock_item?.unit_estmated_profit"
+            ></ngb-highlight>
+          </td>
+          <td>
+            <ngb-highlight
+              [result]="saleRow?.stock_item?.total_estmated_profit"
+            ></ngb-highlight>
+          </td>
+
+          <!-- <td>
+          <ngb-highlight
+            [result]="saleRow?.stock_item?.total_estmated_profit"
+          ></ngb-highlight>
+        </td> -->
+
+          <!-- 
         <td>
           <ngb-highlight
-            [result]="saleRow?.stock_item?.unit_price"
+            [result]="saleRow?.stock_item?.total_estmated_profit"
           ></ngb-highlight>
-        </td>
-        <td>
-          <ngb-highlight
-            [result]="saleRow.stock_item?.unit_selling_price"
-          ></ngb-highlight>
-        </td>
-
-        <td>
+        </td> -->
+          <!-- <td>
           <ngb-highlight
             [result]="saleRow?.stock_item?.total_selling_price"
           ></ngb-highlight>
-        </td>
-        <td>
-          <ngb-highlight
-            [result]="saleRow?.stock_item?.unit_estmated_profit"
-          ></ngb-highlight>
-        </td>
-        <td>
-          <ngb-highlight
-            [result]="saleRow?.stock_item?.total_estmated_profit"
-          ></ngb-highlight>
-        </td>
-
-        <!-- <td>
-          <ngb-highlight
-            [result]="saleRow?.stock_item?.total_estmated_profit"
-          ></ngb-highlight>
         </td> -->
 
-        <!-- 
-        <td>
-          <ngb-highlight
-            [result]="saleRow?.stock_item?.total_estmated_profit"
-          ></ngb-highlight>
-        </td> -->
-        <!-- <td>
-          <ngb-highlight
-            [result]="saleRow?.stock_item?.total_selling_price"
-          ></ngb-highlight>
-        </td> -->
+          <td>
+            <div
+              class="badge font-size-12"
+              [ngClass]="{
+                'bg-danger-subtle text-danger':
+                  saleRow?.stock_item?.status === '2',
+                'bg-success-subtle text-success':
+                  saleRow?.stock_item?.status === '1'
+              }"
+            >
+              <ngb-highlight
+                *ngIf="saleRow?.stock_item?.status == 1"
+                [result]="'in-stock'"
+              ></ngb-highlight>
+              <ngb-highlight
+                *ngIf="saleRow?.stock_item?.status == 2"
+                [result]="'Out of stock'"
+              ></ngb-highlight>
+            </div>
+          </td>
+          <td>
+            <a
+              style="
+                background-color: rgb(227, 227, 21);
+                border-radius: 50%;
+                padding: 10px;
+                margin: 2px;
+              "
+              class="me-3 text-primary"
+              placement="top"
+              ngbTooltip="View details"
+              ><i class="fa fa-eye"></i
+            ></a>
+          </td>
+        </tr>
+        <tr class="text-end">
+          <th scope="row" colspan="1">Total :</th>
 
-        <td>
-          <div
-            class="badge font-size-12"
-            [ngClass]="{
-              'bg-danger-subtle text-danger':
-                saleRow?.stock_item?.status === '2',
-              'bg-success-subtle text-success':
-                saleRow?.stock_item?.status === '1'
-            }"
-          >
-            <ngb-highlight
-              *ngIf="saleRow?.stock_item?.status == 1"
-              [result]="'in-stock'"
-            ></ngb-highlight>
-            <ngb-highlight
-              *ngIf="saleRow?.stock_item?.status == 2"
-              [result]="'Out of stock'"
-            ></ngb-highlight>
-          </div>
-        </td>
-        <td>
-          <a
-            style="
-              background-color: rgb(227, 227, 21);
-              border-radius: 50%;
-              padding: 10px;
-              margin: 2px;
-            "
-            class="me-3 text-primary"
-            placement="top"
-            ngbTooltip="View details"
-            ><i class="fa fa-eye"></i
-          ></a>
-        </td>
-      </tr>
-      <tr class="bg-light text-end">
-        <th scope="row" colspan="1">Total :</th>
+          <td colspan="8" class="text-success">
+            {{ curentStock?.total_estmated_profit }}/=
+          </td>
+        </tr>
+        <tr class="text-end">
+          <th scope="row" colspan="10">Stock Current revenue :</th>
 
-        <td colspan="8" class="text-success">
-          {{ curentStock?.total_estmated_profit }}/=
-        </td>
-      </tr>
-      <tr class="bg-light text-end">
-        <th scope="row" colspan="10">Stock Current revenue :</th>
+          <td class="text-success">{{ curentStock?.total_sales_revenue }}/=</td>
+        </tr>
+        <tr class="text-end">
+          <th scope="row" colspan="10">Total item :</th>
 
-        <td class="text-success">{{ curentStock?.total_sales_revenue }}/=</td>
-      </tr>
-      <tr class="bg-light text-end">
-        <th scope="row" colspan="10">Total item :</th>
+          <td class="text-success">{{ curentStock?.total_products }}</td>
+        </tr>
+        <tr class="text-end">
+          <th scope="row" colspan="10">Total Current Sales :</th>
 
-        <td class="text-success">{{ curentStock?.total_products }}</td>
-      </tr>
-      <tr class="bg-light text-end">
-        <th scope="row" colspan="10">Total Current Sales :</th>
-
-        <td class="text-success">{{ curentStock?.total_sales }} /=</td>
-      </tr>
-    </tbody>
-  </table>
+          <td class="text-success">{{ curentStock?.total_sales }} /=</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
+  <ng-template #error>
+    <p style="text-align: center; padding: 20%">No Data</p>
+  </ng-template>
 </div>

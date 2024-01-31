@@ -45,6 +45,9 @@ export class SignupComponent implements OnInit, AfterViewInit {
       username: ["", Validators.required],
       email: ["", [Validators.required, Validators.email]],
       password: ["", Validators.required],
+      first_name: ["", Validators.required],
+      password2: ["", Validators.required],
+      last_name: ["", Validators.required],
     });
   }
 
@@ -69,16 +72,22 @@ export class SignupComponent implements OnInit, AfterViewInit {
         environment.E_SHOP_BASE_URL +
         environment.AUTHENTICATION.AUTHENTICATION_BASE_URL +
         environment.AUTHENTICATION.REGISTER_URL;
-      this.sharedService
-        .post(null, regester_url, this.signupForm.value)
-        .subscribe(
-          (data) => {
-            this.router.navigate(["/account/login"]);
-          },
-          (error) => {
-            this.error = error ? error : "";
-          }
-        );
+      const body = {
+        username: this.signupForm.value.username,
+        email: this.signupForm.value.email,
+        password: this.signupForm.value.password,
+        first_name: this.signupForm.value.first_name,
+        password2: this.signupForm.value.password,
+        last_name: this.signupForm.value.last_name,
+      };
+      this.sharedService.post(null, regester_url, body).subscribe(
+        (data) => {
+          this.router.navigate(["/account/login"]);
+        },
+        (error) => {
+          this.error = error ? error : "";
+        }
+      );
     }
   }
 }
