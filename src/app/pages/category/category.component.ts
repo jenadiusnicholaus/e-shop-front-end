@@ -20,7 +20,6 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
   styleUrls: ["./category.component.scss"],
 })
 export class CategoryComponent implements OnInit {
-
   // breadcrumb items
   breadCrumbItems: Array<{}>;
   editCategoryForm: UntypedFormGroup;

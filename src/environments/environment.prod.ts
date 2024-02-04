@@ -17,8 +17,8 @@ export const environment = {
     measurementId: "",
   },
   // http://localhost:8000/api/ims/v1/category/?category_id=90
-  E_SHOP_BASE_URL: "http://127.0.0.1:8000/api/",
-  // E_SHOP_BASE_URL: "https://eshop.codingskills.dev/api/",
+  // E_SHOP_BASE_URL: "http://127.0.0.1:8000/api/",
+  E_SHOP_BASE_URL: "https://eshop.codingskills.dev/api/",
   AUTHENTICATION: {
     AUTHENTICATION_BASE_URL: `authentication/${API_VERSION}/`,
     REGISTER_URL: "register/",

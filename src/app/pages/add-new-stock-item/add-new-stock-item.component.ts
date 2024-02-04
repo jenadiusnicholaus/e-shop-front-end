@@ -26,20 +26,19 @@ export class AddNewStockItemComponent implements OnInit {
     { id: "2", name: "out-stock" },
   ];
 
-  //   SI_UNIT_CHOICES = (
-  //     ("m", "Meter (m)"),
-  //     ("kg", "Kilogram (kg)"),
-  //     ("g", "Gram (g)"),
-  //     ("just_no", "just_no"),
-  //     ("pic", "Pic"),
-  // )
-
   SI_UNIT_CHOICES = [
     { id: "m", name: "Meter (m)" },
     { id: "kg", name: "Kilogram (kg)" },
     { id: "g", name: "Gram (g)" },
     { id: "just_no", name: "just_no" },
     { id: "pic", name: "Pic" },
+    { id: "box", name: "Box" },
+    { id: "carton", name: "Carton" },
+    { id: "dozen", name: "Dozen" },
+    { id: "pack", name: "Pack" },
+    { id: "set", name: "Set" },
+    { id: "unit", name: "Unit" },
+    { id: "other", name: "Other" },
   ];
 
   error: "";

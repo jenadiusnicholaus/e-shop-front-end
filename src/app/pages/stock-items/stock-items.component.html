@@ -14,7 +14,7 @@
           [activeId]="1"
           class="nav-tabs nav-tabs-custom nav-justified"
         >
-          <li (click)="onTabKClick($event)" [ngbNavItem]="1">
+          <li (click)="onTabClick($event)" [ngbNavItem]="1">
             <a ngbNavLink>
               <span class="d-block d-sm-none">
                 <i class="fas fa-chevron-left"></i>
@@ -30,7 +30,7 @@
             </a>
             <ng-template ngbNavContent>
               <ng-template
-                *ngIf="stockItemsModel.length > 0; then data; else error"
+                *ngIf="stockItemsModel?.length > 0; then data; else error"
               ></ng-template>
               <ng-template #data>
                 <div class="table-responsive">

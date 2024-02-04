@@ -29,7 +29,21 @@ export interface Stock {
   name: string;
   status: string;
   date_created: string;
+  create_by: CreateBy;
   date_updated: string;
+  image: string;
+  total_products: number;
+  total_estmated_profit: number;
+  total_sales_revenue: number;
+  total_sales: number;
+  total_stock_cost: number;
+}
+
+export interface CreateBy {
+  url: string;
+  username: string;
+  email: string;
+  is_staff: boolean;
 }
 
 export type StockItemSales = Sales[];

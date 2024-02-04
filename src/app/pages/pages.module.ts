@@ -38,9 +38,14 @@ import { SalesComponent } from "./sales/sales.component";
 import { ModuleStateService } from "./moduleshared.service";
 import { UnderconstractionPageComponent } from "./underconstraction-page/underconstraction-page.component";
 import { RepositoryService } from "./repository.service";
-import { StockSalesComponent } from './stock-sales/stock-sales.component';
+import { StockSalesComponent } from "./stock-sales/stock-sales.component";
 // import { DataTablesModule } from 'angular-datatables';
-
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { BrowserModule } from "@angular/platform-browser";
+// import { ToastModule } from "primeng/toast";
+// import { MessageService } from "primeng/api/messageservice";
+// import { MessageService } from "primeng/api";
+// import { Ng2SearchPipeModule } from 'ng2-search-filter';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
   wheelSpeed: 0.3,
@@ -78,8 +83,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     WidgetModule,
     NgbPaginationModule,
     //  DataTablesModule,
-    //
+    // 
     NgbTypeaheadModule,
+    // BrowserAnimationsModule,
+    // ToastModule,
 
     NgbCollapseModule,
     NgSelectModule,
@@ -89,6 +96,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   providers: [
     ModuleStateService,
     RepositoryService,
+    // BrowserModule,
+
+    // MessageService,
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,

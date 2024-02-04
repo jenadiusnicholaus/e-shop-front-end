@@ -13,6 +13,9 @@ import { ModuleStateService } from "../moduleshared.service";
 import { BehaviorSubject } from "rxjs";
 import { environment } from "src/environments/environment";
 import { RepositoryService } from "../repository.service";
+// import { ToastModule } from "primeng/toast";
+
+import { ToastService } from "../toast.service";
 
 @Component({
   selector: "app-sales",
@@ -34,7 +37,8 @@ export class SalesComponent implements OnInit {
     private modalService: NgbModal,
     private route: ActivatedRoute,
     private moduleStateService: ModuleStateService,
-    private repositoryService: RepositoryService
+    private repositoryService: RepositoryService,
+    private toast: ToastService
   ) {}
   createSalesForm: UntypedFormGroup;
   ngOnInit(): void {
@@ -102,13 +106,15 @@ export class SalesComponent implements OnInit {
       (res: any) => {
         console.log(res);
 
-        this.customAlert.successmsg(
-          "Success",
-          "Sales created successfully",
-          "success"
-        );
-        this.getStockItemSales();
-        this.submitted = false;
+        //   this.customAlert.successmsg(
+        //     "Success",
+        //     "Sales created successfully",
+        //     "success"
+        //   );
+        //   this.getStockItemSales();
+        //   this.submitted = false;
+        // },
+        // this.toast.showSuccess("Sales created successfully");
       },
       (error) => {
         this.customAlert.successmsg(

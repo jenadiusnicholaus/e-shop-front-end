@@ -1,6 +1,6 @@
 <!-- {{ stockItemsSalesModel | json }} -->
 <div class="table-responsive">
-  <ng-template *ngIf="stockItemsSalesModel.length > 0; then data; else error">
+  <ng-template *ngIf="stockItemsSalesModel?.length > 0; then data; else error">
   </ng-template>
   <ng-template #data>
     <table

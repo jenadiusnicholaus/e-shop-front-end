@@ -9,7 +9,7 @@ import { NgbModal, NgbNav } from "@ng-bootstrap/ng-bootstrap";
 import { CustomAlertService } from "src/app/shared/custom-alert.service";
 import { SharedService } from "src/app/shared/custom_http.service";
 import { environment } from "src/environments/environment";
-import { StockItemSales, StockItemsModel } from "./model";
+import { Stock, StockItemSales, StockItemsModel } from "./model";
 import { ProductModel } from "../add-new-stock-item/models";
 import Swal from "sweetalert2";
 import { ModuleStateService } from "../moduleshared.service";
@@ -23,6 +23,8 @@ import { RepositoryService } from "../repository.service";
 export class StockItemsComponent implements OnInit {
   stockItemsModel: StockItemsModel[];
   stockItem: StockItemsModel;
+  freshCurrentStockItem: Stock;
+
   stockId: number;
   submitted = false;
   editStockItemForm: UntypedFormGroup; // bootstrap validation form
@@ -79,9 +81,9 @@ export class StockItemsComponent implements OnInit {
       date_updated: ["", [Validators.required]],
       is_sales_update: [false, [Validators.required]],
     });
-
     this.getProductsList();
     this.isLoading = false;
+    this.getStock();
   }
 
   get editStockIform() {
@@ -234,12 +236,12 @@ export class StockItemsComponent implements OnInit {
     );
   }
 
-  changeTab(id, stockItemObj: any) {
+  changeTab(id, stockItemObj?: any) {
     this.customNav.select(id);
     this.getStockItemSales(stockItemObj);
   }
 
-  onTabKClick(event) {
+  onTabClick(event) {
     console.log(event);
     this.getAllStockList();
     this.getCurrentStockItemState();
@@ -311,6 +313,7 @@ export class StockItemsComponent implements OnInit {
       this.repositoryService.getSingle(
         url,
         (data: any) => {
+          this.freshCurrentStockItem = data;
           this.moduleStateService.setCurrentStockState(data);
         },
         (error) => {
