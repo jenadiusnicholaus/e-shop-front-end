@@ -69,7 +69,8 @@ export class ProductsComponent implements OnInit {
       },
       (error) => {
         this.error = error ? error : "";
-        this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+        // this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+        this.customAlert.errorToast("An error Occured", `${error}`, "error");
       }
     );
   }
@@ -102,6 +103,7 @@ export class ProductsComponent implements OnInit {
 
       (error) => {
         console.log(error);
+        this.customAlert.errorToast("An error Occured", `${error}`, "error");
       }
     );
   }
@@ -117,8 +119,13 @@ export class ProductsComponent implements OnInit {
       environment.E_SHOP_BASE_URL + environment.IMS.IMS_PRODUCT_BASE_URL;
     this.httpShareService.post(null, burl, this.addProductForm.value).subscribe(
       (data) => {
-        console.log(data);
-        this.customAlert.successmsg(
+        // console.log(data);
+        // this.customAlert.successmsg(
+        //   "Success",
+        //   "Product Added Successfully",
+        //   "success"
+        // );
+        this.customAlert.successToast(
           "Success",
           "Product Added Successfully",
           "success"
@@ -126,7 +133,8 @@ export class ProductsComponent implements OnInit {
         this.getAllProduct(1);
       },
       (error) => {
-        this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+        // this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+        this.customAlert.errorToast("An error Occured", `${error}`, "error");
       }
     );
   }
@@ -138,7 +146,12 @@ export class ProductsComponent implements OnInit {
       `?product_id=${productId}`;
     this.httpShareService.delete(burl).subscribe(
       (data) => {
-        this.customAlert.successmsg(
+        // this.customAlert.successmsg(
+        //   "Success",
+        //   "Product Deleted Successfully",
+        //   "success"
+        // );
+        this.customAlert.successToast(
           "Success",
           "Product Deleted Successfully",
           "success"
@@ -146,7 +159,8 @@ export class ProductsComponent implements OnInit {
         this.getAllProduct(1);
       },
       (error) => {
-        this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+        // this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+        this.customAlert.errorToast("An error Occured", `${error}`, "error");
       }
     );
   }
@@ -195,7 +209,12 @@ export class ProductsComponent implements OnInit {
       `?product_id=${this.productDetails.id}`;
     this.httpShareService.put(burl, this.editProductForm.value, null).subscribe(
       (data) => {
-        this.customAlert.successmsg(
+        // this.customAlert.successmsg(
+        //   "Success",
+        //   "Product Edited Successfully",
+        //   "success"
+        // );
+        this.customAlert.successToast(
           "Success",
           "Product Edited Successfully",
           "success"
@@ -203,7 +222,8 @@ export class ProductsComponent implements OnInit {
         this.getAllProduct(1);
       },
       (error) => {
-        this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+        // this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+        this.customAlert.errorToast("An error Occured", `${error}`, "error");
       }
     );
   }

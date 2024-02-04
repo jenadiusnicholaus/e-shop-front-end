@@ -11,10 +11,11 @@ import { Register1Component } from './register1/register1.component';
 import { RecoverpasswordComponent } from './recoverpassword/recoverpassword.component';
 import { LockscreenComponent } from './lockscreen/lockscreen.component';
 import { ComingsoonComponent } from './comingsoon/comingsoon.component';
+import { SharedLoaderComponent } from './shared-loader/shared-loader.component';
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
-  declarations: [MaintenanceComponent, Page404Component, Page500Component, Login1Component, Register1Component, RecoverpasswordComponent, LockscreenComponent, ComingsoonComponent],
+  declarations: [MaintenanceComponent, Page404Component, Page500Component, Login1Component, Register1Component, RecoverpasswordComponent, LockscreenComponent, ComingsoonComponent, SharedLoaderComponent],
   imports: [
     CommonModule,
     ExtrapagesRoutingModule

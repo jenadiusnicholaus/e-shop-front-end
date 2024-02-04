@@ -122,15 +122,12 @@ export class AddNewStockItemComponent implements OnInit {
 
     this.httpShareService.post(null, url, body).subscribe(
       (data) => {
-        this.customAlert.successmsg(
-          "Stock Item Added",
-          "Stock Item Added Successfully",
-          "success"
-        );
+        this.customAlert.successToast("Stock Item Added", "Stock Item Added");
       },
       (error) => {
         this.error = error ? error : "";
-        this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+        // this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+        this.customAlert.errorToast("An error Occured", `${error}`, "error");
       }
     );
   }
@@ -146,7 +143,8 @@ export class AddNewStockItemComponent implements OnInit {
       },
       (error) => {
         this.error = error ? error : "";
-        this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+        // this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+        this.customAlert.errorToast("An error Occured", `${error}`, "error");
       }
     );
   }

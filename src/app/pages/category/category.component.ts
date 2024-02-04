@@ -13,6 +13,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
   selector: "app-category",
@@ -78,7 +79,7 @@ export class CategoryComponent implements OnInit {
       },
       (error) => {
         this.error = error ? error : "";
-        this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+        this.customAlert.errorToast("An error Occured", `${error}`, "warning");
       }
     );
   }
@@ -112,14 +113,16 @@ export class CategoryComponent implements OnInit {
       },
       (error) => {
         this.error = error ? error : "";
-        this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+        // this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+        this.customAlert.errorToast("An error Occured", `${error}`);
       }
     );
   }
 
   _editCategory(categoryId) {
     if (this.editCategoryForm.invalid) {
-      Swal.fire("Warning!", "Form is invalid.", "warning");
+      // Swal.fire("Warning!", "Form is invalid.", "warning");
+      this.customAlert.warningToast("Warning!", "Form is invalid.", "warning");
 
       return false;
     }
@@ -133,15 +136,21 @@ export class CategoryComponent implements OnInit {
       .subscribe(
         (data) => {
           this._getAllCategory(1);
-          Swal.fire("Edited!", "Your file has been Edited.", "success");
+          // Swal.fire("Edited!", "Your file has been Edited.", "success");
+          this.customAlert.successToast(
+            "Edited!",
+            "Your file has been Edited.",
+            "success"
+          );
         },
         (error) => {
           this.error = error ? error : "";
-          this.customAlert.successmsg(
-            "An error Occured",
-            `${error}`,
-            "warning"
-          );
+          // this.customAlert.successmsg(
+          //   "An error Occured",
+          //   `${error}`,
+          //   "warning"
+          // );
+          this.customAlert.errorToast("An error Occured", `${error}`);
         }
       );
   }
@@ -155,29 +164,38 @@ export class CategoryComponent implements OnInit {
       environment.IMS.IMS_CAT_BASE_URL +
       environment.IMS.CATEGORY_SUB_BASE_URL;
 
-    if (
-      confirm(
-        "Are you sure you want to add the category with the following Details \n " +
-          ` - Name: ${this.addCategoryForm.value.name} \n - Description: ${this.addCategoryForm.value.description} \n - Status: ${this.addCategoryForm.value.status} `
-      )
-    ) {
-      this.httpShareService
-        .post<CategoryModel>(null, url, this.addCategoryForm.value)
-        .subscribe(
-          (data) => {
-            this._getAllCategory(1);
-            Swal.fire("Added!", "Your file has been Added.", "success");
-          },
-          (error) => {
-            this.error = error ? error : "";
-            this.customAlert.successmsg(
-              "An error Occured",
-              `${error}`,
-              "warning"
-            );
-          }
-        );
-    }
+    this.httpShareService
+      .post<CategoryModel>(null, url, this.addCategoryForm.value)
+      .subscribe(
+        (data) => {
+          this._getAllCategory(1);
+          // Swal.fire("Added!", "Your file has been Added.", "success");
+          this.customAlert.successToast(
+            "Added!",
+            "Your file has been Added.",
+            "success"
+          );
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);
+          // this.error = error ? error : "";
+          // this.customAlert.successmsg(
+          //   "An error Occured",
+          //   `${error}`,
+          //   "warning"
+          // );
+          console.log(error);
+          this.customAlert.errorToast(
+            "An error Occured",
+            `${
+              Array.isArray(error.name) && typeof error.name[0] === "string"
+                ? error.name[0]
+                : " An Error occured"
+            }`,
+            "error"
+          );
+        }
+      );
   }
 
   _getCategoryInfos(categoryId) {
@@ -198,7 +216,8 @@ export class CategoryComponent implements OnInit {
       },
       (error) => {
         this.error = error ? error : "";
-        this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+        // this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+        this.customAlert.errorToast("An error Occured", `${error}`);
       }
     );
   }

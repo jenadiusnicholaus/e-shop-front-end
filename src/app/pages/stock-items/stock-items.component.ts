@@ -189,7 +189,7 @@ export class StockItemsComponent implements OnInit {
       `?stock_item_id=${stockItemId}`;
     this.httpShareService.delete(url).subscribe(
       (res: any) => {
-        this.customAlert.successmsg(
+        this.customAlert.successToast(
           "Stock Item Deleted Successfully",
           "Stock Item Deleted Successfully",
           "success"
@@ -197,7 +197,12 @@ export class StockItemsComponent implements OnInit {
         this.getAllStockList();
       },
       (error) => {
-        this.customAlert.successmsg(
+        // this.customAlert.successmsg(
+        //   "Error in deleting stock item",
+        //   "Something went wrong, please try again later",
+        //   "error"
+        // );
+        this.customAlert.errorToast(
           "Error in deleting stock item",
           "Something went wrong, please try again later",
           "error"

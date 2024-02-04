@@ -17,6 +17,44 @@ export class CustomAlertService {
       cancelButtonColor: "#ff3d60",
     });
   }
+  successToast(title: String, text: String, icon?) {
+    Swal.fire({
+      toast: true,
+      position: "bottom-end",
+      showConfirmButton: false,
+      timer: 3000,
+      title: title?.toString() ?? "success!", // "Warning!",
+      text: text?.toString() ?? "",
+      icon: icon ?? "success",
+    });
+  }
+
+  errorToast(title: String, text: String, icon?) {
+    Swal.fire({
+      toast: true,
+      position: "bottom-end",
+      showConfirmButton: false,
+      timer: 3000,
+      title: title?.toString() ?? "Warning!",
+      text: text?.toString() ?? "",
+      icon: icon ?? "error",
+    });
+
+
+  }
+
+  warningToast(title: String, text: String, icon?) {
+    Swal.fire({
+      toast: true,
+      position: "bottom-end",
+      showConfirmButton: false,
+      timer: 3000,
+      title: title?.toString() ?? "Warning!",
+      text: text?.toString() ?? "",
+      icon: icon ?? "warning",
+    });
+  }
+
 
   async comfirmAndDelete(iAlertParams: IAlertParams) {
     const result = await Swal.fire({

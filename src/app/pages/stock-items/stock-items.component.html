@@ -132,7 +132,7 @@
                         <td>
                           <!-- (click)=" editStoxkItemtModal(modal: any, product: any))" -->
 
-                          <a
+                          <!-- <a
                             (click)="editStockItemtModal(editModal, item)"
                             style="
                               background-color: rgb(227, 227, 21);
@@ -144,7 +144,7 @@
                             placement="top"
                             ngbTooltip="Edit"
                             ><i class="mdi mdi-pencil font-size-18"></i
-                          ></a>
+                          ></a> -->
                           <!-- (click)="_comfirmAndDelete(product?.id)" -->
 
                           <a
@@ -160,7 +160,7 @@
                             ngbTooltip="Delete"
                             ><i class="mdi mdi-trash-can font-size-18"></i
                           ></a>
-                          <button
+                          <a
                             (click)="changeTab(3, item)"
                             style="
                               background-color: rgb(239, 231, 231);
@@ -173,7 +173,7 @@
                             ngbTooltip="Sell the product from stock"
                           >
                             Sell
-                          </button>
+                          </a>
                         </td>
                       </tr>
                     </tbody>

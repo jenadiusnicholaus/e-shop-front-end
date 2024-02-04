@@ -16,6 +16,7 @@ import { RepositoryService } from "../repository.service";
 // import { ToastModule } from "primeng/toast";
 
 import { ToastService } from "../toast.service";
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
   selector: "app-sales",
@@ -37,8 +38,7 @@ export class SalesComponent implements OnInit {
     private modalService: NgbModal,
     private route: ActivatedRoute,
     private moduleStateService: ModuleStateService,
-    private repositoryService: RepositoryService,
-    private toast: ToastService
+    private repositoryService: RepositoryService
   ) {}
   createSalesForm: UntypedFormGroup;
   ngOnInit(): void {
@@ -106,18 +106,28 @@ export class SalesComponent implements OnInit {
       (res: any) => {
         console.log(res);
 
-        //   this.customAlert.successmsg(
-        //     "Success",
-        //     "Sales created successfully",
-        //     "success"
-        //   );
-        //   this.getStockItemSales();
-        //   this.submitted = false;
-        // },
-        // this.toast.showSuccess("Sales created successfully");
+        // this.customAlert.successmsg(
+        //   "Success",
+        //   "Sales created successfully",
+        //   "success"
+        // );
+        this.customAlert.successToast(
+          "Success",
+          "Sales created successfully",
+          "success"
+        );
+        this.getStockItemSales();
+        this.submitted = false;
       },
-      (error) => {
-        this.customAlert.successmsg(
+      // this.toast.showSuccess("Sales created successfully");
+      // },
+      (error: HttpErrorResponse) => {
+        // this.customAlert.successmsg(
+        //   "Error in creating sales",
+        //   "Something went wrong, please try again later",
+        //   "error"
+        // );
+        this.customAlert.errorToast(
           "Error in creating sales",
           `${error}`,
           "error"

@@ -24,6 +24,7 @@ import { JwtInterceptor } from "./core/helpers/jwt.interceptor";
 import { FakeBackendInterceptor } from "./core/helpers/fake-backend";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CommonModule } from "@angular/common";
+import { CustomAlertService } from "./shared/custom-alert.service";
 if (environment.defaultauth === "firebase") {
   initFirebaseBackend(environment.firebaseConfig);
 } else {
@@ -57,6 +58,7 @@ export function createTranslateLoader(http: HttpClient): any {
   providers: [
     // BrowserModule,
     // BrowserAnimationsModule,
+    CustomAlertService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     // { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
