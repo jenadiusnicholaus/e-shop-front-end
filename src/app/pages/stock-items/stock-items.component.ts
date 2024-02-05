@@ -100,6 +100,7 @@ export class StockItemsComponent implements OnInit {
   }
 
   getAllStockItems(id: number) {
+    this.isLoading = true;
     const url =
       environment.E_SHOP_BASE_URL +
       environment.IMS.IMS_STOCK_ITEMS_BASE_URL +
@@ -107,13 +108,15 @@ export class StockItemsComponent implements OnInit {
     this.httpShareService.get<StockItemsModel[]>(url, null).subscribe(
       (res: any) => {
         console.log(res);
+        this.isLoading = false;
         this.stockItemsModel = res;
         this.moduleStateService.setStockItemListState(res);
       },
       (error) => {
-        this.customAlert.successmsg(
+        this.isLoading = false;
+        this.customAlert.errorToast(
           "Error in fetching stock details",
-          "Something went wrong, please try again later",
+          `${error}`,
           "error"
         );
       }
@@ -142,10 +145,10 @@ export class StockItemsComponent implements OnInit {
   }
   editStockItemSubmit() {
     this.submitted = true;
-    this.isLoading = true;
+
     if (this.editStockItemForm.invalid) {
       this.isLoading = false;
-      this.customAlert.successmsg(
+      this.customAlert.successToast(
         "Form is not valid",
         "Please fill all the required fields",
         "error"
@@ -161,22 +164,21 @@ export class StockItemsComponent implements OnInit {
         .put(url, this.editStockItemForm.value, null)
         .subscribe(
           (res: any) => {
-            this.customAlert.successmsg(
+            this.customAlert.successToast(
               "Stock Item Updated Successfully",
               "Stock Item Updated Successfully",
               "success"
             );
             this.modalService.dismissAll();
-            this.isLoading = false;
+
             this.getAllStockList();
           },
           (error) => {
-            this.customAlert.successmsg(
+            this.customAlert.errorToast(
               "Error in updating stock item",
-              "Something went wrong, please try again later",
+              `${error}`,
               "error"
             );
-            this.isLoading = false;
           }
         );
     }
@@ -197,11 +199,6 @@ export class StockItemsComponent implements OnInit {
         this.getAllStockList();
       },
       (error) => {
-        // this.customAlert.successmsg(
-        //   "Error in deleting stock item",
-        //   "Something went wrong, please try again later",
-        //   "error"
-        // );
         this.customAlert.errorToast(
           "Error in deleting stock item",
           "Something went wrong, please try again later",
@@ -236,7 +233,7 @@ export class StockItemsComponent implements OnInit {
       },
       (error) => {
         this.error = error ? error : "";
-        this.customAlert.successmsg("An error Occured", `${error}`, "warning");
+        this.customAlert.errorToast("An error Occured", `${error}`, "warning");
       }
     );
   }
@@ -271,7 +268,7 @@ export class StockItemsComponent implements OnInit {
         // feed the form
       },
       (error) => {
-        this.customAlert.successmsg(
+        this.customAlert.errorToast(
           "Error in fetching stock details",
           "Something went wrong, please try again later",
           "error"
@@ -297,7 +294,7 @@ export class StockItemsComponent implements OnInit {
         this.moduleStateService.setCurrentStockItemState(data);
       },
       (error) => {
-        this.customAlert.successmsg(
+        this.customAlert.errorToast(
           "Error in fetching stock details",
           "Something went wrong, please try again later",
           "error"
@@ -343,6 +340,25 @@ export class StockItemsComponent implements OnInit {
         this.getStock();
       },
       (error) => {
+        console.log("error", error);
+      }
+    );
+  }
+
+  searchStockItem(event) {
+    const url =
+      environment.E_SHOP_BASE_URL +
+      environment.IMS.IMS_STOCK_ITEM_SEARCH +
+      `?search-text=${event.target.value}`;
+    this.repositoryService.getList(
+      url,
+      (res: any) => {
+        console.log("this.stockItemsSalesModel", res);
+        this.stockItemsModel = res;
+        this.moduleStateService.setStockItemListState(res);
+      },
+      (error) => {
+        this.stockItemsModel = [];
         console.log("error", error);
       }
     );

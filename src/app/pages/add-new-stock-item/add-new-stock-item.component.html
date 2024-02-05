@@ -10,7 +10,7 @@
             <div class="row">
               <div class="col-md-6">
                 <label>Product to add</label>
-                <select
+                <!-- <select
                   type="text"
                   class="form-control"
                   formControlName="product"
@@ -35,7 +35,26 @@
                   >
                     {{ product.name }}
                   </option>
-                </select>
+                </select> -->
+                <ng-select
+                  [items]="productsModel"
+                  bindLabel="name"
+                  bindValue="id"
+                  placeholder="Select Product"
+                  formControlName="product"
+                  [ngClass]="{
+                    'is-invalid': submit && addStockItemform.product.errors
+                  }"
+                >
+                  <div
+                    *ngIf="submit && addStockItemform.product.errors"
+                    class="invalid-feedback"
+                  >
+                    <span *ngIf="addStockItemform.product.errors.required"
+                      >This value is required.</span
+                    >
+                  </div>
+                </ng-select>
               </div>
               <div class="col-md-6">
                 <div class="form-group">

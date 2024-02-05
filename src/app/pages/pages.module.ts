@@ -42,6 +42,10 @@ import { StockSalesComponent } from "./stock-sales/stock-sales.component";
 // import { DataTablesModule } from 'angular-datatables';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { BrowserModule } from "@angular/platform-browser";
+import { TranslateModule } from "@ngx-translate/core";
+import { SharedLoaderComponent } from './shared-loader/shared-loader.component';
+import { StockOrdersComponent } from './stock-orders/stock-orders.component';
+
 // import { ToastModule } from "primeng/toast";
 // import { MessageService } from "primeng/api/messageservice";
 // import { MessageService } from "primeng/api";
@@ -62,6 +66,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SalesComponent,
     UnderconstractionPageComponent,
     StockSalesComponent,
+    SharedLoaderComponent,
+    StockOrdersComponent,
   ],
   imports: [
     CommonModule,
@@ -83,10 +89,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     WidgetModule,
     NgbPaginationModule,
     //  DataTablesModule,
-    // 
+    //
     NgbTypeaheadModule,
     // BrowserAnimationsModule,
     // ToastModule,
+    TranslateModule,
 
     NgbCollapseModule,
     NgSelectModule,
