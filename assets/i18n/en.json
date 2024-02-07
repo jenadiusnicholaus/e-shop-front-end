@@ -87,161 +87,117 @@
     "STOCK": {
       "TEXT": "Stock",
       "BADGE": "03"
-    },
+    }
+  },
 
-    "LAYOUTS": {
-      "TEXT": "Layouts",
-      "LIST": {
-        "HORIZONTAL": "Horizontal",
-        "LIGHTSIDEBAR": "Light Sidebar",
-        "COMPACTSIDEBAR": "Compact Sidebar",
-        "ICONSIDEBAR": "Icons Sidebar",
-        "BOXED": "Boxed Layout",
-        "COLOREDSIDEBAR": "Colored Sidebar",
-        "VERTICAL": "Vertical",
-        "LIGHTTOPBAR": "Light Topbar",
-        "COLOREDHEADER": "Colored Header"
-      }
-    },
-    "APPS": {
-      "TEXT": "Apps"
-    },
-    "CALENDAR": {
-      "TEXT": "Calendar"
-    },
-    "CHAT": {
-      "TEXT": "Chat",
-      "BADGE": "New"
-    },
-    "ECOMMERCE": {
-      "TEXT": "Ecommerce",
-      "LIST": {
-        "PRODUCTS": "Products",
-        "PRODUCTDETAIL": "Product Detail",
-        "ORDERS": "Orders",
-        "CUSTOMERS": "Customers",
-        "CART": "Cart",
-        "CHECKOUT": "Checkout",
-        "SHOPS": "Shops",
-        "ADDPRODUCT": "Add Product"
-      }
-    },
-    "EMAIL": {
-      "TEXT": "Email",
-      "LIST": {
-        "INBOX": "Inbox",
-        "READEMAIL": "Read Email"
-      }
-    },
-    "KANBAN": {
-      "TEXT": "Kanban Board"
-    },
-    "PAGES": {
-      "TEXT": "Pages"
-    },
-    "AUTHENTICATION": {
-      "TEXT": "Authentication",
-      "LIST": {
-        "LOGIN": "Login",
-        "REGISTER": "Register",
-        "RECOVERPWD": "Recover Password",
-        "LOCKSCREEN": "Lock screen"
-      }
-    },
-    "UTILITY": {
-      "TEXT": "Utility",
-      "LIST": {
-        "STARTER": "Starter Page",
-        "MAINTENANCE": "Maintenance",
-        "TIMELINE": "Timeline",
-        "COOMINGSOON": "Cooming Soon",
-        "FAQS": "FAQs",
-        "PRICING": "Pricing",
-        "ERROR404": "Error 404",
-        "ERROR500": "Error 500"
-      }
-    },
-    "COMPONENTS": {
-      "TEXT": "Components"
-    },
-    "UIELEMENTS": {
-      "TEXT": "UI Elements",
-      "LIST": {
-        "ALERTS": "Alerts",
-        "BUTTONS": "Buttons",
-        "CARDS": "Cards",
-        "CAROUSEL": "Carousel",
-        "DROPDOWNS": "Dropdowns",
-        "GRID": "Grid",
-        "IMAGES": "Images",
-        "MODALS": "Modals",
-        "RANGESLIDER": "Range Slider",
-        "PROGRESSBAR": "Progress Bars",
-        "SWEETALERT": "Sweet Alert",
-        "TABS": "Tabs & Accordions",
-        "TYPOGRAPHY": "Typography",
-        "VIDEO": "Video",
-        "GENERAL": "General"
-      }
-    },
-    "FORMS": {
-      "TEXT": "Forms",
-      "BADGE": "8",
-      "LIST": {
-        "ELEMENTS": "Form Elements",
-        "VALIDATION": "Form Validation",
-        "ADVANCED": "Form Advanced",
-        "EDITOR": "Form Editor",
-        "FILEUPLOAD": "Form File Upload",
-        "REPEATER": "Form Repeater",
-        "WIZARD": "Form Wizard",
-        "MASK": "Form Mask"
-      }
-    },
-    "TABLES": {
-      "TEXT": "Tables",
-      "LIST": {
-        "BASIC": "Basic Tables",
-        "ADVANCED": "Advanced Table"
-      }
-    },
-    "CHARTS": {
-      "TEXT": "Charts",
-      "LIST": {
-        "APEX": "Apex Chart",
-        "CHARTJS": "Chartjs Chart",
-        "CHARTIST": "Chartist Chart",
-        "ECHART": "E Chart"
-      }
-    },
-    "ICONS": {
-      "TEXT": "Icons",
-      "LIST": {
-        "REMIX": "Boxicons",
-        "MATERIALDESIGN": "Material Design",
-        "DRIPICONS": "Dripicons",
-        "FONTAWESOME": "Font awesome 5"
-      }
-    },
-    "MAPS": {
-      "TEXT": "Maps",
-      "LIST": {
-        "LEAFLET": "Leaflet Maps",
-        "GOOGLEMAP": "Google Maps"
-      }
-    },
-    "MULTILEVEL": {
-      "TEXT": "Multi Level",
-      "LIST": {
-        "LEVEL1": {
-          "1": "Level 1.1",
-          "2": "Level 1.2",
-          "LEVEL2": {
-            "1": "Level 2.1",
-            "2": "Level 2.2"
-          }
-        }
-      }
+  "DASHBOARD": {
+    "REVENUE": "Revenue",
+    "PRODUCT_SOLD": "Product Sold",
+    "LATEST_ORDER": "Latest Order",
+    "DAILY_SALES": "Daily Sales",
+    "VISITS": "Visits",
+    "GROWTH": "Growth",
+    "GOAL": "Goal",
+    "PROJECT_STATUS": "Project Status",
+    "LATEST_COMMENTS": "Latest Comments",
+    "PROGRESS": "Progress"
+  },
+  "CATEGORY": {
+    "CATEGORY": "Category",
+    "ADD_CATEGORY": "Add Category",
+    "CATEGORY_NAME": "Name",
+    "CATEGORY_DESCRIPTION": "Description",
+    "CATEGORY_IMAGE": "Image",
+    "CATEGORY_ICON": "Icon",
+    "CATEGORY_STATUS": "Status",
+    "CATEGORY_ACTION": "Action",
+    "CATEGORY_NAME_REQUIRED": "Category Name is required",
+    "CATEGORY_IMAGE_REQUIRED": "Category Image is required",
+    "CATEGORY_ICON_REQUIRED": "Category Icon is required",
+    "ADD_NEW_CATEGORY": "Add New Category",
+    "EDIT_CATEGORY": "Edit Category",
+    "SAVE_CATEGORY": "Save Category",
+    "CATEGORY_NAME_LABEL": "Category Name",
+    "CATEGORY_IMAGE_LABEL": "Category Image",
+    "CATEGORY_ICON_LABEL": "Category Icon",
+    "CATEGORY_STATUS_LABEL": "Category Status",
+    "ACTIVE": "Active",
+    "INACTIVE": "Inactive",
+    "CANCEL": "Cancel",
+    "SAVE": "Save",
+    "CATEGORY_DETAILS": "Category Details",
+    "CATEGORY_IMAGE_UPLOAD": "Upload Category Image",
+    "CATEGORY_ICON_UPLOAD": "Upload Category Icon",
+    "CATEGORY_IMAGE_UPLOAD_TEXT": "Upload Image",
+    "CATEGORY_ICON_UPLOAD_TEXT": "Upload Icon",
+    "CATEGORY_IMAGE_UPLOAD_TEXT_SECOND": "Drag and drop file here or click to upload"
+  },
+
+  "STOCK": {
+    "STOCK": "Stock",
+    "ADD_STOCK": "Add Stock",
+    "STOCK_NAME": "Name",
+    "STOCK_DESCRIPTION": "Description",
+    "STOCK_IMAGE": "Image",
+    "STOCK_ICON": "Icon",
+    "STOCK_STATUS": "Status",
+    "STOCK_ACTION": "Action",
+    "STOCK_NAME_REQUIRED": "Stock Name is required",
+    "STOCK_IMAGE_REQUIRED": "Stock Image is required",
+    "STOCK_ICON_REQUIRED": "Stock Icon is required",
+    "ADD_NEW_STOCK": "Add New Stock",
+    "EDIT_STOCK": "Edit Stock",
+    "SAVE_STOCK": "Save Stock",
+    "STOCK_NAME_LABEL": "Stock Name",
+    "STOCK_IMAGE_LABEL": "Stock Image",
+    "STOCK_ICON_LABEL": "Stock Icon",
+    "STOCK_STATUS_LABEL": "Stock Status",
+    "ACTIVE": "Active",
+    "INACTIVE": "Inactive",
+    "CANCEL": "Cancel",
+    "SAVE": "Save",
+    "STOCK_DETAILS": "Stock Details",
+    "STOCK_IMAGE_UPLOAD": "Upload Stock Image",
+    "STOCK_ICON_UPLOAD": "Upload Stock Icon",
+    "STOCK_IMAGE_UPLOAD_TEXT": "Upload Image",
+    "STOCK_ICON_UPLOAD_TEXT": "Upload Icon",
+    "STOCK_IMAGE_UPLOAD_TEXT_SECOND": "Drag and drop file here or click to upload"
+  },
+
+  "STOCK_ITEM": {
+    "STOCK_ITEM": "Stock Item",
+    "ADD_STOCK_ITEM": "Add Stock Item",
+    "STOCK_ITEM_NAME": "Name",
+    "STOCK_ITEM_DESCRIPTION": "Description",
+    "STOCK_ITEM_IMAGE": "Image",
+    "STOCK_ITEM_ICON": "Icon",
+    "STOCK_ITEM_STATUS": "Status",
+    "STOCK_ITEM_ACTION": "Action",
+    "STOCK_ITEM_NAME_REQUIRED": "Stock Item Name is required",
+    "STOCK_ITEM_IMAGE_REQUIRED": "Stock Item Image is required",
+    "STOCK_ITEM_ICON_REQUIRED": "Stock Item Icon is required",
+    "ADD_NEW_STOCK_ITEM": "Add New Stock Item",
+    "EDIT_STOCK_ITEM": "Edit Stock Item",
+    "SAVE_STOCK_ITEM": "Save Stock Item",
+    "STOCK_ITEM_NAME_LABEL": "Stock Item Name",
+    "STOCK_ITEM_IMAGE_LABEL": "Stock Item Image",
+    "STOCK_ITEM_ICON_LABEL": "Stock Item Icon",
+    "STOCK_ITEM_STATUS_LABEL": "Stock Item Status",
+    "ACTIVE": "Active",
+    "INACTIVE": "Inactive",
+    "CANCEL": "Cancel",
+    "SAVE": "Save",
+    "STOCK_ITEM_DETAILS": "Stock Item Details",
+    "STOCK_ITEM_IMAGE_UPLOAD": "Upload Stock Item Image",
+    "STOCK_ITEM_ICON_UPLOAD": "Upload Stock Item Icon",
+    "STOCK_ITEM_IMAGE_UPLOAD_TEXT": "Upload Image",
+    "STOCK_ITEM_ICON_UPLOAD_TEXT": "Upload Icon",
+    "STOCK_ITEM_IMAGE_UPLOAD_TEXT_SECOND": "Drag and drop file here or click to upload",
+
+    "ACTION_MENU": {
+      "SELL": "Sell",
+      "PROMOTE": "Promote",
+      "DELETE": "Delete"
     }
   }
 }

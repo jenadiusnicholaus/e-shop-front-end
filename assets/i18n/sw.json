@@ -1,0 +1,181 @@
+{
+  "HEADER": {
+    "SEARCH": "Tafta...",
+    "MEGA_MENU": "Mega Menu",
+
+    "SETTINGS": "Settings",
+    "UI": {
+      "TITLE": "UI Components",
+      "LIGHTBOX": "LightBox",
+      "RANGE_SLIDER": "Range Slider",
+      "SWEET_ALERT": "Sweet Alert",
+      "RATING": "Rating",
+      "FORMS": "Forms",
+      "TABLES": "Tables",
+      "CHARTS": "Charts"
+    },
+    "APPLICATIONS": {
+      "TITLE": "Applications",
+      "ECOMMERCE": "Ecommerce",
+      "CALENDAR": "Calendar",
+      "EMAIL": "Email",
+      "PROJECTS": "Projects",
+      "TASKS": "Tasks",
+      "CONTACTS": "Contacts"
+    },
+    "EXTRA_PAGES": {
+      "TITLE": "Extra Pages",
+      "LIGHT_SIDEBAR": "Light Sidebar",
+      "COMPACT_SIDEBAR": "Compact Sidebar",
+      "HORIZONTAL_LAYOUT": "Horizontal layout",
+      "MAINTENANCE": "Maintenance",
+      "COMING SOON": "Coming Soon",
+      "TIMELINE": "Timeline",
+      "FAQ": "FAQs"
+    },
+    "LOGIN": {
+      "PROFILE": "Wasifu",
+      "MY_WALLET": "My Wallet",
+      "SETTINGS": "Settings",
+      "LOCK_SCREEN": "Lock screen",
+      "LOGOUT": "Logout"
+    }
+  },
+  "MENUITEMS": {
+    "MENU": {
+      "TEXT": "Menu"
+    },
+    "DASHBOARDS": {
+      "TEXT": "Dashibodi",
+      "BADGE": "03"
+    },
+
+    "CATEGORY": {
+      "TEXT": "Aina za Bidhaa",
+      "BADGE": "03"
+    },
+
+    "PRODUCTS": {
+      "TEXT": "Bidthaa",
+      "BADGE": "03"
+    },
+
+    "STOCK": {
+      "TEXT": "Mzigo wa bidhaa",
+      "BADGE": "03"
+    }
+  },
+  "DASHBOARD": {
+    "REVENUE": "Mapato",
+    "PRODUCT_SOLD": "Bidhaa zilizouzwa",
+    "LATEST_ORDER": "Agizo jipya",
+    "DAILY_SALES": "Mauzo ya kila siku",
+    "VISITS": "Visits",
+    "GROWTH": "Ongezeko",
+    "GOAL": "Lengo",
+    "PROJECT_STATUS": "Hali ya mradi",
+    "LATEST_COMMENTS": "Maoni ya hivi karibuni",
+    "PROGRESS": "Maendeleo",
+    "TASKS": "Kazi",
+    "TEAM_MEMBERS": "Wanachama wa timu"
+  },
+
+  "CATEGORY": {
+    "CATEGORY": "Aina za Bidhaa",
+    "ADD_CATEGORY": "Ongeza Aina",
+    "CATEGORY_NAME": "Jina",
+    "CATEGORY_DESCRIPTION": "Maelezo",
+    "CATEGORY_IMAGE": "Picha",
+    "CATEGORY_ICON": "Icon ya Aina",
+    "CATEGORY_STATUS": "Hali",
+    "CATEGORY_ACTION": "Mwenendo wa Aina",
+    "CATEGORY_NAME_REQUIRED": "Jina la Aina ni lazima",
+    "CATEGORY_IMAGE_REQUIRED": "Picha ya Aina ni lazima",
+    "CATEGORY_ICON_REQUIRED": "Icon ya Aina ni lazima",
+    "ADD_NEW_CATEGORY": "Ongeza Aina Mpya",
+    "EDIT_CATEGORY": "Hariri Aina",
+    "SAVE_CATEGORY": "Hifadhi Aina",
+    "CATEGORY_NAME_LABEL": "Jina la Aina",
+    "CATEGORY_IMAGE_LABEL": "Picha ya Aina",
+    "CATEGORY_ICON_LABEL": "Icon ya Aina",
+    "CATEGORY_STATUS_LABEL": "Hali ya Aina",
+    "ACTIVE": "Active",
+    "INACTIVE": "Inactive",
+    "CANCEL": "Ghairi",
+    "SAVE": "Hifadhi",
+    "CATEGORY_DETAILS": "Maelezo ya Aina",
+    "CATEGORY_IMAGE_UPLOAD": "Pakia Picha ya Aina",
+    "CATEGORY_ICON_UPLOAD": "Pakia Icon ya Aina",
+    "CATEGORY_IMAGE_UPLOAD_TEXT": "Pakia Picha",
+    "CATEGORY_ICON_UPLOAD_TEXT": "Pakia Icon",
+    "CATEGORY_IMAGE_UPLOAD_TEXT_SECOND": "Pakia Picha ya Aina"
+  },
+
+  "STOCK": {
+    "STOCK": "Mzigo wa Bidhaa",
+    "ADD_STOCK": "Ongeza Mzigo",
+    "STOCK_NAME": "Jina",
+    "STOCK_DESCRIPTION": "Maelezo",
+    "STOCK_IMAGE": "Picha",
+    "STOCK_ICON": "Icon ya Mzigo",
+    "STOCK_STATUS": "Hali",
+    "STOCK_ACTION": "Mwenendo wa Mzigo",
+    "STOCK_NAME_REQUIRED": "Jina la Mzigo ni lazima",
+    "STOCK_IMAGE_REQUIRED": "Picha ya Mzigo ni lazima",
+    "STOCK_ICON_REQUIRED": "Icon ya Mzigo ni lazima",
+    "ADD_NEW_STOCK": "Ongeza Mzigo Mpya",
+    "EDIT_STOCK": "Hariri Mzigo",
+    "SAVE_STOCK": "Hifadhi Mzigo",
+    "STOCK_NAME_LABEL": "Jina la Mzigo",
+    "STOCK_IMAGE_LABEL": "Picha ya Mzigo",
+    "STOCK_ICON_LABEL": "Icon ya Mzigo",
+    "STOCK_STATUS_LABEL": "Hali ya Mzigo",
+    "ACTIVE": "Active",
+    "INACTIVE": "Inactive",
+    "CANCEL": "Ghairi",
+    "SAVE": "Hifadhi",
+    "STOCK_DETAILS": "Maelezo ya Mzigo",
+    "STOCK_IMAGE_UPLOAD": "Pakia Picha ya Mzigo",
+    "STOCK_ICON_UPLOAD": "Pakia Icon ya Mzigo",
+    "STOCK_IMAGE_UPLOAD_TEXT": "Pakia Picha",
+    "STOCK_ICON_UPLOAD_TEXT": "Pakia Icon",
+    "STOCK_IMAGE_UPLOAD_TEXT_SECOND": "Pakia Picha ya Mzigo"
+  },
+
+  "STOCK_ITEM": {
+    "STOCK_ITEM": "Bidhaa za Mzigo",
+    "ADD_STOCK_ITEM": "Ongeza Bidhaa",
+    "STOCK_ITEM_NAME": "Jina",
+    "STOCK_ITEM_DESCRIPTION": "Maelezo",
+    "STOCK_ITEM_IMAGE": "Picha",
+    "STOCK_ITEM_ICON": "Icon ya Bidhaa",
+    "STOCK_ITEM_STATUS": "Hali",
+    "STOCK_ITEM_ACTION": "Mwenendo wa Bidhaa",
+    "STOCK_ITEM_NAME_REQUIRED": "Jina la Bidhaa ni lazima",
+    "STOCK_ITEM_IMAGE_REQUIRED": "Picha ya Bidhaa ni lazima",
+    "STOCK_ITEM_ICON_REQUIRED": "Icon ya Bidhaa ni lazima",
+    "ADD_NEW_STOCK_ITEM": "Ongeza Bidhaa Mpya",
+    "EDIT_STOCK_ITEM": "Hariri Bidhaa",
+    "SAVE_STOCK_ITEM": "Hifadhi Bidhaa",
+    "STOCK_ITEM_NAME_LABEL": "Jina la Bidhaa",
+    "STOCK_ITEM_IMAGE_LABEL": "Picha ya Bidhaa",
+    "STOCK_ITEM_ICON_LABEL": "Icon ya Bidhaa",
+    "STOCK_ITEM_STATUS_LABEL": "Hali ya Bidhaa",
+    "ACTIVE": "Active",
+    "INACTIVE": "Inactive",
+    "CANCEL": "Ghairi",
+    "SAVE": "Hifadhi",
+    "STOCK_ITEM_DETAILS": "Maelezo ya Bidhaa",
+    "STOCK_ITEM_IMAGE_UPLOAD": "Pakia Picha ya Bidhaa",
+    "STOCK_ITEM_ICON_UPLOAD": "Pakia Icon ya Bidhaa",
+    "STOCK_ITEM_IMAGE_UPLOAD_TEXT": "Pakia Picha",
+    "STOCK_ITEM_ICON_UPLOAD_TEXT": "Pakia Icon",
+    "STOCK_ITEM_IMAGE_UPLOAD_TEXT_SECOND": "Pakia Picha ya Bidhaa",
+
+    "ACTION_MENU": {
+      "SELL": "Uza",
+      "PROMOTE": "Tangaza",
+      "DELETE": "Futa"
+    }
+  }
+}
