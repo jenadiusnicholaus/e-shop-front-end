@@ -73,7 +73,6 @@ export class StockItemsComponent implements OnInit {
     private repositoryService: RepositoryService
   ) {}
   ngOnInit(): void {
-    this.isLoading = true;
     this.getAllStockList();
 
     this.editStockItemForm = this.formBuilder.group({

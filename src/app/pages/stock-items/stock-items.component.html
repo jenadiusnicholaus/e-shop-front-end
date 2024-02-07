@@ -33,23 +33,23 @@
               >
             </a>
             <ng-template ngbNavContent>
-              <ng-template
-                *ngIf="stockItemsModel?.length > 0; then data; else error"
-              ></ng-template>
-              <ng-template #data>
-                <div style="height: 100%" class="table-responsive">
+              <div style="height: 100%" class="table-responsive">
+                <ng-template
+                  *ngIf="isLoading; then loadingBlock; else dataBlock"
+                >
+                </ng-template>
+
+                <ng-template #loadingBlock>
+                  <app-shared-loader
+                    [isLoading]="isLoading"
+                  ></app-shared-loader>
+                </ng-template>
+
+                <ng-template #dataBlock>
                   <ng-template
-                    *ngIf="isLoading; then loadingBlock; else dataBlock"
-                  >
-                  </ng-template>
-
-                  <ng-template #loadingBlock>
-                    <app-shared-loader
-                      [isLoading]="isLoading"
-                    ></app-shared-loader>
-                  </ng-template>
-
-                  <ng-template #dataBlock>
+                    *ngIf="stockItemsModel?.length > 0; then data; else error"
+                  ></ng-template>
+                  <ng-template #data>
                     <table
                       id="basic-datatable"
                       class="table table-centered dt-responsive nowrap datatables no-footer dtr-inline"
@@ -264,11 +264,11 @@
                       </tbody>
                     </table>
                   </ng-template>
-                </div>
-              </ng-template>
-              <ng-template #error>
-                <p style="text-align: center; padding: 20%">No Data</p>
-              </ng-template>
+                  <ng-template #error>
+                    <p style="text-align: center; padding: 20%">No Data</p>
+                  </ng-template>
+                </ng-template>
+              </div>
             </ng-template>
           </li>
           <li [ngbNavItem]="2">
