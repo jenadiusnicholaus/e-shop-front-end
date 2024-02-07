@@ -1,49 +1,55 @@
 <div class="container-fluid">
-  <ng-template *ngIf="isLoading; then loadingBlock; else dataBlock">
-  </ng-template>
-
-  <ng-template #loadingBlock>
-    <app-shared-loader [isLoading]="isLoading"></app-shared-loader>
-  </ng-template>
-
-  <ng-template #dataBlock>
-    <div class="col-lg-12">
-      <div class="card">
-        <div class="card-body">
-          <!-- <h4 class="card-title">Stock No</h4>
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <!-- <h4 class="card-title">Stock No</h4>
         <p class="card-title-desc">Descrition</p> -->
-          <input
-            type="text"
-            class="form-control"
-            placeholder="{{ 'HEADER.SEARCH' | translate }}"
-            (keyup)="searchStockItem($event)"
-          />
-          <ul
-            ngbNav
-            #customNav="ngbNav"
-            [activeId]="1"
-            class="nav-tabs nav-tabs-custom nav-justified"
-          >
-            <li (click)="onTabClick($event)" [ngbNavItem]="1">
-              <a ngbNavLink>
-                <span class="d-block d-sm-none">
-                  <i class="fas fa-chevron-left"></i>
-                </span>
-                <span class="d-none d-sm-block"
-                  ><i
-                    (click)="goBack()"
-                    class="fas fa-chevron-left"
-                    style="padding-right: 24px"
-                  ></i
-                  >Stock Items</span
-                >
-              </a>
-              <ng-template ngbNavContent>
-                <ng-template
-                  *ngIf="stockItemsModel?.length > 0; then data; else error"
-                ></ng-template>
-                <ng-template #data>
-                  <div class="table-responsive">
+
+        <input
+          type="text"
+          class="form-control"
+          placeholder="{{ 'HEADER.SEARCH' | translate }}"
+          (keyup)="searchStockItem($event)"
+        />
+
+        <ul
+          ngbNav
+          #customNav="ngbNav"
+          [activeId]="1"
+          class="nav-tabs nav-tabs-custom nav-justified"
+        >
+          <li (click)="onTabClick($event)" [ngbNavItem]="1">
+            <a ngbNavLink>
+              <span class="d-block d-sm-none">
+                <i class="fas fa-chevron-left"></i>
+              </span>
+              <span class="d-none d-sm-block"
+                ><i
+                  (click)="goBack()"
+                  class="fas fa-chevron-left"
+                  style="padding-right: 24px"
+                ></i
+                >Stock Items</span
+              >
+            </a>
+            <ng-template ngbNavContent>
+              <ng-template
+                *ngIf="stockItemsModel?.length > 0; then data; else error"
+              ></ng-template>
+              <ng-template #data>
+                <div style="height: 100%" class="table-responsive">
+                  <ng-template
+                    *ngIf="isLoading; then loadingBlock; else dataBlock"
+                  >
+                  </ng-template>
+
+                  <ng-template #loadingBlock>
+                    <app-shared-loader
+                      [isLoading]="isLoading"
+                    ></app-shared-loader>
+                  </ng-template>
+
+                  <ng-template #dataBlock>
                     <table
                       id="basic-datatable"
                       class="table table-centered dt-responsive nowrap datatables no-footer dtr-inline"
@@ -159,7 +165,7 @@
                           ></a> -->
                             <!-- (click)="_comfirmAndDelete(product?.id)" -->
 
-                            <a
+                            <!-- <a
                               (click)="_comfirmAndDeleteStockItem(item?.id)"
                               style="
                                 background-color: rgb(239, 231, 231);
@@ -171,8 +177,8 @@
                               placement="top"
                               ngbTooltip="Delete"
                               ><i class="mdi mdi-trash-can font-size-18"></i
-                            ></a>
-                            <a
+                            ></a> -->
+                            <!-- <a
                               (click)="changeTab(3, item)"
                               style="
                                 background-color: rgb(239, 231, 231);
@@ -185,74 +191,159 @@
                               ngbTooltip="Sell the product from stock"
                             >
                               Sell
-                            </a>
+                            </a> -->
+
+                            <div
+                              class="dropdown d-inline-block user-dropdown"
+                              ngbDropdown
+                            >
+                              <a
+                                style="
+                                  padding: 0;
+                                  margin: 0;
+                                  border: none;
+
+                                  height: 20px;
+                                "
+                                type="button"
+                                ngbDropdownToggle
+                                class="btn header-item waves-effect"
+                                id="page-header-user-dropdown"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                              >
+                                <i
+                                  style="margin-block: 0; padding-block: 0"
+                                  class="mdi mdi-dots-vertical"
+                                ></i>
+                              </a>
+
+                              <div
+                                class="dropdown-menu dropdown-menu-end"
+                                ngbDropdownMenu
+                              >
+                                <!-- item-->
+                                <a
+                                  (click)="
+                                    salesStockItemtModal(SallesModel, item)
+                                  "
+                                  class="dropdown-item"
+                                  href="javascript: void(0);"
+                                  ><i class="mdi mdi-cart-outline me-1"></i>
+                                  {{
+                                    "STOCK_ITEM.ACTION_MENU.SELL" | translate
+                                  }}</a
+                                >
+                                <a
+                                  class="dropdown-item"
+                                  href="javascript: void(0);"
+                                  ><i
+                                    class="ri-wallet-2-line align-middle me-1"
+                                  ></i
+                                  >{{
+                                    "STOCK_ITEM.ACTION_MENU.PROMOTE" | translate
+                                  }}</a
+                                >
+
+                                <a
+                                  (click)="_comfirmAndDeleteStockItem(item?.id)"
+                                  class="dropdown-item text-danger"
+                                  href="javascript: void(0);"
+                                  ><i
+                                    class="mdi mdi-trash-can me-1 text-danger"
+                                  ></i>
+                                  {{
+                                    "STOCK_ITEM.ACTION_MENU.DELETE" | translate
+                                  }}</a
+                                >
+                              </div>
+                            </div>
                           </td>
                         </tr>
                       </tbody>
                     </table>
-                  </div>
-                </ng-template>
-                <ng-template #error>
-                  <p style="text-align: center; padding: 20%">No Data</p>
-                </ng-template>
+                  </ng-template>
+                </div>
               </ng-template>
-            </li>
-            <li [ngbNavItem]="2">
-              <a ngbNavLink>
-                <span class="d-block d-sm-none"
-                  ><i class="far fa-plus-square"></i
-                ></span>
-                <span class="d-none d-sm-block"
-                  ><i class="far fa-plus-square" style="padding-right: 24px"></i
-                  >Add new Item
-                </span>
-              </a>
-              <ng-template ngbNavContent>
-                <app-add-new-stock-item
-                  [stockId]="stockId"
-                ></app-add-new-stock-item>
+              <ng-template #error>
+                <p style="text-align: center; padding: 20%">No Data</p>
               </ng-template>
-            </li>
-            <li [ngbNavItem]="3">
-              <a ngbNavLink>
-                <span class="d-block d-sm-none"
-                  ><i class="fa fa-shopping-cart"></i
-                ></span>
-                <span class="d-none d-sm-block"
-                  ><i class="fa fa-shopping-cart" style="padding-right: 24px">
-                  </i
-                  >Stock sales space</span
-                >
-              </a>
-              <ng-template ngbNavContent>
-                <app-sales *ngIf="stockId"></app-sales>
-              </ng-template>
-            </li>
-            <li [ngbNavItem]="4">
-              <a ngbNavLink (click)="getStockSales()">
-                <span class="d-block d-sm-none"
-                  ><i class="fas fa-comments-dollar"></i
-                ></span>
-                <span class="d-none d-sm-block"
-                  ><i
-                    class="fas fa-comments-dollar"
-                    style="padding-right: 24px"
-                  ></i
-                  >Stock revenues</span
-                >
-              </a>
-              <ng-template ngbNavContent>
-                <app-stock-sales></app-stock-sales>
-                <!-- <ng-template [ngTemplateOutlet]="TabContent1"></ng-template> -->
-              </ng-template>
-            </li>
-          </ul>
-          <div [ngbNavOutlet]="customNav"></div>
-        </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="2">
+            <a ngbNavLink>
+              <span class="d-block d-sm-none"
+                ><i class="far fa-plus-square"></i
+              ></span>
+              <span class="d-none d-sm-block"
+                ><i class="far fa-plus-square" style="padding-right: 24px"></i
+                >Add new Item
+              </span>
+            </a>
+            <ng-template ngbNavContent>
+              <app-add-new-stock-item
+                [stockId]="stockId"
+              ></app-add-new-stock-item>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="3">
+            <a ngbNavLink>
+              <span class="d-block d-sm-none"
+                ><i class="fa fa-shopping-cart"></i
+              ></span>
+              <span class="d-none d-sm-block"
+                ><i class="fa fa-shopping-cart" style="padding-right: 24px"> </i
+                >Stock Orders</span
+              >
+            </a>
+            <ng-template ngbNavContent> </ng-template>
+          </li>
+          <li [ngbNavItem]="4">
+            <a ngbNavLink (click)="getStockSales()">
+              <span class="d-block d-sm-none"
+                ><i class="fas fa-comments-dollar"></i
+              ></span>
+              <span class="d-none d-sm-block"
+                ><i
+                  class="fas fa-comments-dollar"
+                  style="padding-right: 24px"
+                ></i
+                >Stock revenues</span
+              >
+            </a>
+            <ng-template ngbNavContent>
+              <app-stock-sales></app-stock-sales>
+              <!-- <ng-template [ngTemplateOutlet]="TabContent1"></ng-template> -->
+            </ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="customNav"></div>
       </div>
     </div>
-  </ng-template>
+  </div>
 </div>
+
+<ng-template #SallesModel let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">
+      <small class="Sales-header">
+        Total Quantity in stock:
+        {{ stockItem?.qty }}{{ stockItem?.qty_in }} for
+        {{ stockItem?.product?.name }}
+      </small>
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="modal.dismiss('Cross click')"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <app-sales *ngIf="stockId"></app-sales>
+  </div>
+</ng-template>
 
 <ng-template #editModal let-modal>
   <div class="modal-header">

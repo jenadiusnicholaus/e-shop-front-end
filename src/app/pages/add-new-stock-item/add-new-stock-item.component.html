@@ -43,7 +43,9 @@
                   placeholder="Select Product"
                   formControlName="product"
                   [ngClass]="{
-                    'is-invalid': submit && addStockItemform.product.errors
+                    'is-invalid': submit && addStockItemform.product.errors,
+                    'light-theme': currentTheme == 'light',
+                    'dark-theme': currentTheme == 'dark'
                   }"
                 >
                   <div

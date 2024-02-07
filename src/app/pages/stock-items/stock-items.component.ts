@@ -23,7 +23,7 @@ import { RepositoryService } from "../repository.service";
 export class StockItemsComponent implements OnInit {
   stockItemsModel: StockItemsModel[];
   stockItem: StockItemsModel;
-  freshCurrentStockItem: Stock;
+  freshCurrentStock: Stock;
 
   stockId: number;
   submitted = false;
@@ -39,21 +39,28 @@ export class StockItemsComponent implements OnInit {
     { id: "1", name: "in-stock" },
     { id: "2", name: "out-stock" },
   ];
-
-  //   SI_UNIT_CHOICES = (
-  //     ("m", "Meter (m)"),
-  //     ("kg", "Kilogram (kg)"),
-  //     ("g", "Gram (g)"),
-  //     ("just_no", "just_no"),
-  //     ("pic", "Pic"),
-  // )
+  // ("pic", "Piece"),
+  // ("box", "Box"),
+  // ("carton", "Carton"),
+  // ("dozen", "Dozen"),
+  // ("pack", "Pack"),
+  // ("set", "Set"),
+  // ("unit", "Unit"),
+  // ("other", "Other"),
 
   SI_UNIT_CHOICES = [
     { id: "m", name: "Meter (m)" },
     { id: "kg", name: "Kilogram (kg)" },
     { id: "g", name: "Gram (g)" },
     { id: "just_no", name: "just_no" },
-    { id: "pic", name: "Pic" },
+    { id: "pic", name: "Piece" },
+    { id: "box", name: "Box" },
+    { id: "carton", name: "Carton" },
+    { id: "dozen", name: "Dozen" },
+    { id: "pack", name: "Pack" },
+    { id: "set", name: "Set" },
+    { id: "unit", name: "Unit" },
+    { id: "other", name: "Other" },
   ];
 
   constructor(
@@ -114,11 +121,11 @@ export class StockItemsComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
-        this.customAlert.errorToast(
-          "Error in fetching stock details",
-          `${error}`,
-          "error"
-        );
+        // this.customAlert.errorToast(
+        //   "Error in fetching stock details",
+        //   `${error}`,
+        //   "error"
+        // );
       }
     );
   }
@@ -237,6 +244,10 @@ export class StockItemsComponent implements OnInit {
       }
     );
   }
+  salesStockItemtModal(modal: any, stockItemObj: any) {
+    this.getStockItemSales(stockItemObj);
+    this.modalService.open(modal, { scrollable: true, size: "fullscreen" });
+  }
 
   changeTab(id, stockItemObj?: any) {
     this.customNav.select(id);
@@ -315,7 +326,7 @@ export class StockItemsComponent implements OnInit {
       this.repositoryService.getSingle(
         url,
         (data: any) => {
-          this.freshCurrentStockItem = data;
+          this.freshCurrentStock = data;
           this.moduleStateService.setCurrentStockState(data);
         },
         (error) => {

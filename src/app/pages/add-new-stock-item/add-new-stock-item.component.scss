@@ -1,3 +1,11 @@
-ng-select {
-  background-color: black;
+.ng-select .light-theme {
+  background-color: white;
+  color: black;
+  /* Styles for the light theme */
+}
+
+.ng-select .dark-theme {
+  background-color: rgb(57, 47, 47);
+  color: white;
+  /* Styles for the dark theme */
 }

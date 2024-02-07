@@ -19,6 +19,7 @@ import { SharedService } from "src/app/shared/custom_http.service";
 export class AddNewStockItemComponent implements OnInit {
   productsModel: ProductModel[];
   @Input() stockId: number;
+  currentTheme: string;
 
   STATUS = [
     // ("1", "in-stock"), ("2", "out-stock")),
@@ -90,6 +91,8 @@ export class AddNewStockItemComponent implements OnInit {
     });
 
     this.submit = false;
+    this.currentTheme = localStorage.getItem("theme");
+    console.log(this.currentTheme);
 
     this.getProductsList();
   }

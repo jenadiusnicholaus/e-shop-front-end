@@ -82,14 +82,18 @@ export class SalesComponent implements OnInit {
   createSalesFormSubmit() {
     this.submitted = true;
     console.log(this.createSalesForm.value);
-    if (this.createSalesForm.value.quantity_sold === 0) {
-      this.customAlert.successmsg(
+    if (
+      this.createSalesForm.value.quantity_sold === 0 ||
+      this.createSalesForm.value.quantity_sold === ""
+    ) {
+      this.customAlert.errorToast(
         "Error in creating sales",
-        "Quantity sold cannot be zero",
+        "Quantity sold cannot be zero or empty",
         "error"
       );
       return;
     }
+
     const body = {
       stock_item: this.createSalesForm.value.stock_item,
       quantity_sold: this.createSalesForm.value.quantity_sold,

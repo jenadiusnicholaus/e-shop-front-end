@@ -1,15 +1,10 @@
-<ng-template *ngIf="curentStockItem; then form; else Sales"> </ng-template>
+<ng-template *ngIf="curentStockItem; then form; else loading"> </ng-template>
 <!-- <p-toast></p-toast> -->
 
 <ng-template #form>
   <div class="container-fluid">
     <div class="row">
-      <small class="Sales-header">
-        TQ -
-        {{ curentStockItem?.qty }}{{ curentStockItem?.qty_in }} for
-        {{ curentStockItem?.product?.name }}
-      </small>
-      <div class="col-lg-8" *ngIf="isSalesDisabled == false">
+      <div class="col-lg-12" *ngIf="isSalesDisabled == false">
         <div class="card">
           <div class="card-body">
             <form
@@ -49,7 +44,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-lg-4">
+                  <div class="col-lg-6">
                     <div class="form-group mb-4">
                       <label for="billing-name">stock item</label>
                       <select
@@ -84,7 +79,7 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-lg-4">
+                  <div class="col-lg-6">
                     <div class="form-group mb-4">
                       <label for="price">Selling price</label>
                       <input
@@ -109,13 +104,14 @@
                       </div>
                     </div>
                   </div>
-
+                  <!-- 
                   <div class="col-lg-4">
                     <div class="form-group mb-4 mb-lg-0">
                       <div class="col-md-12 ms-auto">
                         <div class="mt-4 mt-lg-0">
                           <div class="form-check mb-3">
                             <input
+                              hidden
                               type="checkbox"
                               class="form-check-input"
                               formControlName="product_price_changed"
@@ -129,7 +125,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
 
                 <div class="row">
@@ -163,7 +159,7 @@
                     <button
                       [disabled]="isSalesDisabled"
                       type="submit"
-                      class="btn btn-primary me-1"
+                      class="btn btn-primary me-1 btn-block"
                     >
                       Submit
                     </button>
@@ -180,7 +176,7 @@
       </div>
       <div
         [ngClass]="{
-          'col-lg-4': isSalesDisabled == false,
+          'col-lg-12': isSalesDisabled == false,
           'col-md-12': isSalesDisabled == true
         }"
       >
@@ -201,8 +197,10 @@
                     <th class="border-top-0" style="width: 110px" scope="col">
                       Product
                     </th>
-                    <th class="border-top-0" scope="col">UCS</th>
-                    <th class="border-top-0" scope="col">UCR</th>
+                    <th class="border-top-0" scope="col">Unit Current Sales</th>
+                    <th class="border-top-0" scope="col">
+                      UnitCurrent Revenue
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -281,98 +279,11 @@
           </div>
         </div>
       </div>
-      <!-- <div class="col-lg-6">
-        <div class="card checkout-order-summary">
-          <div class="card-body">
-            <div class="table-responsive">
-              
-  
-              <thead>
-                <tr>
-                  <th class="border-top-0" style="width: 110px" scope="col">
-                    Product
-                  </th>
-                  <th class="border-top-0" style="width: 110px" scope="col">
-                    UCS
-                  </th>
-  
-                  <th class="border-top-0" style="width: 110px" scope="col">
-                    UCR
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  class="bg-success-subtle text-success"
-                  *ngFor="let s of stockItemSales"
-                >
-                  <th scope="row" class="font-size-14 text-truncate">
-                    {{ s.stock_item.product.name }}
-                  </th>
-                  <td colspan="4">
-                    <h5 class="font-size-14 text-truncate text-muted">
-                      <a class="text-dark">{{ s?.total_price }}</a>
-                    </h5>
-                  </td>
-                  <td colspan="1">
-                    <h5 class="font-size-14 text-truncate text-muted">
-                      <a class="text-dark">{{ s?.total_revenue }}</a>
-                    </h5>
-                  </td>
-                </tr>
-  
-                <tr>
-                  <hr style="color: gray" />
-                </tr>
-  
-                <tr class="bg-light text-end">
-                  <th scope="row" colspan="3">Total Item estmated profit :</th>
-  
-                  <td class="text-success">
-                    {{ curentStockItem?.total_estmated_profit }} /=
-                  </td>
-                </tr>
-                <tr class="bg-light text-end">
-                  <th scope="row" colspan="3">Total Item current profit :</th>
-  
-                  <td class="text-success">0 /=</td>
-                </tr>
-                <tr class="bg-light text-end">
-                  <th scope="row" colspan="3">total item estmated sales:</th>
-                  <td class="text-success">
-                    {{ curentStockItem?.total_selling_price }} /=
-                  </td>
-                </tr>
-                <tr class="bg-light text-end">
-                  <th scope="row" colspan="3">Total stock Current Profit:</th>
-  
-                  <td class="text-success">
-                    {{ curentStockItem?.stock?.total_sales_revenue }}/=
-                  </td>
-                </tr>
-                <tr class="bg-light text-end">
-                  <th scope="row" colspan="3">Total stock estmated Profit</th>
-  
-                  <td class="text-success">
-                    {{ curentStockItem?.stock?.total_estmated_profit }}/=
-                  </td>
-                </tr>
-  
-                <tr class="bg-light text-end">
-                  <th scope="row" colspan="3">Total stock sales</th>
-  
-                  <td class="text-success">
-                    {{ curentStockItem?.stock?.total_sales }}/=
-                  </td>
-                </tr>
-              </tbody>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
     <!-- end row -->
   </div>
 </ng-template>
 
-<ng-template #Sales></ng-template>
+<ng-template #loading>
+  <app-shared-loader></app-shared-loader>
+</ng-template>
