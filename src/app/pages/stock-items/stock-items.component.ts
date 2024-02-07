@@ -89,7 +89,7 @@ export class StockItemsComponent implements OnInit {
       is_sales_update: [false, [Validators.required]],
     });
     this.getProductsList();
-    this.isLoading = false;
+    this.isLoading = true;
     this.getStock();
   }
 
