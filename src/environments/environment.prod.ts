@@ -40,6 +40,8 @@ export const environment = {
     // http://localhost:8000/api/sales/v1/sales_vset/?stock_id=2
     IMS_SALES_LIST_BY_STOCK: `sales/${API_VERSION}/sales_vset/`,
     IMS_STOCK_ITEM_SEARCH: `stock/${API_VERSION}/search/`,
+    IMS_DASHBOARD_SALES: `dashboard/${API_VERSION}/dashboard-sales/`,
+
   },
 };
 

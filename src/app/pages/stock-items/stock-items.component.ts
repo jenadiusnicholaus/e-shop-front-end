@@ -39,6 +39,8 @@ export class StockItemsComponent implements OnInit {
     { id: "1", name: "in-stock" },
     { id: "2", name: "out-stock" },
   ];
+
+  breadCrumbItems: Array<{}>;
   // ("pic", "Piece"),
   // ("box", "Box"),
   // ("carton", "Carton"),
@@ -244,7 +246,7 @@ export class StockItemsComponent implements OnInit {
   }
   salesStockItemtModal(modal: any, stockItemObj: any) {
     this.getStockItemSales(stockItemObj);
-    this.modalService.open(modal, { scrollable: true, size: "fullscreen" });
+    this.modalService.open(modal, { scrollable: true, size: "large" });
   }
 
   changeTab(id, stockItemObj?: any) {
@@ -325,6 +327,10 @@ export class StockItemsComponent implements OnInit {
         url,
         (data: any) => {
           this.freshCurrentStock = data;
+          this.breadCrumbItems = [
+            { label: "E-shop" },
+            { label: `${data.name}`, active: true },
+          ];
           this.moduleStateService.setCurrentStockState(data);
         },
         (error) => {

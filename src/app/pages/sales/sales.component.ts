@@ -41,6 +41,18 @@ export class SalesComponent implements OnInit {
     private repositoryService: RepositoryService
   ) {}
   createSalesForm: UntypedFormGroup;
+
+  //   PAYMENT_STATUS = (
+  //     ("Paid", "PAID"),
+  //     ("Unpaid", "UNPAID"),
+  //     ("Chargeback", "CHARGEBACK"),
+  // )
+  paymentStatusList = [
+    { id: "Paid", name: "PAID" },
+    { id: "Unpaid", name: "UNPAID" },
+    { id: "Chargeback", name: "CHARGEBACK" },
+  ];
+
   ngOnInit(): void {
     this.createSalesForm = this.formBuilder.group({
       stock_item: ["", [Validators.required]],
@@ -48,6 +60,7 @@ export class SalesComponent implements OnInit {
       price: ["", [Validators.required]],
       product_price_changed: [false, [Validators.required]],
       reason_for_change: ["", [Validators.required]],
+      payment_satatus: ["", [Validators.required]],
       // set default value to today's date
     });
     this.submitted = false;
@@ -99,6 +112,7 @@ export class SalesComponent implements OnInit {
       quantity_sold: this.createSalesForm.value.quantity_sold,
       price: this.curentStockItem.unit_selling_price,
       product_price_changed: false,
+      payment_satatus: this.createSalesForm.value.payment_satatus,
       reason_for_change: "",
     };
 

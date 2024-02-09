@@ -13,7 +13,7 @@
             >
               <div>
                 <div class="row">
-                  <div class="col-lg-12">
+                  <div class="col-lg-6">
                     <div class="form-group mb-4">
                       <label for="billing-email-address">
                         Qauntity to be sold
@@ -40,6 +40,49 @@
                           >Quantity_in must be at least 6 characters.</span
                         >
                       </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group mb-4">
+                      <label for="billing-email-address">
+                        Qauntity to be sold
+                      </label>
+
+                      <select
+                        type="number"
+                        class="form-control"
+                        style="font-size: 30px"
+                        placeholder="Enter Quantity to be sold,"
+                        formControlName="payment_satatus"
+                        [ngClass]="{
+                          'is-invalid':
+                            submitted && salesForm.payment_satatus.errors
+                        }"
+                      >
+                        <div
+                          *ngIf="submitted && salesForm.payment_satatus.errors"
+                          class="invalid-feedback"
+                        >
+                          <span
+                            *ngIf="salesForm.payment_satatus.errors.required"
+                            >This value is required.</span
+                          >
+                          <span
+                            *ngIf="salesForm.payment_satatus.errors.minlength"
+                            >Quantity_in must be at least 6 characters.</span
+                          >
+                        </div>
+                        <!-- make  loop from PAYMENT_STATUS -->
+                        <option value="" disabled selected>
+                          Select payment status
+                        </option>
+                        <option
+                          *ngFor="let paymentStatus of paymentStatusList"
+                          [value]="paymentStatus.id"
+                        >
+                          {{ paymentStatus.name }}
+                        </option>
+                      </select>
                     </div>
                   </div>
                 </div>

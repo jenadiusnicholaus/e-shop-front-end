@@ -42,6 +42,8 @@ export const environment = {
     IMS_SALES_LIST_BY_STOCK: `sales/${API_VERSION}/sales_vset/`,
     // http://localhost:8000/api/stock/v1/search/?search-text=ts1
     IMS_STOCK_ITEM_SEARCH: `stock/${API_VERSION}/search/`,
+    // http://localhost:8000/api/dashboard/v1/dashboard-sales/
+    IMS_DASHBOARD_SALES: `dashboard/${API_VERSION}/dashboard-sales/`,
   },
 };
 

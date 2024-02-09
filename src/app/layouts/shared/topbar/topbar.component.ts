@@ -27,6 +27,8 @@ export class TopbarComponent implements OnInit {
   error = "";
   userProfileModel: UserProfileModel;
 
+  formattedCurrentTime: string;
+
   listLang = [
     { text: "English", flag: "assets/images/flags/us.jpg", lang: "en" },
     {
@@ -55,6 +57,9 @@ export class TopbarComponent implements OnInit {
   @Output() settingsButtonClicked = new EventEmitter();
 
   ngOnInit(): void {
+    this.updateTime();
+    setInterval(() => this.updateTime(), 1000);
+
     this.element = document.documentElement;
     this.configData = {
       suppressScrollX: true,
@@ -73,6 +78,20 @@ export class TopbarComponent implements OnInit {
     }
 
     this.ngUserProfile();
+  }
+
+  updateTime(): void {
+    const options = {
+      hour: "2-digit" as const,
+      minute: "2-digit" as const,
+      second: "2-digit" as const,
+    };
+
+    const currentTime = new Date();
+    this.formattedCurrentTime = currentTime.toLocaleTimeString(
+      "en-US",
+      options
+    );
   }
 
   /**

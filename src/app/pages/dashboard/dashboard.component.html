@@ -7,7 +7,19 @@
 </ng-template>
 
 <ng-template #elseBlock>
-  <div class="container-fluid">
+  <div class="container-fluid" style="position: relative">
+    <!-- <div class="shimmer-wrapper" *ngIf="isLoadingDashboard">
+
+      <app-shared-loader [isLoading]="isLoadingDashboard"></app-shared-loader>
+    </div> -->
+    <ul *ngIf="isLoadingDashboard">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+
     <app-pagetitle
       title="Dashboard"
       [breadcrumbItems]="breadCrumbItems"
@@ -18,9 +30,9 @@
         <div class="row">
           <div *ngFor="let stat of statData" class="col-md-4">
             <app-stat
-              [title]="stat.title"
-              [value]="stat.value"
-              [icon]="stat.icon"
+              [title]="stat?.title"
+              [value]="stat?.value"
+              [icon]="stat?.icon"
             ></app-stat>
           </div>
         </div>
@@ -31,14 +43,15 @@
             <div class="float-end d-none d-md-inline-block">
               <div class="btn-group mb-2">
                 <button type="button" class="btn btn-sm btn-light">
-                  Today
+                  Today:
+                  {{ todayRevenue | currency : "TSH " : "code" : "1.0-0" }}
                 </button>
-                <button type="button" class="btn btn-sm btn-light active">
+                <!-- <button type="button" class="btn btn-sm btn-light active">
                   Weekly
                 </button>
                 <button type="button" class="btn btn-sm btn-light">
                   Monthly
-                </button>
+                </button> -->
               </div>
             </div>
             <h4 class="card-title mb-4">Revenue Analytics</h4>
@@ -46,13 +59,13 @@
               <apx-chart
                 dir="ltr"
                 class="apex-charts"
-                [series]="revenueChart.series"
-                [chart]="revenueChart.chart"
-                [legend]="revenueChart.legend"
-                [colors]="revenueChart.colors"
-                [labels]="revenueChart.labels"
-                [stroke]="revenueChart.stroke"
-                [plotOptions]="revenueChart.plotOptions"
+                [series]="revenueChart?.series"
+                [chart]="revenueChart?.chart"
+                [legend]="revenueChart?.legend"
+                [colors]="revenueChart?.colors"
+                [labels]="revenueChart?.labels"
+                [stroke]="revenueChart?.stroke"
+                [plotOptions]="revenueChart?.plotOptions"
               >
               </apx-chart>
             </div>
@@ -62,9 +75,14 @@
             <div class="row">
               <div class="col-sm-4">
                 <div class="d-inline-flex">
-                  <h5 class="me-2">$12,253</h5>
+                  <h5 class="me-2">
+                    {{
+                      currentMonthRevenue | currency : "TSH " : "code" : "1.0-0"
+                    }}
+                  </h5>
                   <div class="text-success">
-                    <i class="mdi mdi-menu-up font-size-14"> </i>2.2 %
+                    <i class="mdi mdi-menu-up font-size-14"> </i
+                    >{{ currentMonthRevenuePercentage }} %
                   </div>
                 </div>
                 <p class="text-muted text-truncate mb-0">This month</p>
@@ -72,38 +90,107 @@
 
               <div class="col-sm-4">
                 <div class="mt-4 mt-sm-0">
-                  <p class="mb-2 text-muted text-truncate">
-                    <i
-                      class="mdi mdi-circle text-primary font-size-10 me-1"
-                    ></i>
-                    This Year :
-                  </p>
                   <div class="d-inline-flex">
-                    <h5 class="mb-0 me-2">$ 34,254</h5>
-                    <div class="text-success">
-                      <i class="mdi mdi-menu-up font-size-14"> </i>2.1 %
-                    </div>
+                    <h5 class="mb-0 me-2">
+                      {{
+                        currentYearRevenue
+                          | currency : "TSH " : "code" : "1.0-0"
+                      }}
+                    </h5>
                   </div>
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="mt-4 mt-sm-0">
                   <p class="mb-2 text-muted text-truncate">
                     <i
                       class="mdi mdi-circle text-success font-size-10 me-1"
                     ></i>
-                    Previous Year :
+                    This Year
                   </p>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="mt-4 mt-sm-0">
                   <div class="d-inline-flex">
-                    <h5 class="mb-0">$ 32,695</h5>
+                    <h5 class="mb-0">
+                      {{
+                        previousYearRevenue
+                          | currency : "TSH " : "code" : "1.0-0"
+                      }}
+                    </h5>
                   </div>
+                  <p class="mb-2 text-muted text-truncate">
+                    <i
+                      class="mdi mdi-circle text-primary font-size-10 me-1"
+                    ></i>
+                    Previous Year
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-lg-4">
+      <div class="col-xl-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="float-end">
+              <select class="custom-select custom-select-sm">
+                <option selected>Apr</option>
+                <option value="1">Mar</option>
+                <option value="2">Feb</option>
+                <option value="3">Jan</option>
+              </select>
+            </div>
+            <h4 class="card-title mb-4">Sales Analytics</h4>
+
+            <apx-chart
+              dir="ltr"
+              class="apex-charts"
+              [series]="salesAnalytics?.series"
+              [chart]="salesAnalytics?.chart"
+              [legend]="salesAnalytics?.legend"
+              [colors]="salesAnalytics?.colors"
+              [labels]="revenueChart?.labels"
+              [dataLabels]="salesAnalytics?.dataLabels"
+              [plotOptions]="salesAnalytics?.plotOptions"
+            >
+            </apx-chart>
+            <div class="row">
+              <div class="col-4">
+                <div class="text-center mt-4">
+                  <p class="mb-2 text-truncate">
+                    <i
+                      class="mdi mdi-circle text-primary font-size-10 me-1"
+                    ></i>
+                    Product A
+                  </p>
+                  <h5>42 %</h5>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="text-center mt-4">
+                  <p class="mb-2 text-truncate">
+                    <i
+                      class="mdi mdi-circle text-success font-size-10 me-1"
+                    ></i>
+                    Product B
+                  </p>
+                  <h5>26 %</h5>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="text-center mt-4">
+                  <p class="mb-2 text-truncate">
+                    <i
+                      class="mdi mdi-circle text-warning font-size-10 me-1"
+                    ></i>
+                    Product C
+                  </p>
+                  <h5>42 %</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="card">
           <div class="card-body">
             <div class="dropdown float-end" ngbDropdown>
@@ -132,166 +219,54 @@
               </div>
             </div>
 
-            <h4 class="card-title mb-4">Recent Activity Feed</h4>
-
-            <perfect-scrollbar style="height: 550px">
-              <ul class="list-unstyled activity-wid">
-                <li class="activity-list">
-                  <div class="activity-icon avatar-xs">
-                    <span
-                      class="avatar-title bg-primary-subtle text-primary text-primary rounded-circle"
-                    >
-                      <i class="ri-edit-2-fill"></i>
-                    </span>
-                  </div>
+            <h4 class="card-title mb-4">Earning Reports</h4>
+            <div class="text-center">
+              <div class="row">
+                <div class="col-sm-6">
                   <div>
-                    <div>
-                      <h5 class="font-size-13">
-                        28 Apr, 2020 <small class="text-muted">12:07 am</small>
-                      </h5>
+                    <div class="mb-3">
+                      <apx-chart
+                        dir="ltr"
+                        class="apex-charts"
+                        [series]="sparklineEarning?.series"
+                        [chart]="sparklineEarning?.chart"
+                        [colors]="sparklineEarning?.colors"
+                        [labels]="sparklineEarning?.labels"
+                        [dataLabels]="sparklineEarning?.dataLabels"
+                        [plotOptions]="sparklineEarning?.plotOptions"
+                      >
+                      </apx-chart>
                     </div>
 
-                    <div>
-                      <p class="text-muted mb-0">
-                        Responded to need “Volunteer Activities”
-                      </p>
-                    </div>
+                    <p class="text-muted text-truncate mb-2">Weekly Earnings</p>
+                    <h5 class="mb-0">$2,523</h5>
                   </div>
-                </li>
-                <li class="activity-list">
-                  <div class="activity-icon avatar-xs">
-                    <span
-                      class="avatar-title bg-primary-subtle text-primary text-primary rounded-circle"
-                    >
-                      <i class="ri-user-2-fill"></i>
-                    </span>
-                  </div>
-                  <div>
-                    <div>
-                      <h5 class="font-size-13">
-                        21 Apr, 2020 <small class="text-muted">08:01 pm</small>
-                      </h5>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="mt-5 mt-sm-0">
+                    <div class="mb-3">
+                      <apx-chart
+                        dir="ltr"
+                        class="apex-charts"
+                        [series]="sparklineMonthly?.series"
+                        [chart]="sparklineMonthly?.chart"
+                        [colors]="sparklineMonthly?.colors"
+                        [labels]="sparklineMonthly?.labels"
+                        [dataLabels]="sparklineMonthly?.dataLabels"
+                        [plotOptions]="sparklineMonthly?.plotOptions"
+                      >
+                      </apx-chart>
                     </div>
 
-                    <div>
-                      <p class="text-muted mb-0">
-                        Added an interest “Volunteer Activities”
-                      </p>
-                    </div>
+                    <p class="text-muted text-truncate mb-2">
+                      Monthly Earnings
+                    </p>
+                    <h5 class="mb-0">$11,235</h5>
                   </div>
-                </li>
-                <li class="activity-list">
-                  <div class="activity-icon avatar-xs">
-                    <span
-                      class="avatar-title bg-primary-subtle text-primary text-primary rounded-circle"
-                    >
-                      <i class="ri-bar-chart-fill"></i>
-                    </span>
-                  </div>
-                  <div>
-                    <div>
-                      <h5 class="font-size-13">
-                        17 Apr, 2020 <small class="text-muted">09:23 am</small>
-                      </h5>
-                    </div>
-
-                    <div>
-                      <p class="text-muted mb-0">
-                        Joined the group “Boardsmanship Forum”
-                      </p>
-                    </div>
-                  </div>
-                </li>
-                <li class="activity-list">
-                  <div class="activity-icon avatar-xs">
-                    <span
-                      class="avatar-title bg-primary-subtle text-primary text-primary rounded-circle"
-                    >
-                      <i class="ri-mail-fill"></i>
-                    </span>
-                  </div>
-                  <div>
-                    <div>
-                      <h5 class="font-size-13">
-                        11 Apr, 2020 <small class="text-muted">05:10 pm</small>
-                      </h5>
-                    </div>
-
-                    <div>
-                      <p class="text-muted mb-0">
-                        Responded to need “In-Kind Opportunity”
-                      </p>
-                    </div>
-                  </div>
-                </li>
-                <li class="activity-list">
-                  <div class="activity-icon avatar-xs">
-                    <span
-                      class="avatar-title bg-primary-subtle text-primary text-primary rounded-circle"
-                    >
-                      <i class="ri-calendar-2-fill"></i>
-                    </span>
-                  </div>
-                  <div>
-                    <div>
-                      <h5 class="font-size-13">
-                        07 Apr, 2020 <small class="text-muted">12:47 pm</small>
-                      </h5>
-                    </div>
-
-                    <div>
-                      <p class="text-muted mb-0">
-                        Created need “Volunteer Activities”
-                      </p>
-                    </div>
-                  </div>
-                </li>
-                <li class="activity-list">
-                  <div class="activity-icon avatar-xs">
-                    <span
-                      class="avatar-title bg-primary-subtle text-primary text-primary rounded-circle"
-                    >
-                      <i class="ri-edit-2-fill"></i>
-                    </span>
-                  </div>
-                  <div>
-                    <div>
-                      <h5 class="font-size-13">
-                        05 Apr, 2020 <small class="text-muted">03:09 pm</small>
-                      </h5>
-                    </div>
-
-                    <div>
-                      <p class="text-muted mb-0">
-                        Attending the event “Some New Event”
-                      </p>
-                    </div>
-                  </div>
-                </li>
-                <li class="activity-list">
-                  <div class="activity-icon avatar-xs">
-                    <span
-                      class="avatar-title bg-primary-subtle text-primary text-primary rounded-circle"
-                    >
-                      <i class="ri-user-2-fill"></i>
-                    </span>
-                  </div>
-                  <div>
-                    <div>
-                      <h5 class="font-size-13">
-                        02 Apr, 2020 <small class="text-muted">12:07 am</small>
-                      </h5>
-                    </div>
-
-                    <div>
-                      <p class="text-muted mb-0">
-                        Responded to need “In-Kind Opportunity”
-                      </p>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </perfect-scrollbar>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -350,33 +325,45 @@
               <table class="table table-centered">
                 <thead class="table-light">
                   <tr>
-                    <th>Order ID</th>
+                    <th>SalesID</th>
                     <th>Date</th>
-                    <th>Billing Name</th>
-                    <th>Total</th>
+                    <th>Product</th>
+
+                    <th>Qty Sold</th>
+                    <th>unit Total Sales</th>
+                    <th>unit Total revevue</th>
                     <th>Payment Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of transactions | filter : term">
-                    <td>{{ item.orderid }}</td>
-                    <td>{{ item.date }}</td>
-                    <td>{{ item.billingname }}</td>
-                    <td>{{ item.total }}</td>
+                  <tr *ngFor="let item of SalesData | filter : term">
+                    <td>{{ item?.id }}</td>
+                    <td>
+                      {{
+                        item?.sales_date
+                          | date : "shortDate" : "Africa/Dar_es_Salaam"
+                      }}
+                    </td>
+                    <td>
+                      {{ item?.stock_item?.product?.name }}
+                    </td>
+                    <td>{{ item?.quantity_sold }}</td>
+                    <td>{{ item?.total_sales | number : "1.0-0" }} TZS</td>
+                    <td>{{ item?.total_revenue | number : "1.0-0" }} TZS</td>
                     <td>
                       <div
                         class="badge font-size-12"
                         [ngClass]="{
                           'bg-danger-subtle text-danger':
-                            item.paymentstatus === 'Chargeback',
+                            item.payment_satatus === 'Chargeback',
                           'bg-success-subtle text-success':
-                            item.paymentstatus === 'Paid',
+                            item.payment_satatus === 'Paid',
                           'bg-warning-subtle text-warning':
-                            item.paymentstatus === 'Unpaid'
+                            item.payment_satatus === 'Unpaid'
                         }"
                       >
-                        {{ item.paymentstatus }}
+                        {{ item.payment_satatus }}
                       </div>
                     </td>
                     <td>
