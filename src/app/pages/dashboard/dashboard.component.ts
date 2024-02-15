@@ -1,4 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from "@angular/core";
 import {
   UntypedFormBuilder,
   Validators,
@@ -7,19 +14,24 @@ import {
 import { latLng, tileLayer } from "leaflet";
 
 import { ChartType, Stat, Chat, Transaction } from "./dashboard.model";
+import { NgbCalendar } from "@ng-bootstrap/ng-bootstrap";
 
 import {
   statData,
   revenueChart,
   salesAnalytics,
   sparklineEarning,
-  sparklineMonthly,
+  // sparklySales,
   chatData,
   transactions,
 } from "./data";
 import { en } from "@fullcalendar/core/internal-common";
 import { environment } from "src/environments/environment";
 import { RepositoryService } from "../repository.service";
+import { NgbDate, NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
+import * as XLSX from "xlsx";
+import { get } from "jquery";
+import { CustomAlertService } from "src/app/shared/custom-alert.service";
 
 @Component({
   selector: "app-dashboard",
@@ -46,16 +58,25 @@ export class DashboardComponent implements OnInit {
   currentMonthRevenuePercentage: any;
   previousYearRevenue: any;
   todayRevenue: any;
+  weeklyEarningData: any;
+  weeklysalesData: any;
+  total_weekly_revenue: any;
+  total_weekly_sales: any;
+  totalExpenses: any = 0;
+  stockModel: any;
 
   isLoadingDashboard = false;
 
   threeMonthSalesPercentage: any;
-
+  fromDate: NgbDate | null;
+  toDate: NgbDate | null;
   underconstraction = false;
+  limt = 5;
 
   constructor(
     public formBuilder: UntypedFormBuilder,
-    private repositoryService: RepositoryService
+    private repositoryService: RepositoryService,
+    private customAlert: CustomAlertService
   ) {}
 
   // bread crumb items
@@ -64,7 +85,7 @@ export class DashboardComponent implements OnInit {
   revenueChart: ChartType;
   salesAnalytics: ChartType;
   sparklineEarning: ChartType;
-  sparklineMonthly: ChartType;
+  sparklySales: ChartType;
 
   // Form submit
   chatSubmit: boolean;
@@ -85,6 +106,10 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.isLoadingDashboard = true;
     this.getSales();
+
+    this.getallExpense();
+    this.getallStock();
+
     this.breadCrumbItems = [
       { label: "E-shop" },
       { label: "Dashboard", active: true },
@@ -96,6 +121,10 @@ export class DashboardComponent implements OnInit {
     this.underconstraction = false;
 
     // totalSalesPercentage2023 = this.getTotalRevenueByYear(this.salesData, 2023);
+  }
+
+  viewall() {
+    this.limt = this.SalesData.length;
   }
 
   getrevenueChart() {
@@ -152,11 +181,6 @@ export class DashboardComponent implements OnInit {
         "Dec",
       ],
     };
-    console.log("rdata.series[0].data");
-    console.log(rdata.series[0].data);
-
-    console.log("rdata.series[1].data");
-    console.log(rdata.series[1].data);
 
     return rdata;
   }
@@ -164,8 +188,8 @@ export class DashboardComponent implements OnInit {
   private _fetchData() {
     this.revenueChart = this.getrevenueChart();
     this.salesAnalytics = this.getSalesAnalytics();
-    this.sparklineEarning = sparklineEarning;
-    this.sparklineMonthly = sparklineMonthly;
+    this.sparklineEarning = this.getWeeklyEarning();
+    this.sparklySales = this.getsparklySales();
     this.chatData = chatData;
     this.transactions = transactions;
     this.statData = this.getStatData();
@@ -301,8 +325,6 @@ export class DashboardComponent implements OnInit {
       const month = new Date(record.sales_date).getMonth(); // getMonth() returns a zero-based month index
       totalRevenueForYear[month] += record.total_revenue;
     });
-    console.log("totalRevenueForYear");
-    console.log(totalRevenueForYear);
 
     // Calculate the total sales for the year
     const totalRevenue = totalRevenueForYear.reduce((a, b) => a + b, 0);
@@ -328,30 +350,6 @@ export class DashboardComponent implements OnInit {
     return this.formData.controls;
   }
 
-  /**
-   * Save the message in chat
-   */
-  messageSave() {
-    const message = this.formData.get("message").value;
-    const currentDate = new Date();
-    if (this.formData.valid && message) {
-      // Message Push in Chat
-      this.chatData.push({
-        align: "right",
-        name: "Ricky Clark",
-        message,
-        time: currentDate.getHours() + ":" + currentDate.getMinutes(),
-      });
-
-      // Set Form Data Reset
-      this.formData = this.formBuilder.group({
-        message: null,
-      });
-    }
-
-    this.chatSubmit = true;
-  }
-
   getStatData() {
     const statData = [
       {
@@ -369,8 +367,9 @@ export class DashboardComponent implements OnInit {
       },
       {
         icon: "ri-briefcase-4-line",
-        title: "Average Price",
-        value: "$ 15.4",
+        title: "Total Expenses",
+        value:
+          "TSH " + new Intl.NumberFormat("en-US").format(this.totalExpenses),
       },
     ];
 
@@ -447,9 +446,201 @@ export class DashboardComponent implements OnInit {
     return salesPercentage;
   }
 
+  // weekly  eanings
+  getWeeklyEarning() {
+    const sparklineEarning: ChartType = {
+      series: this.weeklyEarningData,
+      chart: {
+        type: "radialBar",
+        wight: 60,
+        height: 60,
+        sparkline: {
+          enabled: true,
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      colors: ["#5664d2"],
+      stroke: {
+        lineCap: "round",
+      },
+      plotOptions: {
+        radialBar: {
+          hollow: {
+            margin: 0,
+            size: "70%",
+          },
+          track: {
+            margin: 0,
+          },
+
+          dataLabels: {
+            show: false,
+          },
+        },
+      },
+    };
+
+    return sparklineEarning;
+  }
+
+  getsparklySales() {
+    const weeklysales: ChartType = {
+      series: this.weeklysalesData,
+      chart: {
+        type: "radialBar",
+        wight: 60,
+        height: 60,
+        sparkline: {
+          enabled: true,
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      colors: ["#1cbb8c"],
+      stroke: {
+        lineCap: "round",
+      },
+      plotOptions: {
+        radialBar: {
+          hollow: {
+            margin: 0,
+            size: "70%",
+          },
+          track: {
+            margin: 0,
+          },
+
+          dataLabels: {
+            show: false,
+          },
+        },
+      },
+    };
+    return weeklysales;
+  }
+
+  calculateWeeklyEarnings(salesData, key) {
+    // Get the current date
+    const currentDate = new Date();
+
+    // Calculate the start and end dates of the current week
+    const startOfWeek = currentDate.getDate() - currentDate.getDay();
+    const endOfWeek = startOfWeek + 6;
+    const startDate = new Date();
+    startDate.setDate(startOfWeek);
+    startDate.setHours(0, 0, 0, 0); // Start of the day
+    const endDate = new Date();
+    endDate.setDate(endOfWeek);
+    endDate.setHours(23, 59, 59, 999); // End of the day
+
+    // Filter the sales data for the current week
+    const weeklySalesData = salesData.filter((sale) => {
+      const saleDate = new Date(sale.sales_date);
+      return saleDate >= startDate && saleDate <= endDate;
+    });
+
+    // Calculate the total earnings for the current week
+    const weekly = weeklySalesData.reduce((total, sale) => {
+      const earnings = parseFloat(sale[`${key}`]);
+      return !isNaN(earnings) ? total + earnings : total;
+    }, 0);
+
+    // Calculate the total earnings
+    const toto = salesData.reduce((total, sale) => {
+      const earnings = parseFloat(sale[`${key}`]);
+      return !isNaN(earnings) ? total + earnings : total;
+    }, 0);
+
+    if (key === "total_revenue") {
+      this.total_weekly_revenue = weekly;
+    }
+
+    if (key === "total_sales") {
+      this.total_weekly_sales = weekly;
+    }
+
+    // Calculate the weekly earnings as a percentage of the total earnings
+    const weeklyEarningsPercentage = toto !== 0 ? (weekly / toto) * 100 : 0;
+
+    // Round the percentage to the nearest whole number and return it as a single-element array
+    return [Math.round(weeklyEarningsPercentage)];
+  }
+
   getSales() {
     const url =
       environment.E_SHOP_BASE_URL + environment.IMS.IMS_DASHBOARD_SALES;
+    this.repositoryService.getList(
+      url,
+      (data) => {
+        this.isLoadingDashboard = false;
+        this.NumberofSales = data.length;
+        this.SalesRevenue = 0;
+        this.SalesData = data;
+        this.getTotalRevenueByYear(data);
+        if (data.length > 0) {
+          for (let i = 0; i < data.length; i++) {
+            this.SalesRevenue += data[i].total_revenue;
+          }
+        } else {
+          this.SalesRevenue = 0;
+        }
+
+        this.todayRevenue = this.getTodayRevenue(data);
+
+        this.currentMonthRevenue = this.getCurrentMonthRevenue(data);
+        this.currentMonthRevenuePercentage =
+          this.getCurrentMonthRevenuePercentage(data);
+        this.previousYearRevenue = this.getPreviousYearRevenue(data);
+
+        this.currentYearRevenue = this.getCurrentYearRevenue(data);
+
+        this.threeMonthSalesPercentage =
+          this.getThreeMonthSalesPercentage(data);
+        this.weeklysalesData = this.calculateWeeklyEarnings(
+          data,
+          "total_sales"
+        );
+        this.weeklyEarningData = this.calculateWeeklyEarnings(
+          data,
+          "total_revenue"
+        );
+
+        console.log(this.weeklyEarningData);
+
+        this._fetchData();
+      },
+      (error) => {
+        console.log(error);
+        this.customAlert.errorToast(
+          "Error in fetching sales details",
+          "Something went wrong, please try again later",
+          "error"
+        );
+      }
+    );
+  }
+
+  exportExcel(): void {
+    /* pass here the table id */
+    let element = document.getElementById("excel-table");
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+    /* save to file */
+    XLSX.writeFile(wb, "Sales.xlsx");
+  }
+
+  filterByDate() {
+    const url =
+      environment.E_SHOP_BASE_URL +
+      environment.IMS.IMS_DASHBOARD_SALES +
+      `?sales_date_from=${this.fromDate}&sales_date_to=${this.toDate}`;
     this.repositoryService.getList(
       url,
       (data) => {
@@ -480,10 +671,65 @@ export class DashboardComponent implements OnInit {
           `Sales of the last three months as a percentage of the total sales of the current year: ${this.threeMonthSalesPercentage}`
         );
 
+        this.weeklyEarningData = this.calculateWeeklyEarnings(
+          data,
+          "total_revenue"
+        );
+
+        this.weeklysalesData = this.calculateWeeklyEarnings(
+          data,
+          "total_sales"
+        );
         this._fetchData();
       },
       (error) => {
+        this.customAlert.errorToast(
+          "Error in fetching sales details",
+          "Something went wrong, please try again later",
+          "error"
+        );
+      }
+    );
+  }
+
+  getallExpense() {
+    const url =
+      environment.E_SHOP_BASE_URL + environment.IMS.IMS_EXPENSES_BASE_URL;
+    this.repositoryService.getList(
+      url,
+      (data) => {
+        console.log(data);
+
+        this.totalExpenses = data.reduce(
+          (total, expense) => total + expense.amount,
+          0
+        );
+      },
+      (error) => {
         console.log(error);
+      }
+    );
+  }
+
+  getallStock() {
+    const url =
+      environment.E_SHOP_BASE_URL + environment.IMS.IMS_STOCK_BASE_URL;
+    this.repositoryService.getList(
+      url,
+      (data) => {
+        this.stockModel = data;
+
+        console.log("stockModel");
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+
+        this.customAlert.errorToast(
+          "Error in fetching sales details",
+          "Something went wrong, please try again later",
+          "error"
+        );
       }
     );
   }

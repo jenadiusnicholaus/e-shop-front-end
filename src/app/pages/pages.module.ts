@@ -15,6 +15,7 @@ import {
   NgbTypeaheadModule,
   NgbCollapseModule,
   NgbModalModule,
+  NgbDatepickerModule,
 } from "@ng-bootstrap/ng-bootstrap";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { Ng2SearchPipeModule } from "ng2-search-filter";
@@ -45,6 +46,8 @@ import { BrowserModule } from "@angular/platform-browser";
 import { TranslateModule } from "@ngx-translate/core";
 import { SharedLoaderComponent } from './shared-loader/shared-loader.component';
 import { StockOrdersComponent } from './stock-orders/stock-orders.component';
+import { ExpensesComponent } from './expenses/expenses.component';
+import { SalesHistoryComponent } from './sales-history/sales-history.component';
 
 // import { ToastModule } from "primeng/toast";
 // import { MessageService } from "primeng/api/messageservice";
@@ -68,6 +71,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     StockSalesComponent,
     SharedLoaderComponent,
     StockOrdersComponent,
+    ExpensesComponent,
+    SalesHistoryComponent,
   ],
   imports: [
     CommonModule,
@@ -75,6 +80,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ReactiveFormsModule,
     PagesRoutingModule,
     UiModule,
+    NgbDatepickerModule,
 
     Ng2SearchPipeModule,
     NgbNavModule,

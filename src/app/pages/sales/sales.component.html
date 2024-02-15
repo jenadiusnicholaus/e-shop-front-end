@@ -53,23 +53,21 @@
                         class="form-control"
                         style="font-size: 30px"
                         placeholder="Enter Quantity to be sold,"
-                        formControlName="payment_satatus"
+                        formControlName="payment_status"
                         [ngClass]="{
                           'is-invalid':
-                            submitted && salesForm.payment_satatus.errors
+                            submitted && salesForm.payment_status.errors
                         }"
                       >
                         <div
-                          *ngIf="submitted && salesForm.payment_satatus.errors"
+                          *ngIf="submitted && salesForm.payment_status.errors"
                           class="invalid-feedback"
                         >
-                          <span
-                            *ngIf="salesForm.payment_satatus.errors.required"
+                          <span *ngIf="salesForm.payment_status.errors.required"
                             >This value is required.</span
                           >
-                          <span
-                            *ngIf="salesForm.payment_satatus.errors.minlength"
-                            >Quantity_in must be at least 6 characters.</span
+                          <span *ngIf="salesForm.payment_status.errors.required"
+                            >Payment satatusmust be at least 6 characters.</span
                           >
                         </div>
                         <!-- make  loop from PAYMENT_STATUS -->

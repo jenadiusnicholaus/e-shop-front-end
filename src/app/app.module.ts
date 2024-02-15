@@ -25,6 +25,7 @@ import { FakeBackendInterceptor } from "./core/helpers/fake-backend";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CommonModule } from "@angular/common";
 import { CustomAlertService } from "./shared/custom-alert.service";
+import { FilterPipe } from "./filter.pipe";
 // import {SharedLoaderComponent} from
 
 if (environment.defaultauth === "firebase") {
@@ -39,7 +40,7 @@ export function createTranslateLoader(http: HttpClient): any {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, FilterPipe],
   imports: [
     BrowserModule,
     HttpClientModule,

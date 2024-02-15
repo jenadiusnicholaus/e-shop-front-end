@@ -1,10 +1,27 @@
 <!-- {{ stockItemsSalesModel | json }} -->
-<div class="table-responsive">
+
+<div class="table-responsive" *ngIf="!viewDetailsClicked">
+  <div class="row">
+    <div class="col-10">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="{{ 'HEADER.SEARCH' | translate }}"
+        [(ngModel)]="searchValue"
+      />
+    </div>
+    <div class="col-2">
+      <button (click)="exportexcel()" type="button" class="btn btn-success">
+        <i class="ri-download-cloud-2-fill align-middle me-2"></i>
+        Export to excel
+      </button>
+    </div>
+  </div>
   <ng-template *ngIf="stockItemsSalesModel?.length > 0; then data; else error">
   </ng-template>
   <ng-template #data>
     <table
-      id="basic-datatable"
+      id="excel-table"
       class="table table-centered dt-responsive nowrap datatables no-footer dtr-inline"
     >
       <thead>
@@ -24,7 +41,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let saleRow of stockItemsSalesModel">
+        <tr *ngFor="let saleRow of stockItemsSalesModel | filter : searchValue">
           <td>
             <a class="text-dark fw-bold">
               <ngb-highlight [result]="saleRow.id"></ngb-highlight>
@@ -85,24 +102,6 @@
             ></ngb-highlight>
           </td>
 
-          <!-- <td>
-          <ngb-highlight
-            [result]="saleRow?.stock_item?.total_estmated_profit"
-          ></ngb-highlight>
-        </td> -->
-
-          <!-- 
-        <td>
-          <ngb-highlight
-            [result]="saleRow?.stock_item?.total_estmated_profit"
-          ></ngb-highlight>
-        </td> -->
-          <!-- <td>
-          <ngb-highlight
-            [result]="saleRow?.stock_item?.total_selling_price"
-          ></ngb-highlight>
-        </td> -->
-
           <td>
             <div
               class="badge font-size-12"
@@ -131,6 +130,7 @@
                 padding: 10px;
                 margin: 2px;
               "
+              (click)="goToDetails(saleRow)"
               class="me-3 text-primary"
               placement="top"
               ngbTooltip="View details"
@@ -138,25 +138,22 @@
             ></a>
           </td>
         </tr>
-        <tr class="text-end">
-          <th scope="row" colspan="1">Total :</th>
-
-          <td colspan="8" class="text-success">
-            {{ curentStock?.total_estmated_profit }}/=
-          </td>
+        <tr>
+          <td colspan="12"></td>
         </tr>
+
         <tr class="text-end">
-          <th scope="row" colspan="10">Stock Current revenue :</th>
+          <th scope="row" colspan="10">Current Stock revenue :</th>
 
           <td class="text-success">{{ curentStock?.total_sales_revenue }}/=</td>
         </tr>
         <tr class="text-end">
-          <th scope="row" colspan="10">Total item :</th>
+          <th scope="row" colspan="10">Total Sales :</th>
 
-          <td class="text-success">{{ curentStock?.total_products }}</td>
+          <td class="text-success">{{ stockItemsSalesModel?.length }}</td>
         </tr>
         <tr class="text-end">
-          <th scope="row" colspan="10">Total Current Sales :</th>
+          <th scope="row" colspan="10">Current Stock Sales :</th>
 
           <td class="text-success">{{ curentStock?.total_sales }} /=</td>
         </tr>
@@ -167,3 +164,9 @@
     <p style="text-align: center; padding: 20%">No Data</p>
   </ng-template>
 </div>
+
+<app-sales-history
+  [salesModel]="stockItemsSalesModel"
+  [currentSales]="currentstockItemsaleOBj"
+  *ngIf="viewDetailsClicked"
+></app-sales-history>

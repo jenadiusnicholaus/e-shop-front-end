@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from "@angular/core";
   styleUrls: ["./shared-loader.component.scss"],
 })
 export class SharedLoaderComponent implements OnInit {
-  @Input() isLoading = false;
+  // @Input() isLoading = false;
   constructor() {}
 
   ngOnInit(): void {}

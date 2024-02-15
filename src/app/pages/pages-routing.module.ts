@@ -8,6 +8,7 @@ import { ProductsComponent } from "./products/products.component";
 import { StockComponent } from "./stock/stock.component";
 import { StockItemsComponent } from "./stock-items/stock-items.component";
 import { SalesComponent } from "./sales/sales.component";
+import { ExpensesComponent } from "./expenses/expenses.component";
 
 const routes: Routes = [
   { path: "", component: DashboardComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: "products", component: ProductsComponent },
   { path: "stock", component: StockComponent },
   { path: "stock-items/:ID", component: StockItemsComponent },
+  {path: "expenses", component: ExpensesComponent},
   {
     path: "sales",
     component: SalesComponent,

@@ -1,13 +1,20 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
   <app-pagetitle title="Stocks"></app-pagetitle>
-  <!-- [breadcrumbItems]="breadCrumbItems" -->
 
   <div class="row">
+    <button type="button" class="btn btn-primary btn-rounded">
+      Add product
+    </button>
+    <br />
     <div class="col-xl-3 col-sm-6" *ngFor="let data of stockModel">
       <div class="card">
         <div class="card-body">
           <div class="text-center">
-            <img src="{{ data.image }}" alt class="avatar-sm mt-2 mb-4" />
+            <img
+              src="{{ data.image ?? 'assets/images/logo-big.png' }}"
+              alt
+              class="avatar-sm mt-2 mb-4"
+            />
             <div class="flex-1">
               <h5 class="text-truncate">
                 <a (click)="gotoStockItems(data.id)" class="text-primary">{{
@@ -29,7 +36,7 @@
             </div>
             <div class="col-6">
               <p class="text-muted mb-2">TEOP</p>
-              <!-- t -->
+
               <h5>{{ data.total_estmated_profit }}/=</h5>
             </div>
           </div>
@@ -37,7 +44,6 @@
       </div>
     </div>
   </div>
-  <!-- end row -->
 
   <div class="row" *ngIf="stockLodding">
     <div class="col-xl-12">
@@ -51,5 +57,242 @@
       </div>
     </div>
   </div>
-  <!-- end row -->
+</div> -->
+
+<div class="container-fluid">
+  <app-pagetitle title="Customers"></app-pagetitle>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div>
+            <!--  -->
+            <a
+              href="javascript:void(0);"
+              class="btn btn-success mb-2"
+              (click)="openModal(content)"
+            >
+              <i class="mdi mdi-plus me-2"></i> Add
+            </a>
+          </div>
+          <div class="row mb-md-2">
+            <div class="col-sm-12 col-md-6"></div>
+            <!-- Search -->
+            <div class="col-sm-12 col-md-6">
+              <div
+                id="tickets-table_filter"
+                class="dataTables_filter text-md-end"
+              >
+                <label class="d-inline-flex align-items-center"
+                  >Search:
+                  <input
+                    [(ngModel)]="searchTerm"
+                    type="text"
+                    name="searchTerm"
+                    class="form-control form-control-sm ms-2"
+                    aria-controls="tickets-table"
+                /></label>
+              </div>
+            </div>
+            <!-- End search -->
+          </div>
+          <div class="table-responsive mt-3">
+            <table
+              class="table table-centered datatable dt-responsive nowrap"
+              style="border-collapse: collapse; border-spacing: 0; width: 100%"
+            >
+              <thead class="thead-light">
+                <tr>
+                  <th style="width: 20px">
+                    <div class="form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="customercheck"
+                      />
+                      <label class="form-check-label" for="customercheck"
+                        >&nbsp;</label
+                      >
+                    </div>
+                  </th>
+                  <th>Stock image</th>
+                  <th>Stock name</th>
+                  <th>Stock estimated Revenue</th>
+                  <th>Total Product Item</th>
+                  <th>Current revenue</th>
+                  <th>Current Sales</th>
+                  <th style="width: 120px">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let data of stockModel | filter : searchTerm;
+                    let i = index
+                  "
+                >
+                  <td>
+                    <div class="form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="customercheck{{ i }}"
+                      />
+                      <label
+                        class="form-check-label mb-0"
+                        for="customercheck{{ i }}"
+                        >&nbsp;</label
+                      >
+                    </div>
+                  </td>
+
+                  <td>
+                    <img
+                      src="{{ data.image ?? 'assets/images/noimge.jpeg' }}"
+                      alt="user-image"
+                      class="avatar-sm rounded-circle"
+                    />
+                  </td>
+
+                  <td>
+                    <a class="text-primary" (click)="gotoStockItems(data.id)">{{
+                      data.name
+                    }}</a>
+                  </td>
+                  <td>{{ data.total_estmated_profit }}</td>
+                  <td>{{ data.total_products }}</td>
+                  <td>{{ data.total_sales_revenue }}</td>
+                  <td>{{ data.total_sales }}</td>
+                  <td>
+                    <a
+                      (click)="gotoStockItems(data.id)"
+                      class="me-3 text-primary"
+                      v-b-tooltip.hover
+                      title="View details"
+                    >
+                      <i class="ri-slideshow-fill font-size-18"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<!-- Contacts model  -->
+<ng-template #content role="document" let-modal="close">
+  <div class="modal-header">
+    <h5 class="modal-title">Add Contacts</h5>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body p-3">
+    <div class="text-left">
+      <form (ngSubmit)="saveData()" [formGroup]="addStockForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            placeholder="Enter name"
+            formControlName="name"
+            [ngClass]="{ 'is-invalid': submitted && form.name.errors }"
+          />
+          <div *ngIf="submitted && form.name.errors" class="invalid-feedback">
+            <span *ngIf="form.name.errors.required">Name is mendatory.</span>
+          </div>
+
+          <div *ngFor="let error of errors?.name">
+            <small style="color: red">{{ error }}</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="image">Stock image</label>
+          <input
+            class="form-control"
+            type="file"
+            (change)="onFileSelected($event)"
+            placeholder="Enter image"
+            formControlName="image"
+            [ngClass]="{ 'is-invalid': submitted && form.image.errors }"
+          />
+          <div *ngIf="submitted && form.image.errors" class="invalid-feedback">
+            <span *ngIf="form.image.errors.required"
+              >image address is mendatory.</span
+            >
+            <span *ngIf="form.image.errors.pattern"
+              >Please enter valid image.</span
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="">Status</label>
+          <div class="col-md-12">
+            <select
+              class="form-control"
+              formControlName="status"
+              [ngClass]="{
+                'is-invalid': submitted && form.status.errors
+              }"
+            >
+              <option value="" disabled>Select status</option>
+              <option value="1">Active</option>
+              <option value="2">In active</option>
+            </select>
+
+            <div
+              *ngIf="submitted && form.status.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="form.status.errors.required"
+                >This value is required.</span
+              >
+              <span *ngIf="form.status.errors.mustMatch"
+                >This value should be the same.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Date </label>
+          <input
+            type="date"
+            class="form-control"
+            placeholder="Enter date"
+            formControlName="date_created"
+            [ngClass]="{ 'is-invalid': submitted && form.date.errors }"
+          />
+          <div *ngIf="submitted && form.date.errors" class="invalid-feedback">
+            <span *ngIf="form.date.errors.required">Date is mendatory.</span>
+          </div>
+        </div>
+
+        <div class="text-end">
+          <button type="submit" class="btn btn-success">Save</button>
+          <button
+            type="button"
+            class="btn btn-danger ms-1"
+            (click)="modal('close click')"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>

@@ -9,13 +9,6 @@
         <!-- <h4 class="card-title">Stock No</h4>
         <p class="card-title-desc">Descrition</p> -->
 
-        <input
-          type="text"
-          class="form-control"
-          placeholder="{{ 'HEADER.SEARCH' | translate }}"
-          (keyup)="searchStockItem($event)"
-        />
-
         <ul
           ngbNav
           #customNav="ngbNav"
@@ -44,9 +37,7 @@
                 </ng-template>
 
                 <ng-template #loadingBlock>
-                  <app-shared-loader
-                    [isLoading]="isLoading"
-                  ></app-shared-loader>
+                  <app-shared-loader></app-shared-loader>
                 </ng-template>
 
                 <ng-template #dataBlock>
@@ -54,6 +45,12 @@
                     *ngIf="stockItemsModel?.length > 0; then data; else error"
                   ></ng-template>
                   <ng-template #data>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="{{ 'HEADER.SEARCH' | translate }}"
+                      [(ngModel)]="searchValue"
+                    />
                     <table
                       id="basic-datatable"
                       class="table table-centered dt-responsive nowrap datatables no-footer dtr-inline"
@@ -74,7 +71,11 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let item of stockItemsModel">
+                        <tr
+                          *ngFor="
+                            let item of stockItemsModel | filter : searchValue
+                          "
+                        >
                           <td>
                             <a class="text-dark fw-bold">
                               <ngb-highlight
@@ -313,7 +314,7 @@
                   class="fas fa-comments-dollar"
                   style="padding-right: 24px"
                 ></i
-                >Stock revenues</span
+                >Stock Sales and Revenue</span
               >
             </a>
             <ng-template ngbNavContent>

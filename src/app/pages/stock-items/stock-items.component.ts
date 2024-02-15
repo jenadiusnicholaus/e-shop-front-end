@@ -31,6 +31,7 @@ export class StockItemsComponent implements OnInit {
   isLoading = false;
   stockItemSales: StockItemSales;
   @ViewChild("customNav") customNav: NgbNav;
+  searchValue: string;
 
   productsModel: ProductModel[];
   error = "";

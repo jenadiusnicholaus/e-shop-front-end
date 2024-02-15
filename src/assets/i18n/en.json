@@ -87,6 +87,10 @@
     "STOCK": {
       "TEXT": "Stock",
       "BADGE": "03"
+    },
+    "EXPENSES": {
+      "TEXT": "Expenses",
+      "BADGE": "03"
     }
   },
 

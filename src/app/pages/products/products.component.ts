@@ -46,6 +46,7 @@ export class ProductsComponent implements OnInit {
       status: ["", [Validators.required]],
       category: ["", [Validators.required]],
       name: ["", [Validators.required]],
+      price: ["", [Validators.required]],
       description: ["", [Validators.required]],
     });
 
@@ -53,6 +54,7 @@ export class ProductsComponent implements OnInit {
       status: ["", [Validators.required]],
       category: ["", [Validators.required]],
       name: ["", [Validators.required]],
+      price: ["", [Validators.required]],
       description: ["", [Validators.required]],
     });
   }
@@ -198,6 +200,7 @@ export class ProductsComponent implements OnInit {
       category: product.category,
       name: product.name,
       description: product.description,
+      price: product.price,
     });
   }
 

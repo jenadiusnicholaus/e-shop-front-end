@@ -60,7 +60,7 @@ export class SalesComponent implements OnInit {
       price: ["", [Validators.required]],
       product_price_changed: [false, [Validators.required]],
       reason_for_change: ["", [Validators.required]],
-      payment_satatus: ["", [Validators.required]],
+      payment_status: ["", [Validators.required]],
       // set default value to today's date
     });
     this.submitted = false;
@@ -107,12 +107,21 @@ export class SalesComponent implements OnInit {
       return;
     }
 
+    if (this.createSalesForm.value.payment_satatus === "") {
+      this.customAlert.errorToast(
+        "Error in creating sales",
+        "Payment status cannot be empty",
+        "error"
+      );
+      return;
+    }
+
     const body = {
       stock_item: this.createSalesForm.value.stock_item,
       quantity_sold: this.createSalesForm.value.quantity_sold,
       price: this.curentStockItem.unit_selling_price,
       product_price_changed: false,
-      payment_satatus: this.createSalesForm.value.payment_satatus,
+      payment_status: this.createSalesForm.value.payment_status,
       reason_for_change: "",
     };
 

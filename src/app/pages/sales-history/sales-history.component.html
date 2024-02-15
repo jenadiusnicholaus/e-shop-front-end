@@ -1,0 +1,136 @@
+<div class="container-fluid">
+  <div class="d-lg-flex mb-4">
+    <div class="chat-leftsidebar">
+      <div class="card-body border-bottom py-2">
+        <div class="search-box chat-search-box">
+          <div class="position-relative">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search..."
+              [(ngModel)]="searchValue"
+            />
+            <i class="ri-search-line search-icon"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-leftsidebar-nav">
+        <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-pills nav-justified">
+          <li [ngbNavItem]="1">
+            <ng-template ngbNavContent>
+              <div>
+                <h5 class="font-size-14 px-3 mb-3">Sold Items</h5>
+                <perfect-scrollbar style="position: relative; height: 345px">
+                  <ul class="list-group">
+                    <li
+                      class="list-group-item"
+                      [ngClass]="{
+                        active:
+                          sales?.stock_item?.product?.name ==
+                          currentSales?.stock_item?.product?.name
+                      }"
+                      *ngFor="let sales of salesModel | filter : searchValue"
+                    >
+                      <a (click)="getSalesHistory(sales)">
+                        <div class="d-flex">
+                          <div class="flex-1 overflow-hidden">
+                            <h5 class="text-truncate font-size-14 mb-1">
+                              {{ sales.stock_item?.product.name }}
+                            </h5>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </perfect-scrollbar>
+              </div>
+            </ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="nav" class="py-4"></div>
+      </div>
+    </div>
+
+    <div class="w-100 user-chat mt-4 mt-sm-0">
+      <div class="p-3 px-lg-4 user-chat-border">
+        <div class="row">
+          <div class="col-md-12 col-12">
+            <h5 class="font-size-15 mb-1 text-truncate">
+              {{ currentSales.stock_item?.product?.name }} - total quantity Sold
+              {{ currentSales.quantity_sold }}
+              <div
+                class="badge font-size-12"
+                [ngClass]="{
+                  'bg-danger-subtle text-danger':
+                    currentSales?.stock_item?.status === '2',
+                  'bg-success-subtle text-success':
+                    currentSales?.stock_item?.status === '1'
+                }"
+              >
+                <ngb-highlight
+                  *ngIf="currentSales?.stock_item?.status == 1"
+                  [result]="'in-stock'"
+                ></ngb-highlight>
+                <ngb-highlight
+                  *ngIf="currentSales?.stock_item?.status == 2"
+                  [result]="'Out of stock'"
+                ></ngb-highlight>
+              </div>
+              - Available Quantity: {{ currentSales.stock_item?.qty }}
+            </h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-lg-2">
+        <div class="chat-conversation p-3">
+          <perfect-scrollbar style="height: 450px">
+            <ul
+              class="list-unstyled mb-0 pr-3"
+              *ngFor="let sh of SalesHistrory"
+              [ngClass]="'left'"
+            >
+              <li *ngIf="sh.sales_date">
+                <div class="chat-day-title">
+                  <span class="title">{{
+                    sh.sales_date | date : "EEEE, MMMM d, y, h:mm:ss a"
+                  }}</span>
+                </div>
+              </li>
+              <li>
+                <div class="conversation-list">
+                  <div class="ctext-wrap">
+                    <div class="conversation-name">
+                      <h4>{{ sh.quantity_sold }} quantity Sold</h4>
+                    </div>
+                    <div class="ctext-wrap-content">
+                      <p class="mb-0">
+                        {{ sh.total_price }}
+                      </p>
+                    </div>
+                    <p class="chat-time mb-0">
+                      <span
+                        class="title"
+                        [ngClass]="{
+                          'text-success': sh.payment_status === 'Paid',
+                          'text-danger': sh.payment_status === 'Unpaid',
+                          'text-warning': sh.payment_status === 'Chargeback'
+                        }"
+                        >{{ sh.payment_status }}</span
+                      >
+                    </p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </perfect-scrollbar>
+        </div>
+      </div>
+      <div class="px-lg-3">
+        <div class="p-3 chat-input-section"></div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+</div>

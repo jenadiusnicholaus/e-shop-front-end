@@ -8,6 +8,7 @@ import { ModuleStateService } from "../moduleshared.service";
 import { RepositoryService } from "../repository.service";
 import { environment } from "src/environments/environment";
 import { StockSalesModel } from "./model";
+import * as XLSX from "xlsx";
 
 @Component({
   selector: "app-stock-sales",
@@ -16,7 +17,13 @@ import { StockSalesModel } from "./model";
 })
 export class StockSalesComponent implements OnInit {
   stockItemsSalesModel: StockSalesModel[];
+  currentstockItemsaleOBj;
+  StockSalesModel;
   curentStock: any;
+  searchValue: string;
+  fileName = ``;
+  viewDetailsClicked: boolean = false;
+
   constructor(
     public httpShareService: SharedService,
     public customAlert: CustomAlertService,
@@ -39,5 +46,27 @@ export class StockSalesComponent implements OnInit {
         this.curentStock = state;
       }
     });
+
+    this.fileName = `StockSales_${
+      this.curentStock.name
+    }.xlsx_${new Date()}.xlsx`;
+    this.viewDetailsClicked = false;
+  }
+
+  exportexcel(): void {
+    /* pass here the table id */
+    let element = document.getElementById("excel-table");
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+    /* save to file */
+    XLSX.writeFile(wb, this.fileName);
+  }
+  goToDetails(currentOBj) {
+    this.currentstockItemsaleOBj = currentOBj;
+    this.viewDetailsClicked = true;
   }
 }
