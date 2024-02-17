@@ -28,26 +28,28 @@ import { LeafletModule } from "@asymmetrik/ngx-leaflet";
 
 import { DashboardComponent } from "./dashboard/dashboard.component";
 
-import { CategoryComponent } from "./category/category.component";
+import { CategoryComponent } from "./productModule/category/category.component";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { NgxSliderModule } from "@angular-slider/ngx-slider";
-import { ProductsComponent } from "./products/products.component";
-import { StockComponent } from "./stock/stock.component";
-import { StockItemsComponent } from "./stock-items/stock-items.component";
-import { AddNewStockItemComponent } from "./add-new-stock-item/add-new-stock-item.component";
-import { SalesComponent } from "./sales/sales.component";
+import { ProductsComponent } from "./productModule/products/products.component";
+import { StockComponent } from "./stockModule/stock/stock.component";
+import { StockItemsComponent } from "./stockModule/stock-items/stock-items.component";
+import { AddNewStockItemComponent } from "./stockModule/add-new-stock-item/add-new-stock-item.component";
+import { SalesComponent } from "./salesModule/sales/sales.component";
 import { ModuleStateService } from "./moduleshared.service";
 import { UnderconstractionPageComponent } from "./underconstraction-page/underconstraction-page.component";
 import { RepositoryService } from "./repository.service";
-import { StockSalesComponent } from "./stock-sales/stock-sales.component";
+import { StockSalesComponent } from "./stockModule/stock-sales/stock-sales.component";
 // import { DataTablesModule } from 'angular-datatables';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { BrowserModule } from "@angular/platform-browser";
 import { TranslateModule } from "@ngx-translate/core";
-import { SharedLoaderComponent } from './shared-loader/shared-loader.component';
-import { StockOrdersComponent } from './stock-orders/stock-orders.component';
-import { ExpensesComponent } from './expenses/expenses.component';
-import { SalesHistoryComponent } from './sales-history/sales-history.component';
+import { SharedLoaderComponent } from "./shared-loader/shared-loader.component";
+import { StockOrdersComponent } from "./stockModule/stock-orders/stock-orders.component";
+import { ExpensesComponent } from "./expensesModule/expenses/expenses.component";
+import { SalesHistoryComponent } from "./salesModule/sales-history/sales-history.component";
+import { ProductDetailsComponent } from "./productModule/product-details/product-details.component";
+// import { NgImageZoomModule } from "ng-image-zoom";
 
 // import { ToastModule } from "primeng/toast";
 // import { MessageService } from "primeng/api/messageservice";
@@ -73,6 +75,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     StockOrdersComponent,
     ExpensesComponent,
     SalesHistoryComponent,
+    ProductDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -94,6 +97,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LeafletModule,
     WidgetModule,
     NgbPaginationModule,
+
     //  DataTablesModule,
     //
     NgbTypeaheadModule,
@@ -105,6 +109,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgSelectModule,
     NgxSliderModule,
     NgbModalModule,
+    // NgImageZoomModule,
   ],
   providers: [
     ModuleStateService,

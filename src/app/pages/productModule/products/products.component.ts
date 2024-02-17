@@ -11,6 +11,7 @@ import { environment } from "src/environments/environment";
 import { ProductsModel, Result } from "./models";
 import { CategoryModel } from "../category/category.models";
 import Swal from "sweetalert2";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-products",
@@ -35,7 +36,8 @@ export class ProductsComponent implements OnInit {
     public httpShareService: SharedService,
     public customAlert: CustomAlertService,
     private formBuilder: UntypedFormBuilder,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -229,5 +231,12 @@ export class ProductsComponent implements OnInit {
         this.customAlert.errorToast("An error Occured", `${error}`, "error");
       }
     );
+  }
+
+  gotodetails(product: any) {
+    this.router.navigate(["/product-details", product.id]);
+
+    // console all  the route url we have here
+    console.log(this.router.url);
   }
 }

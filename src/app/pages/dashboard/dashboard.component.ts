@@ -699,11 +699,10 @@ export class DashboardComponent implements OnInit {
       url,
       (data) => {
         console.log(data);
-
-        this.totalExpenses = data.reduce(
-          (total, expense) => total + expense.amount,
-          0
-        );
+        this.totalExpenses = data.reduce((total, expense) => {
+          let amount = Number(expense.amount);
+          return total + (isNaN(amount) ? 0 : amount);
+        }, 0);
       },
       (error) => {
         console.log(error);

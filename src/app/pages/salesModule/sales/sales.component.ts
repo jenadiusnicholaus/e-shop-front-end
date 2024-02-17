@@ -8,14 +8,17 @@ import { ActivatedRoute } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { CustomAlertService } from "src/app/shared/custom-alert.service";
 import { SharedService } from "src/app/shared/custom_http.service";
-import { StockItemSales, StockItemsModel } from "../stock-items/model";
-import { ModuleStateService } from "../moduleshared.service";
+import {
+  StockItemSales,
+  StockItemsModel,
+} from "../../stockModule/stock-items/model";
+import { ModuleStateService } from "../../moduleshared.service";
 import { BehaviorSubject } from "rxjs";
 import { environment } from "src/environments/environment";
-import { RepositoryService } from "../repository.service";
+import { RepositoryService } from "../../repository.service";
 // import { ToastModule } from "primeng/toast";
 
-import { ToastService } from "../toast.service";
+import { ToastService } from "../../toast.service";
 import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({

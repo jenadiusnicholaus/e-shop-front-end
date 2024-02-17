@@ -3,12 +3,13 @@ import { Routes, RouterModule } from "@angular/router";
 
 import { DashboardComponent } from "./dashboard/dashboard.component";
 
-import { CategoryComponent } from "./category/category.component";
-import { ProductsComponent } from "./products/products.component";
-import { StockComponent } from "./stock/stock.component";
-import { StockItemsComponent } from "./stock-items/stock-items.component";
-import { SalesComponent } from "./sales/sales.component";
-import { ExpensesComponent } from "./expenses/expenses.component";
+import { CategoryComponent } from "./productModule/category/category.component";
+import { ProductsComponent } from "./productModule/products/products.component";
+import { StockComponent } from "./stockModule/stock/stock.component";
+import { StockItemsComponent } from "./stockModule/stock-items/stock-items.component";
+import { SalesComponent } from "./salesModule/sales/sales.component";
+import { ExpensesComponent } from "./expensesModule/expenses/expenses.component";
+import { ProductDetailsComponent } from "./productModule/product-details/product-details.component";
 
 const routes: Routes = [
   { path: "", component: DashboardComponent },
@@ -16,7 +17,9 @@ const routes: Routes = [
   { path: "products", component: ProductsComponent },
   { path: "stock", component: StockComponent },
   { path: "stock-items/:ID", component: StockItemsComponent },
-  {path: "expenses", component: ExpensesComponent},
+  { path: "expenses", component: ExpensesComponent },
+  { path: "product-details/:ID", component: ProductDetailsComponent },
+
   {
     path: "sales",
     component: SalesComponent,

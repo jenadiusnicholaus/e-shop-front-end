@@ -12,8 +12,8 @@ import { environment } from "src/environments/environment";
 import { Stock, StockItemSales, StockItemsModel } from "./model";
 import { ProductModel } from "../add-new-stock-item/models";
 import Swal from "sweetalert2";
-import { ModuleStateService } from "../moduleshared.service";
-import { RepositoryService } from "../repository.service";
+import { ModuleStateService } from "../../moduleshared.service";
+import { RepositoryService } from "../../repository.service";
 
 @Component({
   selector: "app-stock-items",

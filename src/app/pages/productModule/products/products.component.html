@@ -52,7 +52,9 @@
                     ></ngb-highlight>
                   </td>
                   <td>
-                    <ngb-highlight [result]="product?.name"></ngb-highlight>
+                    <a class="text-primary" (click)="gotodetails(product)">{{
+                      product?.name
+                    }}</a>
                   </td>
                   <td>
                     <ngb-highlight

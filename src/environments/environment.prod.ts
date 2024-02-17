@@ -19,6 +19,8 @@ export const environment = {
   // http://localhost:8000/api/ims/v1/category/?category_id=90
   // E_SHOP_BASE_URL: "http://127.0.0.1:8000/api/",
   E_SHOP_BASE_URL: "https://eshop.codingskills.dev/api/",
+  E_SHOP_MEDIA_BASE_URL: "https://eshop.codingskills.dev",
+
   AUTHENTICATION: {
     AUTHENTICATION_BASE_URL: `authentication/${API_VERSION}/`,
     REGISTER_URL: "register/",
@@ -45,6 +47,7 @@ export const environment = {
     IMS_DASHBOARD_SALES: `dashboard/${API_VERSION}/dashboard-sales/`,
     // http://localhost:8000/api/expenses/v1/expenses_vset/
     IMS_EXPENSES_BASE_URL: `expenses/${API_VERSION}/expenses_vset/`,
+    IMS_PRODUCT_DETAILS: `products/${API_VERSION}/product-details/`,
   },
 };
 

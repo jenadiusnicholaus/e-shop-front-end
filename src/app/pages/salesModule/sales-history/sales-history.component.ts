@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { environment } from "src/environments/environment";
-import { RepositoryService } from "../repository.service";
+import { RepositoryService } from "../../repository.service";
 import { data } from "jquery";
 
 @Component({

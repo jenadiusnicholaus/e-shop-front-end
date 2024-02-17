@@ -51,15 +51,15 @@ export const MENU: MenuItem[] = [
     link: "stock/",
   },
 
-  // {
-  //   id: 5,
-  //   label: "MENUITEMS.EXPENSES.TEXT",
-  //   icon: "ri-store-2-line",
-  //   // badge: {
-  //   //   variant: "success",
-  //   //   text: "MENUITEMS.DASHBOARDS.BADGE",
-  //   // },
+  {
+    id: 5,
+    label: "MENUITEMS.EXPENSES.TEXT",
+    icon: "ri-store-2-line",
+    // badge: {
+    //   variant: "success",
+    //   text: "MENUITEMS.DASHBOARDS.BADGE",
+    // },
 
-  //   link: "expenses/",
-  // },
+    link: "expenses/",
+  },
 ];

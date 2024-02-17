@@ -1,0 +1,210 @@
+<div class="container-fluid">
+  <app-pagetitle title="Expenses"></app-pagetitle>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div>
+            <!--  -->
+            <a
+              href="javascript:void(0);"
+              class="btn btn-success mb-2"
+              (click)="openModal(content)"
+            >
+              <i class="mdi mdi-plus me-2"></i> Add
+            </a>
+          </div>
+          <div class="row mb-md-2">
+            <div class="col-sm-12 col-md-6"></div>
+            <!-- Search -->
+            <div class="col-sm-12 col-md-6">
+              <div
+                id="tickets-table_filter"
+                class="dataTables_filter text-md-end"
+              >
+                <label class="d-inline-flex align-items-center"
+                  >Search:
+                  <input
+                    [(ngModel)]="searchTerm"
+                    type="text"
+                    name="searchTerm"
+                    class="form-control form-control-sm ms-2"
+                    aria-controls="tickets-table"
+                /></label>
+              </div>
+            </div>
+            <!-- End search -->
+          </div>
+          <div class="table-responsive mt-3">
+            <table
+              class="table table-centered datatable dt-responsive nowrap"
+              style="border-collapse: collapse; border-spacing: 0; width: 100%"
+            >
+              <thead class="thead-light">
+                <tr>
+                  <th style="width: 20px">
+                    <div class="form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="customercheck"
+                      />
+                      <label class="form-check-label" for="customercheck"
+                        >&nbsp;</label
+                      >
+                    </div>
+                  </th>
+                  <th>id</th>
+                  <th>Name of the expense</th>
+                  <th>Amount</th>
+                  <th>Description</th>
+                  <th>Date Created</th>
+
+                  <th style="width: 120px">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let data of expenseModel | filter : searchTerm;
+                    let i = index
+                  "
+                >
+                  <td>
+                    <div class="form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="customercheck{{ i }}"
+                      />
+                      <label
+                        class="form-check-label mb-0"
+                        for="customercheck{{ i }}"
+                        >&nbsp;</label
+                      >
+                    </div>
+                  </td>
+                  <td>{{ data.id }}</td>
+
+                  <td>
+                    <a class="text-primary">{{ data.title }}</a>
+                  </td>
+
+                  <td>
+                    {{ data.amount | currency : "TSH " : "code" : "1.0-0" }}
+                  </td>
+                  <td>{{ data.description }}</td>
+                  <td>{{ data.created_date }}</td>
+
+                  <td>
+                    <a
+                      (click)="openEditModal(content, data)"
+                      class="me-3 text-primary"
+                      ngbTooltip="Edit"
+                      ><i class="mdi mdi-pencil font-size-18"></i
+                    ></a>
+                    <a
+                      class="text-danger"
+                      (click)="deleteExpense(data)"
+                      ngbTooltip="Delete"
+                      ><i class="mdi mdi-trash-can font-size-18"></i
+                    ></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Contacts model  -->
+<ng-template #content role="document" let-modal="close">
+  <div class="modal-header">
+    <h5 class="modal-title">Add Contacts</h5>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body p-3">
+    <div class="text-left">
+      <form
+        (ngSubmit)="isEditingModal ? editExpenses() : addExpense()"
+        [formGroup]="ExpenseForm"
+      >
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            placeholder="Enter name"
+            formControlName="title"
+            [ngClass]="{ 'is-invalid': submitted && form.title.errors }"
+          />
+          <div *ngIf="submitted && form.title.errors" class="invalid-feedback">
+            <span *ngIf="form.title.errors.required">title is mendatory.</span>
+          </div>
+
+          <div *ngFor="let error of errors?.title">
+            <small style="color: red">{{ error }}</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Amount used </label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter date"
+            formControlName="amount"
+            [ngClass]="{ 'is-invalid': submitted && form.amount.errors }"
+          />
+          <div *ngIf="submitted && form.amount.errors" class="invalid-feedback">
+            <span *ngIf="form.amount.errors.required"
+              >Amount is mendatory.</span
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter date"
+            formControlName="description"
+            [ngClass]="{ 'is-invalid': submitted && form.description.errors }"
+          />
+          <div
+            *ngIf="submitted && form.description.errors"
+            class="invalid-feedback"
+          >
+            <span *ngIf="form.description.errors.required"
+              >Description is mendatory.</span
+            >
+          </div>
+        </div>
+
+        <div class="text-end">
+          <button type="submit" class="btn btn-success">Save</button>
+          <button
+            type="button"
+            class="btn btn-danger ms-1"
+            (click)="modal('close click')"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>

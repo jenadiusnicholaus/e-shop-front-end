@@ -4,7 +4,7 @@ import {
   UntypedFormBuilder,
   Validators,
 } from "@angular/forms";
-import { ProductsModel, Result } from "../products/models";
+import { ProductsModel, Result } from "../../productModule/products/models";
 import { ProductModel } from "./models";
 import { environment } from "src/environments/environment";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
