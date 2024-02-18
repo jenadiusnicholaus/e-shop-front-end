@@ -49,6 +49,10 @@ export class ProductsComponent implements OnInit {
       category: ["", [Validators.required]],
       name: ["", [Validators.required]],
       price: ["", [Validators.required]],
+      // "selling_price": request.data.get("selling_price"),
+      // "discount_price": request.data.get("discount_price"),
+      selling_price: ["", [Validators.required]],
+      discount_price: ["", [Validators.required]],
       description: ["", [Validators.required]],
     });
 
@@ -57,6 +61,8 @@ export class ProductsComponent implements OnInit {
       category: ["", [Validators.required]],
       name: ["", [Validators.required]],
       price: ["", [Validators.required]],
+      selling_price: ["", [Validators.required]],
+      discount_price: ["", [Validators.required]],
       description: ["", [Validators.required]],
     });
   }
@@ -203,6 +209,8 @@ export class ProductsComponent implements OnInit {
       name: product.name,
       description: product.description,
       price: product.price,
+      selling_price: product.selling_price,
+      discount_price: product.discount_price,
     });
   }
 

@@ -16,7 +16,9 @@ import {
   NgbCollapseModule,
   NgbModalModule,
   NgbDatepickerModule,
+  NgbProgressbarModule,
 } from "@ng-bootstrap/ng-bootstrap";
+// import { BarRatingModule } from "ngx-bar-rating";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { Ng2SearchPipeModule } from "ng2-search-filter";
 import { FullCalendarModule } from "@fullcalendar/angular";
@@ -49,12 +51,22 @@ import { StockOrdersComponent } from "./stockModule/stock-orders/stock-orders.co
 import { ExpensesComponent } from "./expensesModule/expenses/expenses.component";
 import { SalesHistoryComponent } from "./salesModule/sales-history/sales-history.component";
 import { ProductDetailsComponent } from "./productModule/product-details/product-details.component";
-// import { NgImageZoomModule } from "ng-image-zoom";
+import { ColorPickerModule } from "ngx-color-picker";
+import { provideNgxMask } from "ngx-mask";
+import { NgxDropzoneModule } from "ngx-dropzone";
+// import { StarRatingModule } from "angular-star-rating";
+import { DropzoneModule } from "ngx-dropzone-wrapper";
 
-// import { ToastModule } from "primeng/toast";
-// import { MessageService } from "primeng/api/messageservice";
-// import { MessageService } from "primeng/api";
-// import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { DROPZONE_CONFIG } from "ngx-dropzone-wrapper";
+import { DropzoneConfigInterface } from "ngx-dropzone-wrapper";
+import { NgbRatingModule } from "@ng-bootstrap/ng-bootstrap";
+
+const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
+  // Change this to your upload POST address:
+  url: "https://httpbin.org/post",
+  maxFilesize: 4,
+};
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
   wheelSpeed: 0.3,
@@ -97,6 +109,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LeafletModule,
     WidgetModule,
     NgbPaginationModule,
+    ColorPickerModule,
+    DropzoneModule,
+    NgxDropzoneModule,
 
     //  DataTablesModule,
     //
@@ -105,11 +120,15 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     // ToastModule,
     TranslateModule,
 
+    NgbRatingModule,
     NgbCollapseModule,
     NgSelectModule,
     NgxSliderModule,
     NgbModalModule,
     // NgImageZoomModule,
+    NgbProgressbarModule,
+    // BarRatingModule,
+    // StarRatingModule.forRoot(),
   ],
   providers: [
     ModuleStateService,
@@ -120,6 +139,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
+    },
+
+    provideNgxMask(),
+    {
+      provide: DROPZONE_CONFIG,
+      useValue: DEFAULT_DROPZONE_CONFIG,
     },
   ],
 })

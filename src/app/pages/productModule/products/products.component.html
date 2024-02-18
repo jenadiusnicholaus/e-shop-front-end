@@ -35,7 +35,9 @@
                   <th sortable="name">Name</th>
                   <th sortable="description">Description</th>
                   <th sortable="status">Stattus</th>
-                  <th sortable="status">Price</th>
+                  <th sortable="status">Purchasing Price</th>
+                  <th sortable="status">Selling Price</th>
+                  <th sortable="status">Discount Price</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -56,11 +58,10 @@
                       product?.name
                     }}</a>
                   </td>
-                  <td>
-                    <ngb-highlight
-                      [result]="product?.description"
-                    ></ngb-highlight>
-                  </td>
+                  <p class="truncate-text">
+                    {{ product?.description ?? "No description available" }}
+                  </p>
+
                   <td>
                     <ngb-highlight
                       *ngIf="product?.status == 1"
@@ -74,6 +75,19 @@
                   <td>
                     <span>{{
                       product?.price | currency : "TSH " : "code" : "1.0-0"
+                    }}</span>
+                  </td>
+                  <td>
+                    <span>{{
+                      product?.selling_price
+                        | currency : "TSH " : "code" : "1.0-0"
+                    }}</span>
+                  </td>
+
+                  <td>
+                    <span>{{
+                      product?.discount_price
+                        | currency : "TSH " : "code" : "1.0-0"
                     }}</span>
                   </td>
                   <td>
@@ -214,33 +228,7 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label>Name</label>
-
-                  <div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter Price"
-                      formControlName="price"
-                      [ngClass]="{
-                        'is-invalid': submitted && addForm.price.errors
-                      }"
-                    />
-                    <div
-                      *ngIf="submitted && addForm.price.errors"
-                      class="invalid-feedback"
-                    >
-                      <span *ngIf="addForm.price.errors.required"
-                        >This value is required.</span
-                      >
-                      <span *ngIf="addForm.price.errors.minlength"
-                        >price must be at least 6 characters.</span
-                      >
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label>Price</label>
+                  <label>Product name</label>
 
                   <div>
                     <input
@@ -265,6 +253,95 @@
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Buying Price</label>
+
+                      <div>
+                        <input
+                          type="number"
+                          class="form-control"
+                          placeholder="Enter Price"
+                          formControlName="price"
+                          [ngClass]="{
+                            'is-invalid': submitted && addForm.price.errors
+                          }"
+                        />
+                        <div
+                          *ngIf="submitted && addForm.price.errors"
+                          class="invalid-feedback"
+                        >
+                          <span *ngIf="addForm.price.errors.required"
+                            >This value is required.</span
+                          >
+                          <span *ngIf="addForm.price.errors.minlength"
+                            >price must be at least 6 characters.</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Selling Price</label>
+
+                      <div>
+                        <input
+                          type="number"
+                          class="form-control"
+                          placeholder="Enter Selling_Price"
+                          formControlName="selling_price"
+                          [ngClass]="{
+                            'is-invalid':
+                              submitted && addForm.selling_price.errors
+                          }"
+                        />
+                        <div
+                          *ngIf="submitted && addForm.selling_price.errors"
+                          class="invalid-feedback"
+                        >
+                          <span *ngIf="addForm.selling_price.errors.required"
+                            >This value is required.</span
+                          >
+                          <span *ngIf="addForm.selling_price.errors.minlength"
+                            >Selling price must be at least 6 characters.</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Discount Price</label>
+
+                      <div>
+                        <input
+                          type="number"
+                          class="form-control"
+                          placeholder="Enter Discount Price"
+                          formControlName="discount_price"
+                          [ngClass]="{
+                            'is-invalid':
+                              submitted && addForm.discount_price.errors
+                          }"
+                        />
+                        <div
+                          *ngIf="submitted && addForm.discount_price.errors"
+                          class="invalid-feedback"
+                        >
+                          <span *ngIf="addForm.discount_price.errors.required"
+                            >This value is required.</span
+                          >
+                          <span *ngIf="addForm.discount_price.errors.minlength"
+                            >Discount price must be at least 6 characters.</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="form-group">
                   <label>Description</label>
                   <div>
@@ -431,32 +508,95 @@
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label>Price</label>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Buying Price</label>
 
-                  <div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter Price"
-                      formControlName="price"
-                      [ngClass]="{
-                        'is-invalid': submitted && addForm.price.errors
-                      }"
-                    />
-                    <div
-                      *ngIf="submitted && addForm.price.errors"
-                      class="invalid-feedback"
-                    >
-                      <span *ngIf="addForm.price.errors.required"
-                        >This value is required.</span
-                      >
-                      <span *ngIf="addForm.price.errors.minlength"
-                        >price must be at least 6 characters.</span
-                      >
+                      <div>
+                        <input
+                          type="number"
+                          class="form-control"
+                          placeholder="Enter Price"
+                          formControlName="price"
+                          [ngClass]="{
+                            'is-invalid': submitted && addForm.price.errors
+                          }"
+                        />
+                        <div
+                          *ngIf="submitted && addForm.price.errors"
+                          class="invalid-feedback"
+                        >
+                          <span *ngIf="addForm.price.errors.required"
+                            >This value is required.</span
+                          >
+                          <span *ngIf="addForm.price.errors.minlength"
+                            >price must be at least 6 characters.</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Selling Price</label>
+
+                      <div>
+                        <input
+                          type="number"
+                          class="form-control"
+                          placeholder="Enter Selling_Price"
+                          formControlName="selling_price"
+                          [ngClass]="{
+                            'is-invalid':
+                              submitted && addForm.selling_price.errors
+                          }"
+                        />
+                        <div
+                          *ngIf="submitted && addForm.selling_price.errors"
+                          class="invalid-feedback"
+                        >
+                          <span *ngIf="addForm.selling_price.errors.required"
+                            >This value is required.</span
+                          >
+                          <span *ngIf="addForm.selling_price.errors.minlength"
+                            >Selling price must be at least 6 characters.</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Discount Price</label>
+
+                      <div>
+                        <input
+                          type="number"
+                          class="form-control"
+                          placeholder="Enter Discount Price"
+                          formControlName="discount_price"
+                          [ngClass]="{
+                            'is-invalid':
+                              submitted && addForm.discount_price.errors
+                          }"
+                        />
+                        <div
+                          *ngIf="submitted && addForm.discount_price.errors"
+                          class="invalid-feedback"
+                        >
+                          <span *ngIf="addForm.discount_price.errors.required"
+                            >This value is required.</span
+                          >
+                          <span *ngIf="addForm.discount_price.errors.minlength"
+                            >Discount price must be at least 6 characters.</span
+                          >
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
+
                 <div class="form-group">
                   <label>Description</label>
                   <div>
