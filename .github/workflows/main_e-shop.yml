@@ -67,4 +67,4 @@ jobs:
         with:
           app-name: "e-shop"
           slot-name: "Production"
-          package: cd . dist/eshop
+          package: . # This is the folder path of the web app files
