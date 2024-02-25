@@ -67,4 +67,4 @@ jobs:
         with:
           app-name: "e-shop"
           slot-name: "Production"
-          package: .
+          package: cd dist/eshop
