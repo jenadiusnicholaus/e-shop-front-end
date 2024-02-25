@@ -62,4 +62,16 @@ export const MENU: MenuItem[] = [
 
     link: "expenses/",
   },
+
+  {
+    id: 5,
+    label: "MENUITEMS.SHOPS.TEXT",
+    icon: "ri-store-2-line",
+    // badge: {
+    //   variant: "success",
+    //   text: "MENUITEMS.DASHBOARDS.BADGE",
+    // },
+
+    link: "shops/",
+  },
 ];

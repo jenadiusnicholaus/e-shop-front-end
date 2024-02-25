@@ -91,6 +91,10 @@
     "EXPENSES": {
       "TEXT": "Expenses",
       "BADGE": "03"
+    },
+    "SHOPS": {
+      "TEXT": "Shops",
+      "BADGE": "03"
     }
   },
 

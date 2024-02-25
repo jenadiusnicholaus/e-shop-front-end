@@ -49,6 +49,7 @@ export const environment = {
     IMS_PRODUDCT_COLOR: `products/${API_VERSION}/product-color_vset/`,
     IMS_PRODUDCT_SIZE: `products/${API_VERSION}/product-size_vset/`,
     IMS_PRODUDCT_SPECS: `products/${API_VERSION}/product-specs_vset/`,
+    IMS_SHOP: `shops/${API_VERSION}/shop_vset/`,
   },
 };
 

@@ -118,11 +118,12 @@
                   </th>
                   <th>Stock image</th>
                   <th>Stock name</th>
+                  <th>Stop Name</th>
                   <th>Stock estimated Revenue</th>
                   <th>Total Product Item</th>
                   <th>Current revenue</th>
                   <th>Current Sales</th>
-                  <th style="width: 120px">Action</th>
+                  <!-- <th style="width: 120px">Action</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -154,6 +155,7 @@
                       class="avatar-sm rounded-circle"
                     />
                   </td>
+                  <td>{{ data?.shop?.name }}</td>
 
                   <td>
                     <a class="text-primary" (click)="gotoStockItems(data.id)">{{
@@ -164,7 +166,7 @@
                   <td>{{ data.total_products }}</td>
                   <td>{{ data.total_sales_revenue }}</td>
                   <td>{{ data.total_sales }}</td>
-                  <td>
+                  <!-- <td>
                     <a
                       (click)="gotoStockItems(data.id)"
                       class="me-3 text-primary"
@@ -173,7 +175,7 @@
                     >
                       <i class="ri-slideshow-fill font-size-18"></i>
                     </a>
-                  </td>
+                  </td> -->
                 </tr>
               </tbody>
             </table>
@@ -200,6 +202,32 @@
   <div class="modal-body p-3">
     <div class="text-left">
       <form (ngSubmit)="saveData()" [formGroup]="addStockForm">
+        <div class="form-group">
+          <label>shop</label>
+
+          <select
+            type="text"
+            class="form-control"
+            formControlName="shop"
+            [ngClass]="{
+              'is-invalid': submitted && form.shop.errors
+            }"
+            placeholder="Shop Name"
+          >
+            <div *ngIf="submitted && form.shop.errors" class="invalid-feedback">
+              <span *ngIf="form.shop.errors.required"
+                >This value is required.</span
+              >
+            </div>
+
+            <option value="" disabled>Select shop</option>
+            <option value="{{ shop.id }}" *ngFor="let shop of shops">
+              {{ shop?.name }}
+            </option>
+          </select>
+
+          <!-- <ng-select [items]="categoryModel"></ng-select> -->
+        </div>
         <div class="form-group">
           <label for="name">Name</label>
           <input

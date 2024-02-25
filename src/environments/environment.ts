@@ -71,5 +71,9 @@ export const environment = {
     // http://localhost:8000/api/products/v1/product-specs_vset/?product_id=26
 
     IMS_PRODUDCT_SPECS: `products/${API_VERSION}/product-specs_vset/`,
+
+    // http://localhost:8000/api/shops/v1/shop_vset/?shop_id=1
+
+    IMS_SHOP: `shops/${API_VERSION}/shop_vset/`,
   },
 };

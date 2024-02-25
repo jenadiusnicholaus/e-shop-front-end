@@ -24,6 +24,7 @@ export class StockComponent implements OnInit {
   submitted: boolean;
   fileInput: any;
   searchTerm: string;
+  shops: any;
 
   errors = {
     name: [],
@@ -37,10 +38,13 @@ export class StockComponent implements OnInit {
     this.getAllStock();
     this.addStockForm = this.formBuilder.group({
       name: ["", [Validators.required]],
+      shop: ["", [Validators.required]],
       status: ["", [Validators.required]],
       date_created: ["", [Validators.required]],
       image: ["", [Validators.required]],
     });
+
+    this.getAllShop();
   }
 
   get form() {
@@ -94,6 +98,7 @@ export class StockComponent implements OnInit {
     let formdata = new FormData();
     formdata.append("name", this.addStockForm.value.name);
     formdata.append("status", this.addStockForm.value.status);
+    formdata.append("shop", this.addStockForm.value.shop);
     formdata.append("date_created", this.addStockForm.value.date_created);
 
     // image validation
@@ -161,5 +166,25 @@ export class StockComponent implements OnInit {
         this.errors[field] = errorResponse[field];
       }
     }
+  }
+
+  getAllShop() {
+    this.stockLodding = true;
+    const url = environment.E_SHOP_BASE_URL + environment.IMS.IMS_SHOP;
+    this.httpShareService.get(url, null).subscribe(
+      (res: any) => {
+        this.stockLodding = false;
+        this.shops = res;
+      },
+
+      (error) => {
+        this.stockLodding = false;
+        this.customAlert.errorToast(
+          "Error in fetching stock details",
+          "Something went wrong, please try again later",
+          "error"
+        );
+      }
+    );
   }
 }

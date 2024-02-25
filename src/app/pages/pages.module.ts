@@ -60,6 +60,7 @@ import { DropzoneModule } from "ngx-dropzone-wrapper";
 import { DROPZONE_CONFIG } from "ngx-dropzone-wrapper";
 import { DropzoneConfigInterface } from "ngx-dropzone-wrapper";
 import { NgbRatingModule } from "@ng-bootstrap/ng-bootstrap";
+import { ShopsComponent } from './shopModule/shops/shops.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -88,6 +89,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ExpensesComponent,
     SalesHistoryComponent,
     ProductDetailsComponent,
+    ShopsComponent,
   ],
   imports: [
     CommonModule,

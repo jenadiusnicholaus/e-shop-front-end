@@ -67,6 +67,10 @@
     "EXPENSES": {
       "TEXT": "Matumizi",
       "BADGE": "03"
+    },
+    "SHOPS": {
+      "TEXT": "Maduka",
+      "BADGE": "03"
     }
   },
   "DASHBOARD": {
