@@ -117,8 +117,8 @@
                     </div>
                   </th>
                   <th>Stock image</th>
-                  <th>Stock name</th>
-                  <th>Stop Name</th>
+                  <th>Purchase cost</th>
+                  <th>Stock Name</th>
                   <th>Stock estimated Revenue</th>
                   <th>Total Product Item</th>
                   <th>Current revenue</th>
@@ -155,7 +155,7 @@
                       class="avatar-sm rounded-circle"
                     />
                   </td>
-                  <td>{{ data?.shop?.name }}</td>
+                  <td>{{ data?.total_purchases_cost }}</td>
 
                   <td>
                     <a class="text-primary" (click)="gotoStockItems(data.id)">{{
