@@ -640,10 +640,8 @@ export class DashboardComponent implements OnInit {
         this.NumberofSales = data.length;
         this.SalesData = data;
         this.getTotalRevenueByYear(data);
-        for (let i = 0; i < data.length; i++) {
-          this.SalesRevenue += data[i].total_revenue;
-          console.log(data[i].total_revenue);
-        }
+        this.SalesRevenue = 0;
+        this.SalesRevenue = this.getTotReForAllSales(data);
 
         this.todayRevenue = this.getTodayRevenue(data);
 
