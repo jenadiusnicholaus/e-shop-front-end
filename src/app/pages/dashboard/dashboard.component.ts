@@ -92,17 +92,6 @@ export class DashboardComponent implements OnInit {
 
   formData: UntypedFormGroup;
 
-  options = {
-    layers: [
-      tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 18,
-        attribution: "...",
-      }),
-    ],
-    zoom: 6,
-    center: latLng(46.879966, -121.726909),
-  };
-
   ngOnInit(): void {
     this.isLoadingDashboard = true;
     this.getSales();
@@ -569,6 +558,14 @@ export class DashboardComponent implements OnInit {
     return [Math.round(weeklyEarningsPercentage)];
   }
 
+  getTotReForAllSales(data: any[]) {
+    let total = 0;
+    for (let i = 0; i < data.length; i++) {
+      total += data[i].total_revenue;
+    }
+    return total;
+  }
+
   getSales() {
     const url =
       environment.E_SHOP_BASE_URL + environment.IMS.IMS_DASHBOARD_SALES;
@@ -580,13 +577,8 @@ export class DashboardComponent implements OnInit {
         this.SalesRevenue = 0;
         this.SalesData = data;
         this.getTotalRevenueByYear(data);
-        if (data.length > 0) {
-          for (let i = 0; i < data.length; i++) {
-            this.SalesRevenue += data[i].total_revenue;
-          }
-        } else {
-          this.SalesRevenue = 0;
-        }
+
+        this.SalesRevenue = this.getTotReForAllSales(data);
 
         this.todayRevenue = this.getTodayRevenue(data);
 
@@ -717,9 +709,6 @@ export class DashboardComponent implements OnInit {
       url,
       (data) => {
         this.stockModel = data;
-
-        console.log("stockModel");
-        console.log(data);
       },
       (error) => {
         console.log(error);
